@@ -1,3 +1,9 @@
+Personal GitHub pages.
+
+Using forked Sidey tamplate. 
+
+===
+
 # Sidey
 
 Sidey is a simple and minimalistic jekyll blogging theme.
