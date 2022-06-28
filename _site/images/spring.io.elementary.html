@@ -1,0 +1,629 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
+"http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en">
+<head>
+<meta http-equiv="Content-Type" content="text/html;charset=utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>Creating an elementary spring web app and deplying it in a Multipass Docker enviroment.</title>
+<meta name="generator" content="Org mode" />
+<style type="text/css">
+ <!--/*--><![CDATA[/*><!--*/
+  .title  { text-align: center;
+             margin-bottom: .2em; }
+  .subtitle { text-align: center;
+              font-size: medium;
+              font-weight: bold;
+              margin-top:0; }
+  .todo   { font-family: monospace; color: red; }
+  .done   { font-family: monospace; color: green; }
+  .priority { font-family: monospace; color: orange; }
+  .tag    { background-color: #eee; font-family: monospace;
+            padding: 2px; font-size: 80%; font-weight: normal; }
+  .timestamp { color: #bebebe; }
+  .timestamp-kwd { color: #5f9ea0; }
+  .org-right  { margin-left: auto; margin-right: 0px;  text-align: right; }
+  .org-left   { margin-left: 0px;  margin-right: auto; text-align: left; }
+  .org-center { margin-left: auto; margin-right: auto; text-align: center; }
+  .underline { text-decoration: underline; }
+  #postamble p, #preamble p { font-size: 90%; margin: .2em; }
+  p.verse { margin-left: 3%; }
+  pre {
+    border: 1px solid #ccc;
+    box-shadow: 3px 3px 3px #eee;
+    padding: 8pt;
+    font-family: monospace;
+    overflow: auto;
+    margin: 1.2em;
+  }
+  pre.src {
+    position: relative;
+    overflow: auto;
+    padding-top: 1.2em;
+  }
+  pre.src:before {
+    display: none;
+    position: absolute;
+    background-color: white;
+    top: -10px;
+    right: 10px;
+    padding: 3px;
+    border: 1px solid black;
+  }
+  pre.src:hover:before { display: inline; margin-top: 14px;}
+  /* Languages per Org manual */
+  pre.src-asymptote:before { content: 'Asymptote'; }
+  pre.src-awk:before { content: 'Awk'; }
+  pre.src-C:before { content: 'C'; }
+  /* pre.src-C++ doesn't work in CSS */
+  pre.src-clojure:before { content: 'Clojure'; }
+  pre.src-css:before { content: 'CSS'; }
+  pre.src-D:before { content: 'D'; }
+  pre.src-ditaa:before { content: 'ditaa'; }
+  pre.src-dot:before { content: 'Graphviz'; }
+  pre.src-calc:before { content: 'Emacs Calc'; }
+  pre.src-emacs-lisp:before { content: 'Emacs Lisp'; }
+  pre.src-fortran:before { content: 'Fortran'; }
+  pre.src-gnuplot:before { content: 'gnuplot'; }
+  pre.src-haskell:before { content: 'Haskell'; }
+  pre.src-hledger:before { content: 'hledger'; }
+  pre.src-java:before { content: 'Java'; }
+  pre.src-js:before { content: 'Javascript'; }
+  pre.src-latex:before { content: 'LaTeX'; }
+  pre.src-ledger:before { content: 'Ledger'; }
+  pre.src-lisp:before { content: 'Lisp'; }
+  pre.src-lilypond:before { content: 'Lilypond'; }
+  pre.src-lua:before { content: 'Lua'; }
+  pre.src-matlab:before { content: 'MATLAB'; }
+  pre.src-mscgen:before { content: 'Mscgen'; }
+  pre.src-ocaml:before { content: 'Objective Caml'; }
+  pre.src-octave:before { content: 'Octave'; }
+  pre.src-org:before { content: 'Org mode'; }
+  pre.src-oz:before { content: 'OZ'; }
+  pre.src-plantuml:before { content: 'Plantuml'; }
+  pre.src-processing:before { content: 'Processing.js'; }
+  pre.src-python:before { content: 'Python'; }
+  pre.src-R:before { content: 'R'; }
+  pre.src-ruby:before { content: 'Ruby'; }
+  pre.src-sass:before { content: 'Sass'; }
+  pre.src-scheme:before { content: 'Scheme'; }
+  pre.src-screen:before { content: 'Gnu Screen'; }
+  pre.src-sed:before { content: 'Sed'; }
+  pre.src-sh:before { content: 'shell'; }
+  pre.src-sql:before { content: 'SQL'; }
+  pre.src-sqlite:before { content: 'SQLite'; }
+  /* additional languages in org.el's org-babel-load-languages alist */
+  pre.src-forth:before { content: 'Forth'; }
+  pre.src-io:before { content: 'IO'; }
+  pre.src-J:before { content: 'J'; }
+  pre.src-makefile:before { content: 'Makefile'; }
+  pre.src-maxima:before { content: 'Maxima'; }
+  pre.src-perl:before { content: 'Perl'; }
+  pre.src-picolisp:before { content: 'Pico Lisp'; }
+  pre.src-scala:before { content: 'Scala'; }
+  pre.src-shell:before { content: 'Shell Script'; }
+  pre.src-ebnf2ps:before { content: 'ebfn2ps'; }
+  /* additional language identifiers per "defun org-babel-execute"
+       in ob-*.el */
+  pre.src-cpp:before  { content: 'C++'; }
+  pre.src-abc:before  { content: 'ABC'; }
+  pre.src-coq:before  { content: 'Coq'; }
+  pre.src-groovy:before  { content: 'Groovy'; }
+  /* additional language identifiers from org-babel-shell-names in
+     ob-shell.el: ob-shell is the only babel language using a lambda to put
+     the execution function name together. */
+  pre.src-bash:before  { content: 'bash'; }
+  pre.src-csh:before  { content: 'csh'; }
+  pre.src-ash:before  { content: 'ash'; }
+  pre.src-dash:before  { content: 'dash'; }
+  pre.src-ksh:before  { content: 'ksh'; }
+  pre.src-mksh:before  { content: 'mksh'; }
+  pre.src-posh:before  { content: 'posh'; }
+  /* Additional Emacs modes also supported by the LaTeX listings package */
+  pre.src-ada:before { content: 'Ada'; }
+  pre.src-asm:before { content: 'Assembler'; }
+  pre.src-caml:before { content: 'Caml'; }
+  pre.src-delphi:before { content: 'Delphi'; }
+  pre.src-html:before { content: 'HTML'; }
+  pre.src-idl:before { content: 'IDL'; }
+  pre.src-mercury:before { content: 'Mercury'; }
+  pre.src-metapost:before { content: 'MetaPost'; }
+  pre.src-modula-2:before { content: 'Modula-2'; }
+  pre.src-pascal:before { content: 'Pascal'; }
+  pre.src-ps:before { content: 'PostScript'; }
+  pre.src-prolog:before { content: 'Prolog'; }
+  pre.src-simula:before { content: 'Simula'; }
+  pre.src-tcl:before { content: 'tcl'; }
+  pre.src-tex:before { content: 'TeX'; }
+  pre.src-plain-tex:before { content: 'Plain TeX'; }
+  pre.src-verilog:before { content: 'Verilog'; }
+  pre.src-vhdl:before { content: 'VHDL'; }
+  pre.src-xml:before { content: 'XML'; }
+  pre.src-nxml:before { content: 'XML'; }
+  /* add a generic configuration mode; LaTeX export needs an additional
+     (add-to-list 'org-latex-listings-langs '(conf " ")) in .emacs */
+  pre.src-conf:before { content: 'Configuration File'; }
+
+  table { border-collapse:collapse; }
+  caption.t-above { caption-side: top; }
+  caption.t-bottom { caption-side: bottom; }
+  td, th { vertical-align:top;  }
+  th.org-right  { text-align: center;  }
+  th.org-left   { text-align: center;   }
+  th.org-center { text-align: center; }
+  td.org-right  { text-align: right;  }
+  td.org-left   { text-align: left;   }
+  td.org-center { text-align: center; }
+  dt { font-weight: bold; }
+  .footpara { display: inline; }
+  .footdef  { margin-bottom: 1em; }
+  .figure { padding: 1em; }
+  .figure p { text-align: center; }
+  .equation-container {
+    display: table;
+    text-align: center;
+    width: 100%;
+  }
+  .equation {
+    vertical-align: middle;
+  }
+  .equation-label {
+    display: table-cell;
+    text-align: right;
+    vertical-align: middle;
+  }
+  .inlinetask {
+    padding: 10px;
+    border: 2px solid gray;
+    margin: 10px;
+    background: #ffffcc;
+  }
+  #org-div-home-and-up
+   { text-align: right; font-size: 70%; white-space: nowrap; }
+  textarea { overflow-x: auto; }
+  .linenr { font-size: smaller }
+  .code-highlighted { background-color: #ffff00; }
+  .org-info-js_info-navigation { border-style: none; }
+  #org-info-js_console-label
+    { font-size: 10px; font-weight: bold; white-space: nowrap; }
+  .org-info-js_search-highlight
+    { background-color: #ffff00; color: #000000; font-weight: bold; }
+  .org-svg { width: 90%; }
+  /*]]>*/-->
+</style>
+<style>pre.src{background:#343131;color:lightgray;} </style>
+<script type="text/javascript">
+// @license magnet:?xt=urn:btih:e95b018ef3580986a04669f1b5879592219e2a7a&dn=public-domain.txt Public Domain
+<!--/*--><![CDATA[/*><!--*/
+     function CodeHighlightOn(elem, id)
+     {
+       var target = document.getElementById(id);
+       if(null != target) {
+         elem.classList.add("code-highlighted");
+         target.classList.add("code-highlighted");
+       }
+     }
+     function CodeHighlightOff(elem, id)
+     {
+       var target = document.getElementById(id);
+       if(null != target) {
+         elem.classList.remove("code-highlighted");
+         target.classList.remove("code-highlighted");
+       }
+     }
+    /*]]>*///-->
+// @license-end
+</script>
+</head>
+<body>
+<div id="content">
+<h1 class="title">Creating an elementary spring web app and deplying it in a Multipass Docker enviroment.</h1>
+
+<div id="outline-container-org97faedb" class="outline-2">
+<h2 id="org97faedb"><span class="section-number-2">1</span> Review the structure of a static spring web app</h2>
+<div class="outline-text-2" id="text-1">
+
+<div id="orgaff656b" class="figure">
+<p><img src="MVCElementary.png" alt="MVCElementary.png" />
+</p>
+</div>
+
+
+
+<div id="org8a75433" class="figure">
+<p><img src="MVCElementarySeq.png" alt="MVCElementarySeq.png" />
+</p>
+</div>
+</div>
+</div>
+
+
+<div id="outline-container-org30b1543" class="outline-2">
+<h2 id="org30b1543"><span class="section-number-2">2</span> Create the spring web app</h2>
+<div class="outline-text-2" id="text-2">
+</div>
+<div id="outline-container-orgfb69dc1" class="outline-3">
+<h3 id="orgfb69dc1"><span class="section-number-3">2.1</span> Create spring project with <i>spring initializr</i></h3>
+<div class="outline-text-3" id="text-2-1">
+<p>
+Navigate to <a href="https:start.spring.io">https:start.spring.io</a> and select fowllowing options:
+</p>
+<ul class="org-ul">
+<li>Project: Maven Project</li>
+<li>Language: Java</li>
+<li>Spring Boot: 2.7.1</li>
+<li>Project Metadata:
+<ul class="org-ul">
+<li>Artifact: "springboot_ elementary"</li>
+<li>Descripton: "Elementary project for Spring Boot"</li>
+<li>Packaging: Jar</li>
+<li>Java 11</li>
+</ul></li>
+<li>Dependencies: Spring Web</li>
+</ul>
+
+
+
+<div id="org255c655" class="figure">
+<p><img src="SpringBootElem-Initializr.jpg" alt="SpringBootElem-Initializr.jpg" />
+</p>
+</div>
+
+<p>
+Use "GENERATE" button to download an archive with the new project. Unzip the archive and move "springboot_ elementary" folder to a development area.
+</p>
+
+<p>
+Open the new project with <b><i>IntelliJ</i></b> and let dependencies to be downloaded. Specify run configuration with application name and main class through <code>Run</code> -&gt; <code>Run...</code> menu as follows.
+</p>
+
+
+<div id="orge0a07d0" class="figure">
+<p><img src="SpringBootElem-Project.jpg" alt="SpringBootElem-Project.jpg" />
+</p>
+</div>
+
+<p>
+Now you can build and run the app using <b><i>IntelliJ</i></b>, for example using <code>Run -&gt; Run</code> or <code>Build -&gt; Build Project</code> menus.
+</p>
+</div>
+</div>
+
+<div id="outline-container-org7fb173a" class="outline-3">
+<h3 id="org7fb173a"><span class="section-number-3">2.2</span> Add <code>HomeController</code> class</h3>
+<div class="outline-text-3" id="text-2-2">
+<p>
+Create a new package <code>controllers</code> under <code>com.example.springboot_elementary</code> folder. Add <code>HomeController</code> class in this package as follows.
+</p>
+<div class="org-src-container">
+<pre class="src src-java"><span style="color: #56B6C2;">@Controller</span>
+<span style="color: #C678DD;">public</span> <span style="color: #C678DD;">class</span> <span style="color: #E5C07B;">HomeController</span> {
+
+    <span style="color: #56B6C2;">@GetMapping</span>(<span style="color: #98C379;">"/"</span>)
+    <span style="color: #C678DD;">public</span> <span style="color: #E5C07B;">String</span> <span style="color: #61AFEF;">home</span>() {
+        <span style="color: #C678DD;">return</span> <span style="color: #98C379;">"home.html"</span>;
+    }
+}
+</pre>
+</div>
+</div>
+</div>
+
+<div id="outline-container-orgc68e95d" class="outline-3">
+<h3 id="orgc68e95d"><span class="section-number-3">2.3</span> Add static <code>home.html</code></h3>
+<div class="outline-text-3" id="text-2-3">
+<p>
+Create a new <code>home.html</code> file under <code>src/main/resources/static</code> folder as follows.
+</p>
+<div class="org-src-container">
+<pre class="src src-html">&lt;<span style="color: #C678DD;">!DOCTYPE</span> html&gt;
+&lt;<span style="color: #E06C75;">html</span> <span style="color: #D19A66;">lang</span>=<span style="color: #98C379;">"en"</span>  <span style="color: #D19A66;">xmlns</span>=<span style="color: #98C379;">"http://www.w3.org/1999/xhtml"</span>&gt;
+&lt;<span style="color: #E06C75;">head</span>&gt;
+    &lt;<span style="color: #E06C75;">meta</span> <span style="color: #D19A66;">charset</span>=<span style="color: #98C379;">"UTF-8"</span>&gt;
+    &lt;<span style="color: #E06C75;">title</span>&gt;<span style="font-weight: bold; text-decoration: underline;">Spring web app</span>&lt;/<span style="color: #E06C75;">title</span>&gt;
+&lt;/<span style="color: #E06C75;">head</span>&gt;
+&lt;<span style="color: #E06C75;">body</span>&gt;
+  &lt;<span style="color: #E06C75;">h2</span>&gt;<span style="font-weight: bold; font-style: italic; text-decoration: underline;">Home page for the Spring web app...</span>&lt;/<span style="color: #E06C75;">h2</span>&gt;
+&lt;/<span style="color: #E06C75;">body</span>&gt;
+&lt;/<span style="color: #E06C75;">html</span>&gt;
+</pre>
+</div>
+</div>
+</div>
+
+
+<div id="outline-container-org3ddb829" class="outline-3">
+<h3 id="org3ddb829"><span class="section-number-3">2.4</span> Add <code>HomeControllerTest</code> class</h3>
+<div class="outline-text-3" id="text-2-4">
+<p>
+Create a new package <code>controllers</code> under <code>src/test/java/com.example.springboot_elementary</code> folder. Add <code>HomeControllerTest</code> class as follows.
+</p>
+<div class="org-src-container">
+<pre class="src src-java"><span style="color: #5C6370; font-style: italic;">// </span><span style="color: #5C6370; font-style: italic;">additional static imports for MockMvc methods</span>
+<span style="color: #C678DD;">import</span> <span style="color: #C678DD;">static</span> <span style="color: #56B6C2;">org</span>.<span style="color: #56B6C2;">springframework</span>.<span style="color: #56B6C2;">test</span>.<span style="color: #56B6C2;">web</span>.<span style="color: #56B6C2;">servlet</span>.<span style="color: #56B6C2;">request</span>.MockMvcRequestBuilders.<span style="color: #E5C07B;">get</span>;
+<span style="color: #C678DD;">import</span> <span style="color: #C678DD;">static</span> <span style="color: #56B6C2;">org</span>.<span style="color: #56B6C2;">springframework</span>.<span style="color: #56B6C2;">test</span>.<span style="color: #56B6C2;">web</span>.<span style="color: #56B6C2;">servlet</span>.<span style="color: #56B6C2;">result</span>.<span style="color: #56B6C2;">MockMvcResultMatchers</span>.*;
+
+<span style="color: #56B6C2;">@WebMvcTest</span>(HomeController.<span style="color: #C678DD;">class</span>)
+<span style="color: #C678DD;">public</span> <span style="color: #C678DD;">class</span> <span style="color: #E5C07B;">HomeControllerTest</span> {
+
+    <span style="color: #56B6C2;">@Autowired</span>
+    <span style="color: #C678DD;">private</span> <span style="color: #E5C07B;">MockMvc</span> <span style="color: #E06C75;">mockMvc</span>;
+
+    <span style="color: #56B6C2;">@Test</span>
+    <span style="color: #C678DD;">public</span> <span style="color: #E5C07B;">void</span> <span style="color: #61AFEF;">testHomePage</span>() <span style="color: #C678DD;">throws</span> <span style="color: #E5C07B;">Exception</span> {
+        mockMvc.perform(get(<span style="color: #98C379;">"/"</span>))
+                .andExpect(status().isOk())
+                .andExpect(view().name(<span style="color: #98C379;">"home.html"</span>));
+    }
+}
+</pre>
+</div>
+</div>
+</div>
+
+<div id="outline-container-orgc249dd6" class="outline-3">
+<h3 id="orgc249dd6"><span class="section-number-3">2.5</span> Run the app locally</h3>
+<div class="outline-text-3" id="text-2-5">
+<p>
+Now you can build and run the app with the final project strcuture as follows.
+</p>
+
+
+<div id="orgd98e5a6" class="figure">
+<p><img src="SpringBootElem-Structure.jpg" alt="SpringBootElem-Structure.jpg" />
+</p>
+</div>
+
+<p>
+Run the app with <b><i>IntelliJ</i></b> using <code>Run -&gt; Run 'springboot_ elementary'</code> menu. Open a browser and navigate to <code>localhost:8080</code> to validate that the app is up and running as in the example below.
+</p>
+
+
+<div id="orgd1ea8e8" class="figure">
+<p><img src="SpringBootElem-Safari.jpg" alt="SpringBootElem-Safari.jpg" />
+</p>
+</div>
+</div>
+</div>
+</div>
+
+
+<div id="outline-container-org3b4458a" class="outline-2">
+<h2 id="org3b4458a"><span class="section-number-2">3</span> Deploy the app as a Docker container locally</h2>
+<div class="outline-text-2" id="text-3">
+</div>
+<div id="outline-container-org2e40c5c" class="outline-3">
+<h3 id="org2e40c5c"><span class="section-number-3">3.1</span> Update <code>pom.xml</code></h3>
+<div class="outline-text-3" id="text-3-1">
+<p>
+Add image configuration to <code>spring-boot-maven-plugin</code> in <code>pom.xml</code>, and <b>re-Load Maven Changes</b> as follows.
+</p>
+
+<div class="org-src-container">
+<pre class="src src-html">&lt;<span style="color: #E06C75;">build</span>&gt;
+  &lt;<span style="color: #E06C75;">plugins</span>&gt;
+    &lt;<span style="color: #E06C75;">plugin</span>&gt;
+      &lt;<span style="color: #E06C75;">groupId</span>&gt;org.springframework.boot&lt;/<span style="color: #E06C75;">groupId</span>&gt;
+      &lt;<span style="color: #E06C75;">artifactId</span>&gt;spring-boot-maven-plugin&lt;/<span style="color: #E06C75;">artifactId</span>&gt;
+      &lt;<span style="color: #E06C75;">configuration</span>&gt;
+        &lt;<span style="color: #E06C75;">image</span>&gt; &lt;<span style="color: #E06C75;">name</span>&gt;${project.artifactId}:${project.version}&lt;/<span style="color: #E06C75;">name</span>&gt;
+        &lt;/<span style="color: #E06C75;">image</span>&gt;
+      &lt;/<span style="color: #E06C75;">configuration</span>&gt;
+    &lt;/<span style="color: #E06C75;">plugin</span>&gt;
+  &lt;/<span style="color: #E06C75;">plugins</span>&gt;
+&lt;/<span style="color: #E06C75;">build</span>&gt;
+</pre>
+</div>
+</div>
+</div>
+
+
+<div id="outline-container-org9cef6fa" class="outline-3">
+<h3 id="org9cef6fa"><span class="section-number-3">3.2</span> Create a Docker image</h3>
+<div class="outline-text-3" id="text-3-2">
+<p>
+Launch Docker Desktop app on your mac.
+</p>
+
+
+<div id="org119b1bb" class="figure">
+<p><img src="SpringBootElem-DockerDesktop.jpg" alt="SpringBootElem-DockerDesktop.jpg" />
+</p>
+</div>
+
+<p>
+Switch to <code>Terminal</code> panel in <b><i>IntelliJ</i></b> through <code>View -&gt; Tool Windows -&gt; Terminal</code>. Run image building script as follows.
+</p>
+
+<div class="org-src-container">
+<pre class="src src-shell">% ./mvnw spring-boot:build-image
+</pre>
+</div>
+
+<p>
+Check that the docker image has been created.
+</p>
+<div class="org-src-container">
+<pre class="src src-shell">% docker image list springboot_elementary
+REPOSITORY              TAG              IMAGE ID       CREATED        SIZE
+springboot_elementary   0.0.1-SNAPSHOT   d24fd8f3e812   42 years ago   262MB
+</pre>
+</div>
+<p>
+<i>Note: on the question of '42 year ago' refer here <a href="https://buildpacks.io/docs/features/reproducibility/">https://buildpacks.io/docs/features/reproducibility/</a></i>
+</p>
+</div>
+</div>
+
+<div id="outline-container-orgcd315ae" class="outline-3">
+<h3 id="orgcd315ae"><span class="section-number-3">3.3</span> Run the app as a local docker container</h3>
+<div class="outline-text-3" id="text-3-3">
+<p>
+Run the newly create docker image as follows.
+</p>
+<div class="org-src-container">
+<pre class="src src-shell">% docker run -p8090:8080 springboot_elementary:0.0.1-SNAPSHOT
+</pre>
+</div>
+
+<p>
+<i>Note: use Ctrl-C to stop the process inside <code>Terminal</code> tab.</i>
+</p>
+
+<p>
+Validate the app is up and running by navigating to <code>localhost:8090</code> address in your browser.
+</p>
+</div>
+</div>
+</div>
+
+<div id="outline-container-org19d1f07" class="outline-2">
+<h2 id="org19d1f07"><span class="section-number-2">4</span> Deploy the app as a Multipass Docker container</h2>
+<div class="outline-text-2" id="text-4">
+</div>
+<div id="outline-container-orgeca0689" class="outline-3">
+<h3 id="orgeca0689"><span class="section-number-3">4.1</span> Create Multipass Docker instance</h3>
+<div class="outline-text-3" id="text-4-1">
+<p>
+Launch Multipass VM with a Docker instance using the following command inside <code>Terminal</code> tab.
+</p>
+
+<div class="org-src-container">
+<pre class="src src-shell">% multipass launch docker
+</pre>
+</div>
+
+<p>
+Check the running docker instance by running the followoing command.
+</p>
+
+<div class="org-src-container">
+<pre class="src src-shell">% multipass info docker
+Name:           docker
+State:          Running
+IPv4:           192.168.64.3
+                172.17.0.1
+Release:        Ubuntu 21.10
+Image hash:     d5ebdea3522c (Ubuntu 21.10)
+Load:           0.26 0.62 0.33
+Disk usage:     2.4G out of 38.6G
+Memory usage:   210.7M out of 3.8G
+Mounts:         --
+</pre>
+</div>
+</div>
+</div>
+
+<div id="outline-container-orgdb866e3" class="outline-3">
+<h3 id="orgdb866e3"><span class="section-number-3">4.2</span> Copy docker image to Multipass Docker instance</h3>
+<div class="outline-text-3" id="text-4-2">
+<p>
+Create a <code>tar</code> archive of the docker image from local Desktop Docker instance by running the following command.
+</p>
+
+<div class="org-src-container">
+<pre class="src src-shell">% docker save -o springboot_elementary.tar springboot_elementary
+</pre>
+</div>
+
+<p>
+Check that the image archive has been created.
+</p>
+
+<div class="org-src-container">
+<pre class="src src-shell">% ls *.tar
+springboot_elementary.tar
+</pre>
+</div>
+
+<p>
+Transfer the archive to Multipass Docker instance as follows.
+</p>
+
+<div class="org-src-container">
+<pre class="src src-shell">% multipass transfer springboot_elementary.tar docker:/home/ubuntu/springboot_elementary.tar
+</pre>
+</div>
+
+<p>
+Check if the file has been trasferred to a home directory of the multipass docker instance.
+</p>
+
+<div class="org-src-container">
+<pre class="src src-shell">% multipass exec docker ls
+springboot_elementary.tar
+</pre>
+</div>
+</div>
+</div>
+
+<div id="outline-container-org527148e" class="outline-3">
+<h3 id="org527148e"><span class="section-number-3">4.3</span> Run the app as a Multipass Docker container</h3>
+<div class="outline-text-3" id="text-4-3">
+<p>
+Open command line inside Multupass Docker image with the following command.
+</p>
+
+<div class="org-src-container">
+<pre class="src src-shell">% multipass shell docker
+
+ubuntu@docker:~$
+</pre>
+</div>
+<p>
+<i>Note: to exit from the multipass instance shell and return back to <b><i>IntelliJ</i></b> <code>Terminal</code> use <code>exit</code> command.</i>
+</p>
+
+<p>
+Create a docker image from the archive as follows.
+</p>
+
+<div class="org-src-container">
+<pre class="src src-shell">ubuntu@docker:~$ docker load -i springboot_elementary.tar
+</pre>
+</div>
+
+<p>
+Check that the image has been created.
+</p>
+
+<div class="org-src-container">
+<pre class="src src-shell">ubuntu@docker:~$ docker image list
+REPOSITORY               TAG              IMAGE ID       CREATED        SIZE
+portainer/portainer-ce   latest           7b6e59279c38   6 weeks ago    275MB
+springboot_elementary    0.0.1-SNAPSHOT   d24fd8f3e812   42 years ago   262MB
+</pre>
+</div>
+
+<p>
+Now you can run the spring web app as a container inside Multipass VM.
+</p>
+
+<div class="org-src-container">
+<pre class="src src-shell">ubuntu@docker:~$ docker run -p8085:8080 springboot_elementary:0.0.1-SNAPSHOT
+</pre>
+</div>
+<p>
+<i>Note: use Ctrl-C to stop the process inside the terminal.</i>
+</p>
+
+<p>
+Navigate browser to the <code>192.168.64.3:8085</code> address to validate that the web app is up and running.
+</p>
+
+
+<div id="org8975868" class="figure">
+<p><img src="SpringBootElem-SafariUbuntu.jpg" alt="SpringBootElem-SafariUbuntu.jpg" />
+</p>
+</div>
+
+<hr />
+</div>
+</div>
+</div>
+</div>
+<div id="postamble" class="status">
+<p class="validation"><a href="https://validator.w3.org/check?uri=referer">Validate</a></p>
+</div>
+</body>
+</html>
