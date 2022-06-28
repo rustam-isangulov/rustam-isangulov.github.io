@@ -1,22 +1,22 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <urlset xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.sitemaps.org/schemas/sitemap/0.9 http://www.sitemaps.org/schemas/sitemap/0.9/sitemap.xsd" xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
 <url>
-<loc>http://localhost:4000/about</loc>
-<lastmod>2022-06-28T14:17:22+01:00</lastmod>
+<loc>rustam-isangulov.github.io/about</loc>
+<lastmod>2022-06-28T15:44:44+01:00</lastmod>
 </url>
 <url>
-<loc>http://localhost:4000/search</loc>
-<lastmod>2022-06-28T14:17:22+01:00</lastmod>
+<loc>rustam-isangulov.github.io/search</loc>
+<lastmod>2022-06-28T15:44:44+01:00</lastmod>
 </url>
 <url>
-<loc>http://localhost:4000/2022/06/27/html-is-possible</loc>
+<loc>rustam-isangulov.github.io/2022/06/27/html-is-possible</loc>
 <lastmod>2022-06-27T12:11:27+01:00</lastmod>
 </url>
 <url>
-<loc>http://localhost:4000/</loc>
+<loc>rustam-isangulov.github.io/</loc>
 </url>
 <url>
-<loc>http://localhost:4000/images/spring.io.elementary.html</loc>
+<loc>rustam-isangulov.github.io/images/spring.io.elementary.html</loc>
 <lastmod>2022-06-27T13:47:59+01:00</lastmod>
 </url>
 </urlset>

@@ -44,18 +44,22 @@ categories: spring Multipass Docker
 Toolkit: macOS | <a href="https://www.jetbrains.com/idea/">InelliJ IDEA</a> | <a href="https://www.docker.com/products/docker-desktop/">Docker Desktop</a> | <a href="https://multipass.run">Multipass</a>
 </p>
 
-<div id="outline-container-org3a84c0c" class="outline-2">
-<h2 id="org3a84c0c">Review the structure of a static spring web app</h2>
-<div class="outline-text-2" id="text-org3a84c0c">
+<p>
+Sources: <a href="https://github.com/rustam-isangulov/spring.io/tree/main/springboot_elementary">GitHub</a>
+</p>
 
-<div id="org6ec89f6" class="figure">
+<div id="outline-container-org6cbec52" class="outline-2">
+<h2 id="org6cbec52">Review the structure of a static spring web app</h2>
+<div class="outline-text-2" id="text-org6cbec52">
+
+<div id="orgd810279" class="figure">
 <p><img src="/images/MVCElementary.png" alt="MVCElementary.png" />
 </p>
 </div>
 
 
 
-<div id="orgf60c858" class="figure">
+<div id="org83073a7" class="figure">
 <p><img src="/images/MVCElementarySeq.png" alt="MVCElementarySeq.png" />
 </p>
 </div>
@@ -63,13 +67,13 @@ Toolkit: macOS | <a href="https://www.jetbrains.com/idea/">InelliJ IDEA</a> | <a
 <hr />
 </div>
 </div>
-<div id="outline-container-org1c95e73" class="outline-2">
-<h2 id="org1c95e73">Create a basic spring web app</h2>
-<div class="outline-text-2" id="text-org1c95e73">
+<div id="outline-container-orge410d48" class="outline-2">
+<h2 id="orge410d48">Create a basic spring web app</h2>
+<div class="outline-text-2" id="text-orge410d48">
 </div>
-<div id="outline-container-org62917c9" class="outline-3">
-<h3 id="org62917c9">Create spring project with <i>spring initializr</i></h3>
-<div class="outline-text-3" id="text-org62917c9">
+<div id="outline-container-org4b0c021" class="outline-3">
+<h3 id="org4b0c021">Create spring project with <i>spring initializr</i></h3>
+<div class="outline-text-3" id="text-org4b0c021">
 <p>
 Navigate to <a href="https:start.spring.io">https:start.spring.io</a> and select fowllowing options:
 </p>
@@ -89,7 +93,7 @@ Navigate to <a href="https:start.spring.io">https:start.spring.io</a> and select
 
 
 
-<div id="orgf92465b" class="figure">
+<div id="orgbe895c7" class="figure">
 <p><img src="/images/SpringBootElem-Initializr.jpg" alt="SpringBootElem-Initializr.jpg" />
 </p>
 </div>
@@ -103,7 +107,7 @@ Open the new project with <b><i>IntelliJ</i></b> and let dependencies to be down
 </p>
 
 
-<div id="orge55e902" class="figure">
+<div id="org8d8751e" class="figure">
 <p><img src="/images/SpringBootElem-Project.jpg" alt="SpringBootElem-Project.jpg" />
 </p>
 </div>
@@ -114,9 +118,9 @@ Now you can build and run the app using <b><i>IntelliJ</i></b>, for example usin
 </div>
 </div>
 
-<div id="outline-container-orgad82fa5" class="outline-3">
-<h3 id="orgad82fa5">Add controller class</h3>
-<div class="outline-text-3" id="text-orgad82fa5">
+<div id="outline-container-orgced37d5" class="outline-3">
+<h3 id="orgced37d5">Add controller class</h3>
+<div class="outline-text-3" id="text-orgced37d5">
 <p>
 Create a new package <code>controllers</code> under <code>com.example.springboot_elementary</code> folder. Add <code>HomeController</code> class in this package as follows.
 </p>
@@ -134,9 +138,9 @@ Create a new package <code>controllers</code> under <code>com.example.springboot
 </div>
 </div>
 
-<div id="outline-container-orgefcf854" class="outline-3">
-<h3 id="orgefcf854">Add static html source</h3>
-<div class="outline-text-3" id="text-orgefcf854">
+<div id="outline-container-org2affc8c" class="outline-3">
+<h3 id="org2affc8c">Add static html source</h3>
+<div class="outline-text-3" id="text-org2affc8c">
 <p>
 Create a new <code>home.html</code> file under <code>src/main/resources/static</code> folder with the following content.
 </p>
@@ -156,9 +160,9 @@ Create a new <code>home.html</code> file under <code>src/main/resources/static</
 </div>
 </div>
 
-<div id="outline-container-org01e8798" class="outline-3">
-<h3 id="org01e8798">Add controller test class</h3>
-<div class="outline-text-3" id="text-org01e8798">
+<div id="outline-container-org468d9a9" class="outline-3">
+<h3 id="org468d9a9">Add controller test class</h3>
+<div class="outline-text-3" id="text-org468d9a9">
 <p>
 Create a new package <code>controllers</code> in <code>src/test/java/com.example.springboot_elementary</code>. Add <code>HomeControllerTest</code> class with content as below.
 </p>
@@ -185,15 +189,15 @@ Create a new package <code>controllers</code> in <code>src/test/java/com.example
 </div>
 </div>
 
-<div id="outline-container-org3aae9e7" class="outline-3">
-<h3 id="org3aae9e7">Run the app locally</h3>
-<div class="outline-text-3" id="text-org3aae9e7">
+<div id="outline-container-org87e6542" class="outline-3">
+<h3 id="org87e6542">Run the app locally</h3>
+<div class="outline-text-3" id="text-org87e6542">
 <p>
 Now you can build and run the app with the final project structure as follows.
 </p>
 
 
-<div id="orga5f2192" class="figure">
+<div id="org68d2e2b" class="figure">
 <p><img src="/images/SpringBootElem-Structure.jpg" alt="SpringBootElem-Structure.jpg" width="300" />
 </p>
 </div>
@@ -203,7 +207,7 @@ Run the app with <b><i>IntelliJ</i></b> using <code>Run -&gt; Run 'springboot_ e
 </p>
 
 
-<div id="orgb3c3aa0" class="figure">
+<div id="org613476e" class="figure">
 <p><img src="/images/SpringBootElem-Safari.jpg" alt="SpringBootElem-Safari.jpg" />
 </p>
 </div>
@@ -213,15 +217,15 @@ Run the app with <b><i>IntelliJ</i></b> using <code>Run -&gt; Run 'springboot_ e
 </div>
 </div>
 
-<div id="outline-container-org26c412e" class="outline-2">
-<h2 id="org26c412e">Deploy the app as a Docker container locally</h2>
-<div class="outline-text-2" id="text-org26c412e">
+<div id="outline-container-org8a44bc8" class="outline-2">
+<h2 id="org8a44bc8">Deploy the app as a Docker container locally</h2>
+<div class="outline-text-2" id="text-org8a44bc8">
 </div>
-<div id="outline-container-org159d18c" class="outline-3">
-<h3 id="org159d18c">Review the structure of a local Docker deployment</h3>
-<div class="outline-text-3" id="text-org159d18c">
+<div id="outline-container-org8af5018" class="outline-3">
+<h3 id="org8af5018">Review the structure of a local Docker deployment</h3>
+<div class="outline-text-3" id="text-org8af5018">
 
-<div id="org887b637" class="figure">
+<div id="org95ec2e9" class="figure">
 <p><img src="/images/MVCElementaryDockerLocal.png" alt="MVCElementaryDockerLocal.png" />
 </p>
 </div>
@@ -229,9 +233,9 @@ Run the app with <b><i>IntelliJ</i></b> using <code>Run -&gt; Run 'springboot_ e
 </div>
 
 
-<div id="outline-container-org00ba117" class="outline-3">
-<h3 id="org00ba117">Add image name pattern to maven project configuration</h3>
-<div class="outline-text-3" id="text-org00ba117">
+<div id="outline-container-orgea1fcf2" class="outline-3">
+<h3 id="orgea1fcf2">Add image name pattern to maven project configuration</h3>
+<div class="outline-text-3" id="text-orgea1fcf2">
 <p>
 Add image configuration to <code>spring-boot-maven-plugin</code> in <code>pom.xml</code>, and <b>re-Load Maven Changes</b> as follows.This is to set the name template for docker images.
 </p>
@@ -254,15 +258,15 @@ Add image configuration to <code>spring-boot-maven-plugin</code> in <code>pom.xm
 </div>
 </div>
 
-<div id="outline-container-orgf8d9167" class="outline-3">
-<h3 id="orgf8d9167">Create a Docker image</h3>
-<div class="outline-text-3" id="text-orgf8d9167">
+<div id="outline-container-org0570deb" class="outline-3">
+<h3 id="org0570deb">Create a Docker image</h3>
+<div class="outline-text-3" id="text-org0570deb">
 <p>
 Launch Docker Desktop app.
 </p>
 
 
-<div id="org7eb2195" class="figure">
+<div id="org5660ed8" class="figure">
 <p><img src="/images/SpringBootElem-DockerDesktop.jpg" alt="SpringBootElem-DockerDesktop.jpg" />
 </p>
 </div>
@@ -291,9 +295,9 @@ springboot_elementary   0.0.1-SNAPSHOT   d24fd8f3e812   42 years ago   262MB
 </div>
 </div>
 
-<div id="outline-container-org78dce19" class="outline-3">
-<h3 id="org78dce19">Run the app as a local docker container</h3>
-<div class="outline-text-3" id="text-org78dce19">
+<div id="outline-container-orga9b1991" class="outline-3">
+<h3 id="orga9b1991">Run the app as a local docker container</h3>
+<div class="outline-text-3" id="text-orga9b1991">
 <p>
 Run the newly created docker image as follows.
 </p>
@@ -314,24 +318,24 @@ Validate the app is up and running by navigating to <code>localhost:8090</code> 
 </div>
 </div>
 </div>
-<div id="outline-container-org18e1374" class="outline-2">
-<h2 id="org18e1374">Deploy the app as a Multipass Docker container</h2>
-<div class="outline-text-2" id="text-org18e1374">
+<div id="outline-container-org7e0c0b7" class="outline-2">
+<h2 id="org7e0c0b7">Deploy the app as a Multipass Docker container</h2>
+<div class="outline-text-2" id="text-org7e0c0b7">
 </div>
-<div id="outline-container-org8c56a85" class="outline-3">
-<h3 id="org8c56a85">Review the structure of a Multipass Docker deployment</h3>
-<div class="outline-text-3" id="text-org8c56a85">
+<div id="outline-container-org532befb" class="outline-3">
+<h3 id="org532befb">Review the structure of a Multipass Docker deployment</h3>
+<div class="outline-text-3" id="text-org532befb">
 
-<div id="org07b3382" class="figure">
+<div id="org905e381" class="figure">
 <p><img src="/images/MVCElementaryDockerMultipass.png" alt="MVCElementaryDockerMultipass.png" />
 </p>
 </div>
 </div>
 </div>
 
-<div id="outline-container-orge2ec30f" class="outline-3">
-<h3 id="orge2ec30f">Create Multipass Docker instance</h3>
-<div class="outline-text-3" id="text-orge2ec30f">
+<div id="outline-container-org4ef0dfe" class="outline-3">
+<h3 id="org4ef0dfe">Create Multipass Docker instance</h3>
+<div class="outline-text-3" id="text-org4ef0dfe">
 <p>
 Launch Multipass VM with a Docker instance using the following command inside the <code>Terminal</code> tab.
 </p>
@@ -362,9 +366,9 @@ Mounts:         --
 </div>
 </div>
 
-<div id="outline-container-orge26b84f" class="outline-3">
-<h3 id="orge26b84f">Copy docker image to Multipass Docker instance</h3>
-<div class="outline-text-3" id="text-orge26b84f">
+<div id="outline-container-orge61d7a8" class="outline-3">
+<h3 id="orge61d7a8">Copy docker image to Multipass Docker instance</h3>
+<div class="outline-text-3" id="text-orge61d7a8">
 <p>
 Create a <code>tar</code> archive of the docker image from local Docker Desktop instance by running the following command.
 </p>
@@ -405,9 +409,9 @@ springboot_elementary.tar
 </div>
 </div>
 
-<div id="outline-container-org58d9453" class="outline-3">
-<h3 id="org58d9453">Run the app as a Multipass Docker container</h3>
-<div class="outline-text-3" id="text-org58d9453">
+<div id="outline-container-orgcad936a" class="outline-3">
+<h3 id="orgcad936a">Run the app as a Multipass Docker container</h3>
+<div class="outline-text-3" id="text-orgcad936a">
 <p>
 Open command line inside Multupass Docker image with the following command.
 </p>
@@ -460,7 +464,7 @@ Navigate browser to the <code>192.168.64.3:8085</code> address to validate that 
 </p>
 
 
-<div id="orgdef17d4" class="figure">
+<div id="org414ed97" class="figure">
 <p><img src="/images/SpringBootElem-SafariUbuntu.jpg" alt="SpringBootElem-SafariUbuntu.jpg" />
 </p>
 </div>
