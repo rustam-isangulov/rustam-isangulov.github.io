@@ -2,15 +2,19 @@
 <urlset xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.sitemaps.org/schemas/sitemap/0.9 http://www.sitemaps.org/schemas/sitemap/0.9/sitemap.xsd" xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
 <url>
 <loc>rustam-isangulov.github.io/about</loc>
-<lastmod>2022-06-28T19:58:54+01:00</lastmod>
+<lastmod>2022-06-29T21:36:43+01:00</lastmod>
 </url>
 <url>
 <loc>rustam-isangulov.github.io/search</loc>
-<lastmod>2022-06-28T19:58:54+01:00</lastmod>
+<lastmod>2022-06-29T21:36:43+01:00</lastmod>
 </url>
 <url>
 <loc>rustam-isangulov.github.io/2022/06/27/html-is-possible</loc>
 <lastmod>2022-06-27T12:11:27+01:00</lastmod>
+</url>
+<url>
+<loc>rustam-isangulov.github.io/2022/06/29/css-debugging-html</loc>
+<lastmod>2022-06-29T12:00:03+01:00</lastmod>
 </url>
 <url>
 <loc>rustam-isangulov.github.io/</loc>

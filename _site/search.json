@@ -2,6 +2,17 @@
   
     {
 
+      "title"    : "Using CSS outline property to visualise the structure of an html page.",
+      "description" : "",
+      "url"      : "/2022/06/29/css-debugging-html",
+      "category" : "CSS, html, Jekyll",
+      "tags"     : "",
+      "date"     : "2022-06-29 12:00:03 +0100"
+
+    } ,
+  
+    {
+
       "title"    : "Creating an elementary spring web app and deplying it in a Multipass Docker environment",
       "description" : "",
       "url"      : "/2022/06/27/html-is-possible",

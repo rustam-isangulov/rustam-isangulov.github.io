@@ -4,7 +4,7 @@
  <title>blog</title>
  <link href="rustam-isangulov.github.io/atom.xml" rel="self"/>
  <link href="rustam-isangulov.github.io/"/>
- <updated>2022-06-28T19:58:54+01:00</updated>
+ <updated>2022-06-29T21:36:43+01:00</updated>
  <id>rustam-isangulov.github.io</id>
  <author>
    <name></name>
@@ -13,46 +13,71 @@
 
  
  <entry>
+   <title>Using CSS &lt;code&gt;outline&lt;/code&gt; property to visualise the structure of an html page.</title>
+   <link href="rustam-isangulov.github.io/2022/06/29/css-debugging-html"/>
+   <updated>2022-06-29T12:00:03+01:00</updated>
+   <id>rustam-isangulov.github.io/2022/06/29/css-debugging-html</id>
+   <content type="html">&lt;div class=&quot;post&quot;&gt;
+&lt;p&gt;
+Language: CSS
+&lt;/p&gt;
+&lt;/div&gt;
+
+&lt;div id=&quot;outline-container-org02933f8&quot; class=&quot;outline-2&quot;&gt;
+&lt;h3 id=&quot;org02933f8&quot;&gt;Technique&lt;/h3&gt;
+&lt;div class=&quot;outline-text-2&quot; id=&quot;text-org02933f8&quot;&gt;
+&lt;p&gt;
+To identify discrepancies in placement of html elements you can add &lt;i&gt;CSS&lt;/i&gt; &lt;code&gt;outline&lt;/code&gt; property to make their contours visible as follows.
+&lt;/p&gt;
+
+&lt;div class=&quot;org-src-container&quot;&gt;
+&lt;pre class=&quot;src src-css&quot;&gt;&lt;span style=&quot;color: #61AFEF;&quot;&gt;div &lt;/span&gt;{
+    &lt;span style=&quot;color: #C678DD;&quot;&gt;outline&lt;/span&gt;: 1px solid &lt;span style=&quot;color: #ffffff; background-color: #0000ff;&quot;&gt;blue&lt;/span&gt;;
+}
+&lt;/pre&gt;
+&lt;/div&gt;
+
+
+&lt;p&gt;
+Below is an example of using the property to see contours of &lt;code&gt;&amp;lt;div&amp;gt;&lt;/code&gt; and &lt;code&gt;&amp;lt;p&amp;gt;&lt;/code&gt; elements.
+&lt;/p&gt;
+
+
+&lt;p class=&quot;codepen&quot; data-height=&quot;360&quot; data-default-tab=&quot;html,result&quot; data-slug-hash=&quot;xxWxNEq&quot; data-user=&quot;rustam-isangulov&quot; style=&quot;height: 360px; box-sizing: border-box; display: flex; align-items: center; justify-content: center; border: 2px solid; margin: 1em 0; padding: 1em;&quot;&gt;
+  &lt;span&gt;See the Pen &lt;a href=&quot;https://codepen.io/rustam-isangulov/pen/xxWxNEq&quot;&gt;
+  Outline elements&lt;/a&gt; by Rustam (&lt;a href=&quot;https://codepen.io/rustam-isangulov&quot;&gt;@rustam-isangulov&lt;/a&gt;)
+  on &lt;a href=&quot;https://codepen.io&quot;&gt;CodePen&lt;/a&gt;.&lt;/span&gt;
+&lt;/p&gt;
+&lt;script async src=&quot;https://cpwebassets.codepen.io/assets/embed/ei.js&quot;&gt;&lt;/script&gt;
+
+&lt;p&gt;&lt;/p&gt;
+&lt;/div&gt;
+&lt;/div&gt;
+
+&lt;div id=&quot;outline-container-org237cc94&quot; class=&quot;outline-2&quot;&gt;
+&lt;h2 id=&quot;org237cc94&quot;&gt;Example&lt;/h2&gt;
+&lt;div class=&quot;outline-text-2&quot; id=&quot;text-org237cc94&quot;&gt;
+&lt;p&gt;
+Below is an example of using this technique for a blog post &quot;debugging&quot;.
+&lt;/p&gt;
+
+&lt;p&gt;
+&lt;img src=&quot;/images/CSS-clean.jpg&quot; alt=&quot;CSS-clean.jpg&quot; /&gt;
+&lt;img src=&quot;/images/CSS-outline.jpg&quot; alt=&quot;CSS-outline.jpg&quot; /&gt;
+&lt;/p&gt;
+
+&lt;hr /&gt;
+&lt;/div&gt;
+&lt;/div&gt;
+</content>
+ </entry>
+ 
+ <entry>
    <title>Creating an elementary spring web app and deplying it in a Multipass Docker environment</title>
    <link href="rustam-isangulov.github.io/2022/06/27/html-is-possible"/>
    <updated>2022-06-27T12:11:27+01:00</updated>
    <id>rustam-isangulov.github.io/2022/06/27/html-is-possible</id>
-   <content type="html">&lt;?xml version=&quot;1.0&quot; encoding=&quot;utf-8&quot;?&gt;
-&lt;!DOCTYPE html PUBLIC &quot;-//W3C//DTD XHTML 1.0 Strict//EN&quot;
-&quot;http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd&quot;&gt;
-&lt;html xmlns=&quot;http://www.w3.org/1999/xhtml&quot; lang=&quot;en&quot; xml:lang=&quot;en&quot;&gt;
-&lt;head&gt;
-&lt;meta http-equiv=&quot;Content-Type&quot; content=&quot;text/html;charset=utf-8&quot; /&gt;
-&lt;meta name=&quot;viewport&quot; content=&quot;width=device-width, initial-scale=1&quot; /&gt;
-&lt;title&gt;Creating an elementary spring web app and deploying it in a Multipass Docker enviroment.&lt;/title&gt;
-&lt;meta name=&quot;generator&quot; content=&quot;Org mode&quot; /&gt;
-&lt;meta name=&quot;author&quot; content=&quot;Rustam Isangulov&quot; /&gt;
-&lt;style&gt;pre.src{ background:#343131;color:lightgray;padding: 1rem; border: 1px solid #aeb0b5;border-radius: 0.1875em;margin-top:1rem;margin-bottom:1rem;} ul {padding-left: 2em;} h1, h2, h3, h4, h5 {padding-top: 1rem; padding-bottom:1rem;} hr {margin-top:2rem; margin-bottom:2rem; border-style:inset; border-width:1px;} img {padding-top:1rem; padding-bottom:1rem;}&lt;/style&gt;
-&lt;script type=&quot;text/javascript&quot;&gt;
-// @license magnet:?xt=urn:btih:e95b018ef3580986a04669f1b5879592219e2a7a&amp;dn=public-domain.txt Public Domain
-&lt;!--/*--&gt;&lt;![CDATA[/*&gt;&lt;!--*/
-     function CodeHighlightOn(elem, id)
-     {
-       var target = document.getElementById(id);
-       if(null != target) {
-         elem.classList.add(&quot;code-highlighted&quot;);
-         target.classList.add(&quot;code-highlighted&quot;);
-       }
-     }
-     function CodeHighlightOff(elem, id)
-     {
-       var target = document.getElementById(id);
-       if(null != target) {
-         elem.classList.remove(&quot;code-highlighted&quot;);
-         target.classList.remove(&quot;code-highlighted&quot;);
-       }
-     }
-    /*]]&gt;*///--&gt;
-// @license-end
-&lt;/script&gt;
-&lt;/head&gt;
-&lt;body&gt;
-&lt;div id=&quot;content&quot;&gt;
+   <content type="html">&lt;div&gt;
 &lt;p&gt;
 Toolkit: macOS | &lt;a href=&quot;https://www.jetbrains.com/idea/&quot;&gt;InelliJ IDEA&lt;/a&gt; | &lt;a href=&quot;https://www.docker.com/products/docker-desktop/&quot;&gt;Docker Desktop&lt;/a&gt; | &lt;a href=&quot;https://multipass.run&quot;&gt;Multipass&lt;/a&gt;
 &lt;/p&gt;
@@ -60,19 +85,20 @@ Toolkit: macOS | &lt;a href=&quot;https://www.jetbrains.com/idea/&quot;&gt;Inell
 &lt;p&gt;
 Sources: &lt;a href=&quot;https://github.com/rustam-isangulov/spring.io/tree/main/springboot_elementary&quot;&gt;GitHub&lt;/a&gt;
 &lt;/p&gt;
+&lt;/div&gt;
 
-&lt;div id=&quot;outline-container-org1910df0&quot; class=&quot;outline-2&quot;&gt;
-&lt;h2 id=&quot;org1910df0&quot;&gt;Review the structure of a static spring web app&lt;/h2&gt;
-&lt;div class=&quot;outline-text-2&quot; id=&quot;text-org1910df0&quot;&gt;
+&lt;div id=&quot;outline-container-org3319e7d&quot; class=&quot;outline-2&quot;&gt;
+&lt;h2 id=&quot;org3319e7d&quot;&gt;Review the structure of a static spring web app&lt;/h2&gt;
+&lt;div class=&quot;outline-text-2&quot; id=&quot;text-org3319e7d&quot;&gt;
 
-&lt;div id=&quot;org90cc620&quot; class=&quot;figure&quot;&gt;
+&lt;div id=&quot;org3643a31&quot; class=&quot;figure&quot;&gt;
 &lt;p&gt;&lt;img src=&quot;/images/MVCElementary.png&quot; alt=&quot;MVCElementary.png&quot; /&gt;
 &lt;/p&gt;
 &lt;/div&gt;
 
 
 
-&lt;div id=&quot;org56422de&quot; class=&quot;figure&quot;&gt;
+&lt;div id=&quot;orgabea983&quot; class=&quot;figure&quot;&gt;
 &lt;p&gt;&lt;img src=&quot;/images/MVCElementarySeq.png&quot; alt=&quot;MVCElementarySeq.png&quot; /&gt;
 &lt;/p&gt;
 &lt;/div&gt;
@@ -80,15 +106,15 @@ Sources: &lt;a href=&quot;https://github.com/rustam-isangulov/spring.io/tree/mai
 &lt;hr /&gt;
 &lt;/div&gt;
 &lt;/div&gt;
-&lt;div id=&quot;outline-container-org25336b0&quot; class=&quot;outline-2&quot;&gt;
-&lt;h2 id=&quot;org25336b0&quot;&gt;Create a basic spring web app&lt;/h2&gt;
-&lt;div class=&quot;outline-text-2&quot; id=&quot;text-org25336b0&quot;&gt;
+&lt;div id=&quot;outline-container-org7b5e7e3&quot; class=&quot;outline-2&quot;&gt;
+&lt;h2 id=&quot;org7b5e7e3&quot;&gt;Create a basic spring web app&lt;/h2&gt;
+&lt;div class=&quot;outline-text-2&quot; id=&quot;text-org7b5e7e3&quot;&gt;
 &lt;/div&gt;
-&lt;div id=&quot;outline-container-org9859c12&quot; class=&quot;outline-3&quot;&gt;
-&lt;h3 id=&quot;org9859c12&quot;&gt;Create spring project with &lt;i&gt;spring initializr&lt;/i&gt;&lt;/h3&gt;
-&lt;div class=&quot;outline-text-3&quot; id=&quot;text-org9859c12&quot;&gt;
+&lt;div id=&quot;outline-container-org7bb6064&quot; class=&quot;outline-3&quot;&gt;
+&lt;h3 id=&quot;org7bb6064&quot;&gt;Create spring project with &lt;i&gt;spring initializr&lt;/i&gt;&lt;/h3&gt;
+&lt;div class=&quot;outline-text-3&quot; id=&quot;text-org7bb6064&quot;&gt;
 &lt;p&gt;
-Navigate to &lt;a href=&quot;https:start.spring.io&quot;&gt;https:start.spring.io&lt;/a&gt; and select fowllowing options:
+Navigate to &lt;a href=&quot;https:start.spring.io&quot;&gt;https:start.spring.io&lt;/a&gt; and select following options:
 &lt;/p&gt;
 &lt;ul class=&quot;org-ul&quot;&gt;
 &lt;li&gt;&lt;b&gt;Project&lt;/b&gt;: Maven Project&lt;/li&gt;
@@ -106,7 +132,7 @@ Navigate to &lt;a href=&quot;https:start.spring.io&quot;&gt;https:start.spring.i
 
 
 
-&lt;div id=&quot;org6b2288a&quot; class=&quot;figure&quot;&gt;
+&lt;div id=&quot;org4a3bb5d&quot; class=&quot;figure&quot;&gt;
 &lt;p&gt;&lt;img src=&quot;/images/SpringBootElem-Initializr.jpg&quot; alt=&quot;SpringBootElem-Initializr.jpg&quot; /&gt;
 &lt;/p&gt;
 &lt;/div&gt;
@@ -120,7 +146,7 @@ Open the new project with &lt;b&gt;&lt;i&gt;IntelliJ&lt;/i&gt;&lt;/b&gt; and let
 &lt;/p&gt;
 
 
-&lt;div id=&quot;orgab51e9e&quot; class=&quot;figure&quot;&gt;
+&lt;div id=&quot;org7f41494&quot; class=&quot;figure&quot;&gt;
 &lt;p&gt;&lt;img src=&quot;/images/SpringBootElem-Project.jpg&quot; alt=&quot;SpringBootElem-Project.jpg&quot; /&gt;
 &lt;/p&gt;
 &lt;/div&gt;
@@ -131,9 +157,9 @@ Now you can build and run the app using &lt;b&gt;&lt;i&gt;IntelliJ&lt;/i&gt;&lt;
 &lt;/div&gt;
 &lt;/div&gt;
 
-&lt;div id=&quot;outline-container-org494b01b&quot; class=&quot;outline-3&quot;&gt;
-&lt;h3 id=&quot;org494b01b&quot;&gt;Add controller class&lt;/h3&gt;
-&lt;div class=&quot;outline-text-3&quot; id=&quot;text-org494b01b&quot;&gt;
+&lt;div id=&quot;outline-container-orgdf1c2c6&quot; class=&quot;outline-3&quot;&gt;
+&lt;h3 id=&quot;orgdf1c2c6&quot;&gt;Add controller class&lt;/h3&gt;
+&lt;div class=&quot;outline-text-3&quot; id=&quot;text-orgdf1c2c6&quot;&gt;
 &lt;p&gt;
 Create a new package &lt;code&gt;controllers&lt;/code&gt; under &lt;code&gt;com.example.springboot_elementary&lt;/code&gt; folder. Add &lt;code&gt;HomeController&lt;/code&gt; class in this package as follows.
 &lt;/p&gt;
@@ -151,9 +177,9 @@ Create a new package &lt;code&gt;controllers&lt;/code&gt; under &lt;code&gt;com.
 &lt;/div&gt;
 &lt;/div&gt;
 
-&lt;div id=&quot;outline-container-org13502a2&quot; class=&quot;outline-3&quot;&gt;
-&lt;h3 id=&quot;org13502a2&quot;&gt;Add static html source&lt;/h3&gt;
-&lt;div class=&quot;outline-text-3&quot; id=&quot;text-org13502a2&quot;&gt;
+&lt;div id=&quot;outline-container-orgc969dfc&quot; class=&quot;outline-3&quot;&gt;
+&lt;h3 id=&quot;orgc969dfc&quot;&gt;Add static html source&lt;/h3&gt;
+&lt;div class=&quot;outline-text-3&quot; id=&quot;text-orgc969dfc&quot;&gt;
 &lt;p&gt;
 Create a new &lt;code&gt;home.html&lt;/code&gt; file under &lt;code&gt;src/main/resources/static&lt;/code&gt; folder with the following content.
 &lt;/p&gt;
@@ -173,9 +199,9 @@ Create a new &lt;code&gt;home.html&lt;/code&gt; file under &lt;code&gt;src/main/
 &lt;/div&gt;
 &lt;/div&gt;
 
-&lt;div id=&quot;outline-container-org40ae5a3&quot; class=&quot;outline-3&quot;&gt;
-&lt;h3 id=&quot;org40ae5a3&quot;&gt;Add controller test class&lt;/h3&gt;
-&lt;div class=&quot;outline-text-3&quot; id=&quot;text-org40ae5a3&quot;&gt;
+&lt;div id=&quot;outline-container-org35c515b&quot; class=&quot;outline-3&quot;&gt;
+&lt;h3 id=&quot;org35c515b&quot;&gt;Add controller test class&lt;/h3&gt;
+&lt;div class=&quot;outline-text-3&quot; id=&quot;text-org35c515b&quot;&gt;
 &lt;p&gt;
 Create a new package &lt;code&gt;controllers&lt;/code&gt; in &lt;code&gt;src/test/java/com.example.springboot_elementary&lt;/code&gt;. Add &lt;code&gt;HomeControllerTest&lt;/code&gt; class with content as below.
 &lt;/p&gt;
@@ -202,15 +228,15 @@ Create a new package &lt;code&gt;controllers&lt;/code&gt; in &lt;code&gt;src/tes
 &lt;/div&gt;
 &lt;/div&gt;
 
-&lt;div id=&quot;outline-container-org1793c05&quot; class=&quot;outline-3&quot;&gt;
-&lt;h3 id=&quot;org1793c05&quot;&gt;Run the app locally&lt;/h3&gt;
-&lt;div class=&quot;outline-text-3&quot; id=&quot;text-org1793c05&quot;&gt;
+&lt;div id=&quot;outline-container-org42880a5&quot; class=&quot;outline-3&quot;&gt;
+&lt;h3 id=&quot;org42880a5&quot;&gt;Run the app locally&lt;/h3&gt;
+&lt;div class=&quot;outline-text-3&quot; id=&quot;text-org42880a5&quot;&gt;
 &lt;p&gt;
 Now you can build and run the app with the final project structure as follows.
 &lt;/p&gt;
 
 
-&lt;div id=&quot;org735ba4d&quot; class=&quot;figure&quot;&gt;
+&lt;div id=&quot;orga404e63&quot; class=&quot;figure&quot;&gt;
 &lt;p&gt;&lt;img src=&quot;/images/SpringBootElem-Structure.jpg&quot; alt=&quot;SpringBootElem-Structure.jpg&quot; width=&quot;300&quot; /&gt;
 &lt;/p&gt;
 &lt;/div&gt;
@@ -220,7 +246,7 @@ Run the app with &lt;b&gt;&lt;i&gt;IntelliJ&lt;/i&gt;&lt;/b&gt; using &lt;code&g
 &lt;/p&gt;
 
 
-&lt;div id=&quot;org55fc813&quot; class=&quot;figure&quot;&gt;
+&lt;div id=&quot;org806250b&quot; class=&quot;figure&quot;&gt;
 &lt;p&gt;&lt;img src=&quot;/images/SpringBootElem-Safari.jpg&quot; alt=&quot;SpringBootElem-Safari.jpg&quot; /&gt;
 &lt;/p&gt;
 &lt;/div&gt;
@@ -230,15 +256,15 @@ Run the app with &lt;b&gt;&lt;i&gt;IntelliJ&lt;/i&gt;&lt;/b&gt; using &lt;code&g
 &lt;/div&gt;
 &lt;/div&gt;
 
-&lt;div id=&quot;outline-container-org13fd8cb&quot; class=&quot;outline-2&quot;&gt;
-&lt;h2 id=&quot;org13fd8cb&quot;&gt;Deploy the app as a Docker container locally&lt;/h2&gt;
-&lt;div class=&quot;outline-text-2&quot; id=&quot;text-org13fd8cb&quot;&gt;
+&lt;div id=&quot;outline-container-org2ebd1c6&quot; class=&quot;outline-2&quot;&gt;
+&lt;h2 id=&quot;org2ebd1c6&quot;&gt;Deploy the app as a Docker container locally&lt;/h2&gt;
+&lt;div class=&quot;outline-text-2&quot; id=&quot;text-org2ebd1c6&quot;&gt;
 &lt;/div&gt;
-&lt;div id=&quot;outline-container-org018679f&quot; class=&quot;outline-3&quot;&gt;
-&lt;h3 id=&quot;org018679f&quot;&gt;Review the structure of a local Docker deployment&lt;/h3&gt;
-&lt;div class=&quot;outline-text-3&quot; id=&quot;text-org018679f&quot;&gt;
+&lt;div id=&quot;outline-container-orgefd0609&quot; class=&quot;outline-3&quot;&gt;
+&lt;h3 id=&quot;orgefd0609&quot;&gt;Review the structure of a local Docker deployment&lt;/h3&gt;
+&lt;div class=&quot;outline-text-3&quot; id=&quot;text-orgefd0609&quot;&gt;
 
-&lt;div id=&quot;org71154ed&quot; class=&quot;figure&quot;&gt;
+&lt;div id=&quot;org2d59c32&quot; class=&quot;figure&quot;&gt;
 &lt;p&gt;&lt;img src=&quot;/images/MVCElementaryDockerLocal.png&quot; alt=&quot;MVCElementaryDockerLocal.png&quot; /&gt;
 &lt;/p&gt;
 &lt;/div&gt;
@@ -246,9 +272,9 @@ Run the app with &lt;b&gt;&lt;i&gt;IntelliJ&lt;/i&gt;&lt;/b&gt; using &lt;code&g
 &lt;/div&gt;
 
 
-&lt;div id=&quot;outline-container-orgbd6d7fb&quot; class=&quot;outline-3&quot;&gt;
-&lt;h3 id=&quot;orgbd6d7fb&quot;&gt;Add image name pattern to maven project configuration&lt;/h3&gt;
-&lt;div class=&quot;outline-text-3&quot; id=&quot;text-orgbd6d7fb&quot;&gt;
+&lt;div id=&quot;outline-container-org198aef6&quot; class=&quot;outline-3&quot;&gt;
+&lt;h3 id=&quot;org198aef6&quot;&gt;Add image name pattern to maven project configuration&lt;/h3&gt;
+&lt;div class=&quot;outline-text-3&quot; id=&quot;text-org198aef6&quot;&gt;
 &lt;p&gt;
 Add image configuration to &lt;code&gt;spring-boot-maven-plugin&lt;/code&gt; in &lt;code&gt;pom.xml&lt;/code&gt;, and &lt;b&gt;re-Load Maven Changes&lt;/b&gt; as follows.This is to set the name template for docker images.
 &lt;/p&gt;
@@ -271,15 +297,15 @@ Add image configuration to &lt;code&gt;spring-boot-maven-plugin&lt;/code&gt; in 
 &lt;/div&gt;
 &lt;/div&gt;
 
-&lt;div id=&quot;outline-container-orgf918652&quot; class=&quot;outline-3&quot;&gt;
-&lt;h3 id=&quot;orgf918652&quot;&gt;Create a Docker image&lt;/h3&gt;
-&lt;div class=&quot;outline-text-3&quot; id=&quot;text-orgf918652&quot;&gt;
+&lt;div id=&quot;outline-container-org8c1fd5e&quot; class=&quot;outline-3&quot;&gt;
+&lt;h3 id=&quot;org8c1fd5e&quot;&gt;Create a Docker image&lt;/h3&gt;
+&lt;div class=&quot;outline-text-3&quot; id=&quot;text-org8c1fd5e&quot;&gt;
 &lt;p&gt;
 Launch Docker Desktop app.
 &lt;/p&gt;
 
 
-&lt;div id=&quot;org2a26bb1&quot; class=&quot;figure&quot;&gt;
+&lt;div id=&quot;org8733b93&quot; class=&quot;figure&quot;&gt;
 &lt;p&gt;&lt;img src=&quot;/images/SpringBootElem-DockerDesktop.jpg&quot; alt=&quot;SpringBootElem-DockerDesktop.jpg&quot; /&gt;
 &lt;/p&gt;
 &lt;/div&gt;
@@ -308,9 +334,9 @@ springboot_elementary   0.0.1-SNAPSHOT   d24fd8f3e812   42 years ago   262MB
 &lt;/div&gt;
 &lt;/div&gt;
 
-&lt;div id=&quot;outline-container-org7977325&quot; class=&quot;outline-3&quot;&gt;
-&lt;h3 id=&quot;org7977325&quot;&gt;Run the app as a local docker container&lt;/h3&gt;
-&lt;div class=&quot;outline-text-3&quot; id=&quot;text-org7977325&quot;&gt;
+&lt;div id=&quot;outline-container-org89d049f&quot; class=&quot;outline-3&quot;&gt;
+&lt;h3 id=&quot;org89d049f&quot;&gt;Run the app as a local docker container&lt;/h3&gt;
+&lt;div class=&quot;outline-text-3&quot; id=&quot;text-org89d049f&quot;&gt;
 &lt;p&gt;
 Run the newly created docker image as follows.
 &lt;/p&gt;
@@ -331,24 +357,24 @@ Validate the app is up and running by navigating to &lt;code&gt;localhost:8090&l
 &lt;/div&gt;
 &lt;/div&gt;
 &lt;/div&gt;
-&lt;div id=&quot;outline-container-orgf653fbb&quot; class=&quot;outline-2&quot;&gt;
-&lt;h2 id=&quot;orgf653fbb&quot;&gt;Deploy the app as a Multipass Docker container&lt;/h2&gt;
-&lt;div class=&quot;outline-text-2&quot; id=&quot;text-orgf653fbb&quot;&gt;
+&lt;div id=&quot;outline-container-org59ef0e5&quot; class=&quot;outline-2&quot;&gt;
+&lt;h2 id=&quot;org59ef0e5&quot;&gt;Deploy the app as a Multipass Docker container&lt;/h2&gt;
+&lt;div class=&quot;outline-text-2&quot; id=&quot;text-org59ef0e5&quot;&gt;
 &lt;/div&gt;
-&lt;div id=&quot;outline-container-org86c6bf1&quot; class=&quot;outline-3&quot;&gt;
-&lt;h3 id=&quot;org86c6bf1&quot;&gt;Review the structure of a Multipass Docker deployment&lt;/h3&gt;
-&lt;div class=&quot;outline-text-3&quot; id=&quot;text-org86c6bf1&quot;&gt;
+&lt;div id=&quot;outline-container-org598f4c0&quot; class=&quot;outline-3&quot;&gt;
+&lt;h3 id=&quot;org598f4c0&quot;&gt;Review the structure of a Multipass Docker deployment&lt;/h3&gt;
+&lt;div class=&quot;outline-text-3&quot; id=&quot;text-org598f4c0&quot;&gt;
 
-&lt;div id=&quot;org7dfdc78&quot; class=&quot;figure&quot;&gt;
+&lt;div id=&quot;org1f6fe86&quot; class=&quot;figure&quot;&gt;
 &lt;p&gt;&lt;img src=&quot;/images/MVCElementaryDockerMultipass.png&quot; alt=&quot;MVCElementaryDockerMultipass.png&quot; /&gt;
 &lt;/p&gt;
 &lt;/div&gt;
 &lt;/div&gt;
 &lt;/div&gt;
 
-&lt;div id=&quot;outline-container-org99149ad&quot; class=&quot;outline-3&quot;&gt;
-&lt;h3 id=&quot;org99149ad&quot;&gt;Create Multipass Docker instance&lt;/h3&gt;
-&lt;div class=&quot;outline-text-3&quot; id=&quot;text-org99149ad&quot;&gt;
+&lt;div id=&quot;outline-container-orgd69aa63&quot; class=&quot;outline-3&quot;&gt;
+&lt;h3 id=&quot;orgd69aa63&quot;&gt;Create Multipass Docker instance&lt;/h3&gt;
+&lt;div class=&quot;outline-text-3&quot; id=&quot;text-orgd69aa63&quot;&gt;
 &lt;p&gt;
 Launch Multipass VM with a Docker instance using the following command inside the &lt;code&gt;Terminal&lt;/code&gt; tab.
 &lt;/p&gt;
@@ -379,9 +405,9 @@ Mounts:         --
 &lt;/div&gt;
 &lt;/div&gt;
 
-&lt;div id=&quot;outline-container-orgfa2728b&quot; class=&quot;outline-3&quot;&gt;
-&lt;h3 id=&quot;orgfa2728b&quot;&gt;Copy docker image to Multipass Docker instance&lt;/h3&gt;
-&lt;div class=&quot;outline-text-3&quot; id=&quot;text-orgfa2728b&quot;&gt;
+&lt;div id=&quot;outline-container-orgec47650&quot; class=&quot;outline-3&quot;&gt;
+&lt;h3 id=&quot;orgec47650&quot;&gt;Copy docker image to Multipass Docker instance&lt;/h3&gt;
+&lt;div class=&quot;outline-text-3&quot; id=&quot;text-orgec47650&quot;&gt;
 &lt;p&gt;
 Create a &lt;code&gt;tar&lt;/code&gt; archive of the docker image from local Docker Desktop instance by running the following command.
 &lt;/p&gt;
@@ -422,9 +448,9 @@ springboot_elementary.tar
 &lt;/div&gt;
 &lt;/div&gt;
 
-&lt;div id=&quot;outline-container-orgd6b10c1&quot; class=&quot;outline-3&quot;&gt;
-&lt;h3 id=&quot;orgd6b10c1&quot;&gt;Run the app as a Multipass Docker container&lt;/h3&gt;
-&lt;div class=&quot;outline-text-3&quot; id=&quot;text-orgd6b10c1&quot;&gt;
+&lt;div id=&quot;outline-container-org58b108a&quot; class=&quot;outline-3&quot;&gt;
+&lt;h3 id=&quot;org58b108a&quot;&gt;Run the app as a Multipass Docker container&lt;/h3&gt;
+&lt;div class=&quot;outline-text-3&quot; id=&quot;text-org58b108a&quot;&gt;
 &lt;p&gt;
 Open command line inside Multipass Docker image with the following command.
 &lt;/p&gt;
@@ -477,7 +503,7 @@ Navigate browser to the &lt;code&gt;192.168.64.3:8085&lt;/code&gt; address to va
 &lt;/p&gt;
 
 
-&lt;div id=&quot;orgb31ce4d&quot; class=&quot;figure&quot;&gt;
+&lt;div id=&quot;org478b6f3&quot; class=&quot;figure&quot;&gt;
 &lt;p&gt;&lt;img src=&quot;/images/SpringBootElem-SafariUbuntu.jpg&quot; alt=&quot;SpringBootElem-SafariUbuntu.jpg&quot; /&gt;
 &lt;/p&gt;
 &lt;/div&gt;
@@ -486,9 +512,6 @@ Navigate browser to the &lt;code&gt;192.168.64.3:8085&lt;/code&gt; address to va
 &lt;/div&gt;
 &lt;/div&gt;
 &lt;/div&gt;
-&lt;/div&gt;
-&lt;/body&gt;
-&lt;/html&gt;
 </content>
  </entry>
  
