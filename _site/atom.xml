@@ -4,7 +4,7 @@
  <title>blog</title>
  <link href="http://localhost:4000/atom.xml" rel="self"/>
  <link href="http://localhost:4000/"/>
- <updated>2022-07-30T21:15:08+01:00</updated>
+ <updated>2022-07-31T18:45:53+01:00</updated>
  <id>http://localhost:4000</id>
  <author>
    <name></name>
@@ -13,7 +13,7 @@
 
  
  <entry>
-   <title>Creating an ftp utility to download all files from a remote directory using Apache Commons FTPClient</title>
+   <title>Creating an ftp utility using Apache Commons &lt;code&gt;FTPClient&lt;/code&gt;</title>
    <link href="http://localhost:4000/2022/07/30/java-fundamentals-ftputil"/>
    <updated>2022-07-30T12:11:27+01:00</updated>
    <id>http://localhost:4000/2022/07/30/java-fundamentals-ftputil</id>

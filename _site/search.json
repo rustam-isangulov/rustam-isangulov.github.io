@@ -2,7 +2,7 @@
   
     {
 
-      "title"    : "Creating an ftp utility to download all files from a remote directory using Apache Commons FTPClient",
+      "title"    : "Creating an ftp utility using Apache Commons FTPClient",
       "description" : "",
       "url"      : "/2022/07/30/java-fundamentals-ftputil",
       "category" : "Java, Apache, Commons, Net, FTP",
