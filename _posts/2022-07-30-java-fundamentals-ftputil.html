@@ -15,9 +15,9 @@ Sources: <a href="https://github.com/rustam-isangulov/java.fundamentals">GitHub<
 </p>
 </div>
 
-<div id="outline-container-orgb58b272" class="outline-2">
-<h2 id="orgb58b272">Objectives</h2>
-<div class="outline-text-2" id="text-orgb58b272">
+<div id="outline-container-org37d94e0" class="outline-2">
+<h2 id="org37d94e0">Objectives</h2>
+<div class="outline-text-2" id="text-org37d94e0">
 <p>
 Create a utility to:
 </p>
@@ -32,28 +32,50 @@ Create a utility to:
 </div>
 </div>
 
-<div id="outline-container-org320d9c7" class="outline-2">
-<h2 id="org320d9c7">Review the structure</h2>
-<div class="outline-text-2" id="text-org320d9c7">
+<div id="outline-container-orgde3cbdc" class="outline-2">
+<h2 id="orgde3cbdc">Review the structure</h2>
+<div class="outline-text-2" id="text-orgde3cbdc">
 
-<div id="orgabc9e29" class="figure">
+<div id="org1f0106b" class="figure">
 <p><img src="/images/ftputil-structure.png" alt="ftputil-structure.png" />
 </p>
 </div>
 <hr />
 </div>
 </div>
-<div id="outline-container-orga1eedbc" class="outline-2">
-<h2 id="orga1eedbc">Add create instance and open connection logic</h2>
-<div class="outline-text-2" id="text-orga1eedbc">
+<div id="outline-container-org644ba1d" class="outline-2">
+<h2 id="org644ba1d">Add dependecies to Apache Commons in <code>maven</code> project</h2>
+<div class="outline-text-2" id="text-org644ba1d">
+</div>
+<div id="outline-container-org6277511" class="outline-3">
+<h3 id="org6277511"><code>pom.xml</code></h3>
+<div class="outline-text-3" id="text-org6277511">
+<div class="org-src-container">
+<pre class="src src-xml">&lt;<span style="color: #E06C75;">dependencies</span>&gt;
+  &lt;<span style="color: #E06C75;">dependency</span>&gt;
+    &lt;<span style="color: #E06C75;">groupId</span>&gt;commons-net&lt;/<span style="color: #E06C75;">groupId</span>&gt;
+    &lt;<span style="color: #E06C75;">artifactId</span>&gt;commons-net&lt;/<span style="color: #E06C75;">artifactId</span>&gt;
+    &lt;<span style="color: #E06C75;">version</span>&gt;3.8.0&lt;/<span style="color: #E06C75;">version</span>&gt;
+  &lt;/<span style="color: #E06C75;">dependency</span>&gt;
+&lt;/<span style="color: #E06C75;">dependencies</span>&gt;
+
+</pre>
+</div>
+</div>
+</div>
+</div>
+
+<div id="outline-container-org88760b3" class="outline-2">
+<h2 id="org88760b3">Add create instance and open connection logic</h2>
+<div class="outline-text-2" id="text-org88760b3">
 <p>
 In this section we will add content for open/close connection method, constructor and instance factory methods.
 </p>
 </div>
 
-<div id="outline-container-orge8d0589" class="outline-3">
-<h3 id="orge8d0589"><code>open(...)</code></h3>
-<div class="outline-text-3" id="text-orge8d0589">
+<div id="outline-container-org401515b" class="outline-3">
+<h3 id="org401515b"><code>open(...)</code></h3>
+<div class="outline-text-3" id="text-org401515b">
 <div class="org-src-container">
 <pre class="src src-java"><span style="color: #C678DD;">private</span> <span style="color: #E5C07B;">void</span> <span style="color: #61AFEF;">open</span>(<span style="color: #E5C07B;">int</span> <span style="color: #E06C75;">port</span>, <span style="color: #E5C07B;">String</span> <span style="color: #E06C75;">user</span>, <span style="color: #E5C07B;">String</span> <span style="color: #E06C75;">password</span>) <span style="color: #C678DD;">throws</span> <span style="color: #E5C07B;">IOException</span> {
 
@@ -86,9 +108,9 @@ In this section we will add content for open/close connection method, constructo
 </div>
 </div>
 
-<div id="outline-container-orga96e300" class="outline-3">
-<h3 id="orga96e300"><code>close()</code></h3>
-<div class="outline-text-3" id="text-orga96e300">
+<div id="outline-container-org7ce3ae7" class="outline-3">
+<h3 id="org7ce3ae7"><code>close()</code></h3>
+<div class="outline-text-3" id="text-org7ce3ae7">
 <div class="org-src-container">
 <pre class="src src-java"><span style="color: #56B6C2;">@Override</span>
 <span style="color: #C678DD;">public</span> <span style="color: #E5C07B;">void</span> <span style="color: #61AFEF;">close</span>() <span style="color: #C678DD;">throws</span> <span style="color: #E5C07B;">IOException</span> {
@@ -100,9 +122,9 @@ In this section we will add content for open/close connection method, constructo
 </div>
 </div>
 
-<div id="outline-container-org02efa69" class="outline-3">
-<h3 id="org02efa69"><code>FtpClient(...)</code></h3>
-<div class="outline-text-3" id="text-org02efa69">
+<div id="outline-container-org85215df" class="outline-3">
+<h3 id="org85215df"><code>FtpClient(...)</code></h3>
+<div class="outline-text-3" id="text-org85215df">
 <div class="org-src-container">
 <pre class="src src-java"><span style="color: #C678DD;">private</span> <span style="color: #61AFEF;">FtpClient</span>(<span style="color: #E5C07B;">URI</span> <span style="color: #E06C75;">serverAddress</span>, <span style="color: #E5C07B;">FTPClient</span> <span style="color: #E06C75;">ftp</span>) {
     <span style="color: #C678DD;">this</span>.server = serverAddress;
@@ -113,9 +135,9 @@ In this section we will add content for open/close connection method, constructo
 </div>
 </div>
 
-<div id="outline-container-org5793909" class="outline-3">
-<h3 id="org5793909"><code>getClient(...)</code></h3>
-<div class="outline-text-3" id="text-org5793909">
+<div id="outline-container-orgea1c41b" class="outline-3">
+<h3 id="orgea1c41b"><code>getClient(...)</code></h3>
+<div class="outline-text-3" id="text-orgea1c41b">
 <div class="org-src-container">
 <pre class="src src-java"><span style="color: #C678DD;">public</span> <span style="color: #C678DD;">static</span> <span style="color: #E5C07B;">FtpClient</span> <span style="color: #61AFEF;">getClient</span>
     (<span style="color: #E5C07B;">URI</span> <span style="color: #E06C75;">serverAddress</span>, <span style="color: #E5C07B;">FTPClient</span> <span style="color: #E06C75;">ftp</span>) <span style="color: #C678DD;">throws</span> <span style="color: #E5C07B;">IOException</span> {
@@ -150,17 +172,17 @@ In this section we will add content for open/close connection method, constructo
 </div>
 </div>
 
-<div id="outline-container-org654e559" class="outline-2">
-<h2 id="org654e559">List files in a remote directory</h2>
-<div class="outline-text-2" id="text-org654e559">
+<div id="outline-container-org3d9420e" class="outline-2">
+<h2 id="org3d9420e">List files in a remote directory</h2>
+<div class="outline-text-2" id="text-org3d9420e">
 <p>
 In this section we will add the logic to retrieve a list of files in a remote directory.
 </p>
 </div>
 
-<div id="outline-container-org70dba72" class="outline-3">
-<h3 id="org70dba72"><code>listFiles(...)</code></h3>
-<div class="outline-text-3" id="text-org70dba72">
+<div id="outline-container-orga027393" class="outline-3">
+<h3 id="orga027393"><code>listFiles(...)</code></h3>
+<div class="outline-text-3" id="text-orga027393">
 <div class="org-src-container">
 <pre class="src src-java"><span style="color: #C678DD;">public</span> <span style="color: #E5C07B;">List</span>&lt;<span style="color: #E5C07B;">FTPFile</span>&gt; <span style="color: #61AFEF;">listFiles</span>(<span style="color: #E5C07B;">Path</span> <span style="color: #E06C75;">remoteDir</span>) <span style="color: #C678DD;">throws</span> <span style="color: #E5C07B;">IOException</span> {
 
@@ -175,18 +197,17 @@ In this section we will add the logic to retrieve a list of files in a remote di
 </div>
 </div>
 
-
-<div id="outline-container-org49629fb" class="outline-2">
-<h2 id="org49629fb">Download remote files</h2>
-<div class="outline-text-2" id="text-org49629fb">
+<div id="outline-container-orga6f6f3f" class="outline-2">
+<h2 id="orga6f6f3f">Download remote files</h2>
+<div class="outline-text-2" id="text-orga6f6f3f">
 <p>
 In this section we will add content for remote files downloading methods, both single file and multple files versions.
 </p>
 </div>
 
-<div id="outline-container-org2c7d195" class="outline-3">
-<h3 id="org2c7d195"><code>downloadFile(...)</code></h3>
-<div class="outline-text-3" id="text-org2c7d195">
+<div id="outline-container-org149a8f9" class="outline-3">
+<h3 id="org149a8f9"><code>downloadFile(...)</code></h3>
+<div class="outline-text-3" id="text-org149a8f9">
 <div class="org-src-container">
 <pre class="src src-java"><span style="color: #C678DD;">public</span> <span style="color: #E5C07B;">void</span> <span style="color: #61AFEF;">downloadFile</span>
     (<span style="color: #E5C07B;">Path</span> <span style="color: #E06C75;">remoteFile</span>, <span style="color: #E5C07B;">OutputStream</span> <span style="color: #E06C75;">out</span>) <span style="color: #C678DD;">throws</span> <span style="color: #E5C07B;">IOException</span> {
@@ -198,9 +219,9 @@ In this section we will add content for remote files downloading methods, both s
 </div>
 </div>
 
-<div id="outline-container-org91d2b52" class="outline-3">
-<h3 id="org91d2b52"><code>downloadAllFiles(...)</code></h3>
-<div class="outline-text-3" id="text-org91d2b52">
+<div id="outline-container-org84ef305" class="outline-3">
+<h3 id="org84ef305"><code>downloadAllFiles(...)</code></h3>
+<div class="outline-text-3" id="text-org84ef305">
 <div class="org-src-container">
 <pre class="src src-java"><span style="color: #C678DD;">public</span> <span style="color: #E5C07B;">void</span> <span style="color: #61AFEF;">downloadAllFiles</span>
     (<span style="color: #E5C07B;">Path</span> <span style="color: #E06C75;">remoteDir</span>
@@ -230,10 +251,9 @@ In this section we will add content for remote files downloading methods, both s
 </div>
 </div>
 
-
-<div id="outline-container-orgec9286c" class="outline-2">
-<h2 id="orgec9286c">Example</h2>
-<div class="outline-text-2" id="text-orgec9286c">
+<div id="outline-container-org9c37ca7" class="outline-2">
+<h2 id="org9c37ca7">Example</h2>
+<div class="outline-text-2" id="text-org9c37ca7">
 <p>
 Here is an example of using the <code>FtpClient</code> to list and download multiple files form an FTP server.
 </p>
@@ -323,6 +343,7 @@ Process finished with exit code 0
 </pre>
 </div>
 
+<hr />
 <p>
 Thank you.
 </p>
