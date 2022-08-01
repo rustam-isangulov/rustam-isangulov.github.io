@@ -4,13 +4,587 @@
  <title>blog</title>
  <link href="http://localhost:4000/atom.xml" rel="self"/>
  <link href="http://localhost:4000/"/>
- <updated>2022-08-01T12:11:28+01:00</updated>
+ <updated>2022-08-01T15:36:06+01:00</updated>
  <id>http://localhost:4000</id>
  <author>
    <name></name>
    <email></email>
  </author>
 
+ 
+ <entry>
+   <title>Writing unit tests for the ftp utility using &lt;code&gt;JUnit 5&lt;/code&gt; and &lt;code&gt;Mockito 4&lt;/code&gt;</title>
+   <link href="http://localhost:4000/2022/08/01/java-fundamentals-ftputil-unittests"/>
+   <updated>2022-08-01T12:11:27+01:00</updated>
+   <id>http://localhost:4000/2022/08/01/java-fundamentals-ftputil-unittests</id>
+   <content type="html">&lt;div class=&quot;post&quot;&gt;
+&lt;p&gt;
+Toolkit: macOS | &lt;a href=&quot;https://www.jetbrains.com/idea/&quot;&gt;InelliJ IDEA&lt;/a&gt; | &lt;a href=&quot;https://junit.org/junit5/docs/current/user-guide/&quot;&gt;JUnit 5&lt;/a&gt; | &lt;a href=&quot;https://site.mockito.org/&quot;&gt;Mockito 4&lt;/a&gt;
+&lt;/p&gt;
+
+&lt;p&gt;
+Sources: &lt;a href=&quot;https://github.com/rustam-isangulov/java.fundamentals&quot;&gt;GitHub&lt;/a&gt;
+&lt;/p&gt;
+&lt;/div&gt;
+
+&lt;div id=&quot;outline-container-org88dde2d&quot; class=&quot;outline-2&quot;&gt;
+&lt;h2 id=&quot;org88dde2d&quot;&gt;Objectives&lt;/h2&gt;
+&lt;div class=&quot;outline-text-2&quot; id=&quot;text-org88dde2d&quot;&gt;
+&lt;p&gt;
+Create unit tests that provide 100% coverage for methods and code lines.
+&lt;/p&gt;
+&lt;/div&gt;
+&lt;/div&gt;
+
+&lt;div id=&quot;outline-container-org4ec523f&quot; class=&quot;outline-2&quot;&gt;
+&lt;h2 id=&quot;org4ec523f&quot;&gt;Review the structure&lt;/h2&gt;
+&lt;div class=&quot;outline-text-2&quot; id=&quot;text-org4ec523f&quot;&gt;
+
+&lt;div id=&quot;org7028ed4&quot; class=&quot;figure&quot;&gt;
+&lt;p&gt;&lt;img src=&quot;/images/ftputil-structure.png&quot; alt=&quot;ftputil-structure.png&quot; /&gt;
+&lt;/p&gt;
+&lt;/div&gt;
+&lt;hr /&gt;
+&lt;/div&gt;
+&lt;/div&gt;
+&lt;div id=&quot;outline-container-org420e802&quot; class=&quot;outline-2&quot;&gt;
+&lt;h2 id=&quot;org420e802&quot;&gt;Final result of running all unit tests in IntelliJ&lt;/h2&gt;
+&lt;div class=&quot;outline-text-2&quot; id=&quot;text-org420e802&quot;&gt;
+
+&lt;div id=&quot;org9c5ba7a&quot; class=&quot;figure&quot;&gt;
+&lt;p&gt;&lt;img src=&quot;/images/ftputil-unittests-result.jpg&quot; alt=&quot;ftputil-unittests-result.jpg&quot; /&gt;
+&lt;/p&gt;
+&lt;/div&gt;
+
+&lt;hr /&gt;
+&lt;/div&gt;
+&lt;/div&gt;
+
+&lt;div id=&quot;outline-container-org55c205c&quot; class=&quot;outline-2&quot;&gt;
+&lt;h2 id=&quot;org55c205c&quot;&gt;Add dependecies to &lt;code&gt;JUnit&lt;/code&gt; and &lt;code&gt;Mockito&lt;/code&gt; in &lt;code&gt;maven&lt;/code&gt; project&lt;/h2&gt;
+&lt;div class=&quot;outline-text-2&quot; id=&quot;text-org55c205c&quot;&gt;
+&lt;/div&gt;
+&lt;div id=&quot;outline-container-orgd85034e&quot; class=&quot;outline-3&quot;&gt;
+&lt;h3 id=&quot;orgd85034e&quot;&gt;&lt;code&gt;pom.xml&lt;/code&gt;&lt;/h3&gt;
+&lt;div class=&quot;outline-text-3&quot; id=&quot;text-orgd85034e&quot;&gt;
+&lt;div class=&quot;org-src-container&quot;&gt;
+&lt;pre class=&quot;src src-xml&quot;&gt;&amp;lt;&lt;span style=&quot;color: #E06C75;&quot;&gt;dependencies&lt;/span&gt;&amp;gt;
+  &amp;lt;&lt;span style=&quot;color: #E06C75;&quot;&gt;dependency&lt;/span&gt;&amp;gt;
+    &amp;lt;&lt;span style=&quot;color: #E06C75;&quot;&gt;groupId&lt;/span&gt;&amp;gt;org.junit.jupiter&amp;lt;/&lt;span style=&quot;color: #E06C75;&quot;&gt;groupId&lt;/span&gt;&amp;gt;
+    &amp;lt;&lt;span style=&quot;color: #E06C75;&quot;&gt;artifactId&lt;/span&gt;&amp;gt;junit-jupiter-api&amp;lt;/&lt;span style=&quot;color: #E06C75;&quot;&gt;artifactId&lt;/span&gt;&amp;gt;
+    &amp;lt;&lt;span style=&quot;color: #E06C75;&quot;&gt;version&lt;/span&gt;&amp;gt;5.8.2&amp;lt;/&lt;span style=&quot;color: #E06C75;&quot;&gt;version&lt;/span&gt;&amp;gt;
+    &amp;lt;&lt;span style=&quot;color: #E06C75;&quot;&gt;scope&lt;/span&gt;&amp;gt;test&amp;lt;/&lt;span style=&quot;color: #E06C75;&quot;&gt;scope&lt;/span&gt;&amp;gt;
+  &amp;lt;/&lt;span style=&quot;color: #E06C75;&quot;&gt;dependency&lt;/span&gt;&amp;gt;
+  &amp;lt;&lt;span style=&quot;color: #E06C75;&quot;&gt;dependency&lt;/span&gt;&amp;gt;
+    &amp;lt;&lt;span style=&quot;color: #E06C75;&quot;&gt;groupId&lt;/span&gt;&amp;gt;org.junit.jupiter&amp;lt;/&lt;span style=&quot;color: #E06C75;&quot;&gt;groupId&lt;/span&gt;&amp;gt;
+    &amp;lt;&lt;span style=&quot;color: #E06C75;&quot;&gt;artifactId&lt;/span&gt;&amp;gt;junit-jupiter-engine&amp;lt;/&lt;span style=&quot;color: #E06C75;&quot;&gt;artifactId&lt;/span&gt;&amp;gt;
+    &amp;lt;&lt;span style=&quot;color: #E06C75;&quot;&gt;version&lt;/span&gt;&amp;gt;5.8.2&amp;lt;/&lt;span style=&quot;color: #E06C75;&quot;&gt;version&lt;/span&gt;&amp;gt;
+    &amp;lt;&lt;span style=&quot;color: #E06C75;&quot;&gt;scope&lt;/span&gt;&amp;gt;test&amp;lt;/&lt;span style=&quot;color: #E06C75;&quot;&gt;scope&lt;/span&gt;&amp;gt;
+  &amp;lt;/&lt;span style=&quot;color: #E06C75;&quot;&gt;dependency&lt;/span&gt;&amp;gt;
+  &amp;lt;&lt;span style=&quot;color: #E06C75;&quot;&gt;dependency&lt;/span&gt;&amp;gt;
+    &amp;lt;&lt;span style=&quot;color: #E06C75;&quot;&gt;groupId&lt;/span&gt;&amp;gt;org.mockito&amp;lt;/&lt;span style=&quot;color: #E06C75;&quot;&gt;groupId&lt;/span&gt;&amp;gt;
+    &amp;lt;&lt;span style=&quot;color: #E06C75;&quot;&gt;artifactId&lt;/span&gt;&amp;gt;mockito-junit-jupiter&amp;lt;/&lt;span style=&quot;color: #E06C75;&quot;&gt;artifactId&lt;/span&gt;&amp;gt;
+    &amp;lt;&lt;span style=&quot;color: #E06C75;&quot;&gt;version&lt;/span&gt;&amp;gt;4.5.1&amp;lt;/&lt;span style=&quot;color: #E06C75;&quot;&gt;version&lt;/span&gt;&amp;gt;
+    &amp;lt;&lt;span style=&quot;color: #E06C75;&quot;&gt;scope&lt;/span&gt;&amp;gt;test&amp;lt;/&lt;span style=&quot;color: #E06C75;&quot;&gt;scope&lt;/span&gt;&amp;gt;
+  &amp;lt;/&lt;span style=&quot;color: #E06C75;&quot;&gt;dependency&lt;/span&gt;&amp;gt;
+&amp;lt;/&lt;span style=&quot;color: #E06C75;&quot;&gt;dependencies&lt;/span&gt;&amp;gt;
+
+&lt;/pre&gt;
+&lt;/div&gt;
+&lt;/div&gt;
+&lt;/div&gt;
+&lt;/div&gt;
+&lt;div id=&quot;outline-container-orgc2e8b4c&quot; class=&quot;outline-2&quot;&gt;
+&lt;h2 id=&quot;orgc2e8b4c&quot;&gt;Add tests for &lt;code&gt;open(...)&lt;/code&gt; and &lt;code&gt;close(...)&lt;/code&gt; methods&lt;/h2&gt;
+&lt;div class=&quot;outline-text-2&quot; id=&quot;text-orgc2e8b4c&quot;&gt;
+&lt;/div&gt;
+&lt;div id=&quot;outline-container-orgefd44ae&quot; class=&quot;outline-3&quot;&gt;
+&lt;h3 id=&quot;orgefd44ae&quot;&gt;Add and initialise &lt;code&gt;FTPClient&lt;/code&gt; and &lt;code&gt;FtpClient&lt;/code&gt; objects&lt;/h3&gt;
+&lt;div class=&quot;outline-text-3&quot; id=&quot;text-orgefd44ae&quot;&gt;
+&lt;div class=&quot;org-src-container&quot;&gt;
+&lt;pre class=&quot;src src-java&quot;&gt;&lt;span style=&quot;color: #C678DD;&quot;&gt;public&lt;/span&gt; &lt;span style=&quot;color: #C678DD;&quot;&gt;class&lt;/span&gt; &lt;span style=&quot;color: #E5C07B;&quot;&gt;FtpClientUnitTest&lt;/span&gt; {
+
+    &lt;span style=&quot;color: #56B6C2;&quot;&gt;@Nested&lt;/span&gt;
+    &lt;span style=&quot;color: #56B6C2;&quot;&gt;@DisplayName&lt;/span&gt;(&lt;span style=&quot;color: #98C379;&quot;&gt;&quot;Test successful ftp connection&quot;&lt;/span&gt;)
+    &lt;span style=&quot;color: #C678DD;&quot;&gt;public&lt;/span&gt; &lt;span style=&quot;color: #C678DD;&quot;&gt;class&lt;/span&gt; &lt;span style=&quot;color: #E5C07B;&quot;&gt;openIfSuccessful&lt;/span&gt; {
+
+        &lt;span style=&quot;color: #C678DD;&quot;&gt;private&lt;/span&gt; &lt;span style=&quot;color: #C678DD;&quot;&gt;final&lt;/span&gt; &lt;span style=&quot;color: #E5C07B;&quot;&gt;FTPClient&lt;/span&gt; &lt;span style=&quot;color: #E06C75;&quot;&gt;mockFTPClient&lt;/span&gt; = mock(FTPClient.&lt;span style=&quot;color: #C678DD;&quot;&gt;class&lt;/span&gt;);
+        &lt;span style=&quot;color: #C678DD;&quot;&gt;private&lt;/span&gt; &lt;span style=&quot;color: #E5C07B;&quot;&gt;FtpClient&lt;/span&gt; &lt;span style=&quot;color: #E06C75;&quot;&gt;client&lt;/span&gt;;
+        &lt;span style=&quot;color: #C678DD;&quot;&gt;private&lt;/span&gt; &lt;span style=&quot;color: #E5C07B;&quot;&gt;FTPFile&lt;/span&gt;[] &lt;span style=&quot;color: #E06C75;&quot;&gt;ftpFiles&lt;/span&gt;;
+
+        &lt;span style=&quot;color: #56B6C2;&quot;&gt;@BeforeEach&lt;/span&gt;
+        &lt;span style=&quot;color: #C678DD;&quot;&gt;public&lt;/span&gt; &lt;span style=&quot;color: #E5C07B;&quot;&gt;void&lt;/span&gt; &lt;span style=&quot;color: #61AFEF;&quot;&gt;setUp&lt;/span&gt;() &lt;span style=&quot;color: #C678DD;&quot;&gt;throws&lt;/span&gt; &lt;span style=&quot;color: #E5C07B;&quot;&gt;IOException&lt;/span&gt; {
+
+            &lt;span style=&quot;color: #5C6370; font-style: italic;&quot;&gt;// &lt;/span&gt;&lt;span style=&quot;color: #5C6370; font-style: italic;&quot;&gt;set up a happy path for connecting / login sequence&lt;/span&gt;
+            when(mockFTPClient.getReplyCode())
+                .thenReturn(230);
+            when(mockFTPClient.login(anyString(), anyString()))
+                .thenReturn(&lt;span style=&quot;color: #56B6C2;&quot;&gt;true&lt;/span&gt;);
+
+            client = FtpClient.getClient
+                (URI.create(&lt;span style=&quot;color: #98C379;&quot;&gt;&quot;localhost&quot;&lt;/span&gt;), mockFTPClient);
+
+            &lt;span style=&quot;color: #5C6370; font-style: italic;&quot;&gt;/* &lt;/span&gt;&lt;span style=&quot;color: #5C6370; font-style: italic;&quot;&gt;more code&lt;/span&gt;&lt;span style=&quot;color: #5C6370; font-style: italic;&quot;&gt; */&lt;/span&gt;
+        }
+    }
+}
+&lt;/pre&gt;
+&lt;/div&gt;
+&lt;/div&gt;
+&lt;/div&gt;
+
+&lt;div id=&quot;outline-container-orge835e0a&quot; class=&quot;outline-3&quot;&gt;
+&lt;h3 id=&quot;orge835e0a&quot;&gt;Add &lt;code&gt;open(...)&lt;/code&gt; method test&lt;/h3&gt;
+&lt;div class=&quot;outline-text-3&quot; id=&quot;text-orge835e0a&quot;&gt;
+&lt;/div&gt;
+&lt;div id=&quot;outline-container-orgbc56cd4&quot; class=&quot;outline-4&quot;&gt;
+&lt;h4 id=&quot;orgbc56cd4&quot;&gt;Code to test&lt;/h4&gt;
+&lt;div class=&quot;outline-text-4&quot; id=&quot;text-orgbc56cd4&quot;&gt;
+&lt;div class=&quot;org-src-container&quot;&gt;
+&lt;pre class=&quot;src src-java&quot;&gt;&lt;span style=&quot;color: #C678DD;&quot;&gt;private&lt;/span&gt; &lt;span style=&quot;color: #E5C07B;&quot;&gt;void&lt;/span&gt; &lt;span style=&quot;color: #61AFEF;&quot;&gt;open&lt;/span&gt;
+    (&lt;span style=&quot;color: #E5C07B;&quot;&gt;int&lt;/span&gt; &lt;span style=&quot;color: #E06C75;&quot;&gt;port&lt;/span&gt;, &lt;span style=&quot;color: #E5C07B;&quot;&gt;String&lt;/span&gt; &lt;span style=&quot;color: #E06C75;&quot;&gt;user&lt;/span&gt;, &lt;span style=&quot;color: #E5C07B;&quot;&gt;String&lt;/span&gt; &lt;span style=&quot;color: #E06C75;&quot;&gt;password&lt;/span&gt;) &lt;span style=&quot;color: #C678DD;&quot;&gt;throws&lt;/span&gt; &lt;span style=&quot;color: #E5C07B;&quot;&gt;IOException&lt;/span&gt; {
+
+    &lt;span style=&quot;color: #5C6370; font-style: italic;&quot;&gt;// &lt;/span&gt;&lt;span style=&quot;color: #5C6370; font-style: italic;&quot;&gt;connect&lt;/span&gt;
+    ftp.connect(server.toString(), port);
+
+    &lt;span style=&quot;color: #5C6370; font-style: italic;&quot;&gt;// &lt;/span&gt;&lt;span style=&quot;color: #5C6370; font-style: italic;&quot;&gt;check for connection failures&lt;/span&gt;
+    &lt;span style=&quot;color: #C678DD;&quot;&gt;if&lt;/span&gt; (&lt;span style=&quot;color: #56B6C2; font-weight: bold;&quot;&gt;!&lt;/span&gt;FTPReply.isPositiveCompletion(ftp.getReplyCode())) {
+        ftp.disconnect();
+        &lt;span style=&quot;color: #C678DD;&quot;&gt;throw&lt;/span&gt; &lt;span style=&quot;color: #C678DD;&quot;&gt;new&lt;/span&gt; &lt;span style=&quot;color: #E5C07B;&quot;&gt;IOException&lt;/span&gt;
+            (&lt;span style=&quot;color: #98C379;&quot;&gt;&quot;Unable to connect to FTP Server: &quot;&lt;/span&gt; + server
+             + &lt;span style=&quot;color: #98C379;&quot;&gt;&quot; port: &quot;&lt;/span&gt; + port);
+    }
+
+    &lt;span style=&quot;color: #5C6370; font-style: italic;&quot;&gt;// &lt;/span&gt;&lt;span style=&quot;color: #5C6370; font-style: italic;&quot;&gt;check for login failures&lt;/span&gt;
+    &lt;span style=&quot;color: #C678DD;&quot;&gt;if&lt;/span&gt; (&lt;span style=&quot;color: #56B6C2; font-weight: bold;&quot;&gt;!&lt;/span&gt;ftp.login(user, password)) {
+        ftp.disconnect();
+        &lt;span style=&quot;color: #C678DD;&quot;&gt;throw&lt;/span&gt; &lt;span style=&quot;color: #C678DD;&quot;&gt;new&lt;/span&gt; &lt;span style=&quot;color: #E5C07B;&quot;&gt;IOException&lt;/span&gt;
+            (&lt;span style=&quot;color: #98C379;&quot;&gt;&quot;Unable to login to FTP Server: &quot;&lt;/span&gt; + server
+             + &lt;span style=&quot;color: #98C379;&quot;&gt;&quot; port: &quot;&lt;/span&gt; + port);
+    }
+
+    &lt;span style=&quot;color: #5C6370; font-style: italic;&quot;&gt;// &lt;/span&gt;&lt;span style=&quot;color: #5C6370; font-style: italic;&quot;&gt;passive mode to be able to work from inside VMs&lt;/span&gt;
+    ftp.enterLocalPassiveMode();
+
+    &lt;span style=&quot;color: #5C6370; font-style: italic;&quot;&gt;// &lt;/span&gt;&lt;span style=&quot;color: #5C6370; font-style: italic;&quot;&gt;now ready to access files and dirs&lt;/span&gt;
+}
+&lt;/pre&gt;
+&lt;/div&gt;
+&lt;/div&gt;
+&lt;/div&gt;
+
+&lt;div id=&quot;outline-container-org18b105c&quot; class=&quot;outline-4&quot;&gt;
+&lt;h4 id=&quot;org18b105c&quot;&gt;Unit test&lt;/h4&gt;
+&lt;div class=&quot;outline-text-4&quot; id=&quot;text-org18b105c&quot;&gt;
+&lt;div class=&quot;org-src-container&quot;&gt;
+&lt;pre class=&quot;src src-java&quot;&gt;&lt;span style=&quot;color: #56B6C2;&quot;&gt;@Test&lt;/span&gt;
+&lt;span style=&quot;color: #56B6C2;&quot;&gt;@DisplayName&lt;/span&gt;(&lt;span style=&quot;color: #98C379;&quot;&gt;&quot;Test open connection sequence for default port/user&quot;&lt;/span&gt;)
+&lt;span style=&quot;color: #C678DD;&quot;&gt;public&lt;/span&gt; &lt;span style=&quot;color: #E5C07B;&quot;&gt;void&lt;/span&gt; &lt;span style=&quot;color: #61AFEF;&quot;&gt;testFTPOpenDefault&lt;/span&gt;() &lt;span style=&quot;color: #C678DD;&quot;&gt;throws&lt;/span&gt; &lt;span style=&quot;color: #E5C07B;&quot;&gt;IOException&lt;/span&gt; {
+
+    &lt;span style=&quot;color: #5C6370; font-style: italic;&quot;&gt;// &lt;/span&gt;&lt;span style=&quot;color: #5C6370; font-style: italic;&quot;&gt;open connection should have three steps:&lt;/span&gt;
+    &lt;span style=&quot;color: #5C6370; font-style: italic;&quot;&gt;// &lt;/span&gt;&lt;span style=&quot;color: #5C6370; font-style: italic;&quot;&gt;connect to server @ port&lt;/span&gt;
+    verify(mockFTPClient).connect(&lt;span style=&quot;color: #98C379;&quot;&gt;&quot;localhost&quot;&lt;/span&gt;, 21);
+    &lt;span style=&quot;color: #5C6370; font-style: italic;&quot;&gt;// &lt;/span&gt;&lt;span style=&quot;color: #5C6370; font-style: italic;&quot;&gt;log in with username anonymous and no password&lt;/span&gt;
+    verify(mockFTPClient).login(&lt;span style=&quot;color: #98C379;&quot;&gt;&quot;anonymous&quot;&lt;/span&gt;, &lt;span style=&quot;color: #98C379;&quot;&gt;&quot;&quot;&lt;/span&gt;);
+    &lt;span style=&quot;color: #5C6370; font-style: italic;&quot;&gt;// &lt;/span&gt;&lt;span style=&quot;color: #5C6370; font-style: italic;&quot;&gt;switch to passive mode to be able to work from VMs&lt;/span&gt;
+    &lt;span style=&quot;color: #5C6370; font-style: italic;&quot;&gt;// &lt;/span&gt;&lt;span style=&quot;color: #5C6370; font-style: italic;&quot;&gt;(behind NATs and port mapping)&lt;/span&gt;
+    verify(mockFTPClient).enterLocalPassiveMode();
+}
+&lt;/pre&gt;
+&lt;/div&gt;
+&lt;/div&gt;
+&lt;/div&gt;
+&lt;/div&gt;
+
+&lt;div id=&quot;outline-container-org294f6a3&quot; class=&quot;outline-3&quot;&gt;
+&lt;h3 id=&quot;org294f6a3&quot;&gt;Add &lt;code&gt;close(...)&lt;/code&gt; method test&lt;/h3&gt;
+&lt;div class=&quot;outline-text-3&quot; id=&quot;text-org294f6a3&quot;&gt;
+&lt;/div&gt;
+&lt;div id=&quot;outline-container-orgcd5916e&quot; class=&quot;outline-4&quot;&gt;
+&lt;h4 id=&quot;orgcd5916e&quot;&gt;Code to test&lt;/h4&gt;
+&lt;div class=&quot;outline-text-4&quot; id=&quot;text-orgcd5916e&quot;&gt;
+&lt;div class=&quot;org-src-container&quot;&gt;
+&lt;pre class=&quot;src src-java&quot;&gt;&lt;span style=&quot;color: #56B6C2;&quot;&gt;@Override&lt;/span&gt;
+&lt;span style=&quot;color: #C678DD;&quot;&gt;public&lt;/span&gt; &lt;span style=&quot;color: #E5C07B;&quot;&gt;void&lt;/span&gt; &lt;span style=&quot;color: #61AFEF;&quot;&gt;close&lt;/span&gt;() &lt;span style=&quot;color: #C678DD;&quot;&gt;throws&lt;/span&gt; &lt;span style=&quot;color: #E5C07B;&quot;&gt;IOException&lt;/span&gt; {
+    ftp.logout();
+    ftp.disconnect();
+}
+
+&lt;/pre&gt;
+&lt;/div&gt;
+&lt;/div&gt;
+&lt;/div&gt;
+
+&lt;div id=&quot;outline-container-org3d7ccc1&quot; class=&quot;outline-4&quot;&gt;
+&lt;h4 id=&quot;org3d7ccc1&quot;&gt;Unit test&lt;/h4&gt;
+&lt;div class=&quot;outline-text-4&quot; id=&quot;text-org3d7ccc1&quot;&gt;
+&lt;div class=&quot;org-src-container&quot;&gt;
+&lt;pre class=&quot;src src-java&quot;&gt;&lt;span style=&quot;color: #56B6C2;&quot;&gt;@Test&lt;/span&gt;
+&lt;span style=&quot;color: #56B6C2;&quot;&gt;@DisplayName&lt;/span&gt;(&lt;span style=&quot;color: #98C379;&quot;&gt;&quot;Test close sequence&quot;&lt;/span&gt;)
+&lt;span style=&quot;color: #C678DD;&quot;&gt;public&lt;/span&gt; &lt;span style=&quot;color: #E5C07B;&quot;&gt;void&lt;/span&gt; &lt;span style=&quot;color: #61AFEF;&quot;&gt;testFTPClose&lt;/span&gt;() &lt;span style=&quot;color: #C678DD;&quot;&gt;throws&lt;/span&gt; &lt;span style=&quot;color: #E5C07B;&quot;&gt;IOException&lt;/span&gt; {
+
+    &lt;span style=&quot;color: #5C6370; font-style: italic;&quot;&gt;// &lt;/span&gt;&lt;span style=&quot;color: #5C6370; font-style: italic;&quot;&gt;close (as in Closeable interface)&lt;/span&gt;
+    client.close();
+
+    &lt;span style=&quot;color: #5C6370; font-style: italic;&quot;&gt;// &lt;/span&gt;&lt;span style=&quot;color: #5C6370; font-style: italic;&quot;&gt;order of calls verification&lt;/span&gt;
+    &lt;span style=&quot;color: #E5C07B;&quot;&gt;InOrder&lt;/span&gt; &lt;span style=&quot;color: #E06C75;&quot;&gt;inOrder&lt;/span&gt; = inOrder(mockFTPClient);
+
+    inOrder.verify(mockFTPClient).logout();
+    inOrder.verify(mockFTPClient).disconnect();
+}
+&lt;/pre&gt;
+&lt;/div&gt;
+&lt;/div&gt;
+&lt;/div&gt;
+&lt;/div&gt;
+
+&lt;div id=&quot;outline-container-orgcfe9b7e&quot; class=&quot;outline-3&quot;&gt;
+&lt;h3 id=&quot;orgcfe9b7e&quot;&gt;Unsuccessful ftp connection behaviour tests for &lt;code&gt;open(...)&lt;/code&gt;&lt;/h3&gt;
+&lt;div class=&quot;outline-text-3&quot; id=&quot;text-orgcfe9b7e&quot;&gt;
+&lt;/div&gt;
+&lt;div id=&quot;outline-container-org97c052e&quot; class=&quot;outline-4&quot;&gt;
+&lt;h4 id=&quot;org97c052e&quot;&gt;Connection problem test&lt;/h4&gt;
+&lt;div class=&quot;outline-text-4&quot; id=&quot;text-org97c052e&quot;&gt;
+&lt;div class=&quot;org-src-container&quot;&gt;
+&lt;pre class=&quot;src src-java&quot;&gt;&lt;span style=&quot;color: #56B6C2;&quot;&gt;@Nested&lt;/span&gt;
+&lt;span style=&quot;color: #56B6C2;&quot;&gt;@DisplayName&lt;/span&gt;(&lt;span style=&quot;color: #98C379;&quot;&gt;&quot;Test unsuccessful open connection cases&quot;&lt;/span&gt;)
+&lt;span style=&quot;color: #C678DD;&quot;&gt;public&lt;/span&gt; &lt;span style=&quot;color: #C678DD;&quot;&gt;class&lt;/span&gt; &lt;span style=&quot;color: #E5C07B;&quot;&gt;unsuccessfulCases&lt;/span&gt; {
+
+    &lt;span style=&quot;color: #C678DD;&quot;&gt;private&lt;/span&gt; &lt;span style=&quot;color: #E5C07B;&quot;&gt;FTPClient&lt;/span&gt; &lt;span style=&quot;color: #E06C75;&quot;&gt;mockFTPClient&lt;/span&gt; = mock(FTPClient.&lt;span style=&quot;color: #C678DD;&quot;&gt;class&lt;/span&gt;);
+
+    &lt;span style=&quot;color: #56B6C2;&quot;&gt;@Test&lt;/span&gt;
+    &lt;span style=&quot;color: #56B6C2;&quot;&gt;@DisplayName&lt;/span&gt;(&lt;span style=&quot;color: #98C379;&quot;&gt;&quot;Test connect problem behaviour&quot;&lt;/span&gt;)
+    &lt;span style=&quot;color: #C678DD;&quot;&gt;public&lt;/span&gt; &lt;span style=&quot;color: #E5C07B;&quot;&gt;void&lt;/span&gt; &lt;span style=&quot;color: #61AFEF;&quot;&gt;testConnectProblem&lt;/span&gt;() &lt;span style=&quot;color: #C678DD;&quot;&gt;throws&lt;/span&gt; &lt;span style=&quot;color: #E5C07B;&quot;&gt;IOException&lt;/span&gt; {
+
+        &lt;span style=&quot;color: #5C6370; font-style: italic;&quot;&gt;// &lt;/span&gt;&lt;span style=&quot;color: #5C6370; font-style: italic;&quot;&gt;set up a troublesome path for the connecting sequence&lt;/span&gt;
+        when(mockFTPClient.getReplyCode())
+            .thenReturn(534);
+
+        &lt;span style=&quot;color: #E5C07B;&quot;&gt;Throwable&lt;/span&gt; &lt;span style=&quot;color: #E06C75;&quot;&gt;ex&lt;/span&gt; = assertThrows
+            (IOException.&lt;span style=&quot;color: #C678DD;&quot;&gt;class&lt;/span&gt;
+             , () -&amp;gt; FtpClient.getClient(URI.create(&lt;span style=&quot;color: #98C379;&quot;&gt;&quot;localhost&quot;&lt;/span&gt;), mockFTPClient)
+             , () -&amp;gt; &lt;span style=&quot;color: #98C379;&quot;&gt;&quot;FtpClient should throw an exception&quot;&lt;/span&gt; +
+             &lt;span style=&quot;color: #98C379;&quot;&gt;&quot; when ftp return code is not positive&quot;&lt;/span&gt;);
+    }
+
+    &lt;span style=&quot;color: #5C6370; font-style: italic;&quot;&gt;/* &lt;/span&gt;&lt;span style=&quot;color: #5C6370; font-style: italic;&quot;&gt;more code&lt;/span&gt;&lt;span style=&quot;color: #5C6370; font-style: italic;&quot;&gt; */&lt;/span&gt;
+}
+&lt;/pre&gt;
+&lt;/div&gt;
+&lt;/div&gt;
+&lt;/div&gt;
+
+&lt;div id=&quot;outline-container-org3a93a3e&quot; class=&quot;outline-4&quot;&gt;
+&lt;h4 id=&quot;org3a93a3e&quot;&gt;Login problem test&lt;/h4&gt;
+&lt;div class=&quot;outline-text-4&quot; id=&quot;text-org3a93a3e&quot;&gt;
+&lt;div class=&quot;org-src-container&quot;&gt;
+&lt;pre class=&quot;src src-java&quot;&gt;&lt;span style=&quot;color: #56B6C2;&quot;&gt;@Nested&lt;/span&gt;
+&lt;span style=&quot;color: #56B6C2;&quot;&gt;@DisplayName&lt;/span&gt;(&lt;span style=&quot;color: #98C379;&quot;&gt;&quot;Test unsuccessful open connection cases&quot;&lt;/span&gt;)
+&lt;span style=&quot;color: #C678DD;&quot;&gt;public&lt;/span&gt; &lt;span style=&quot;color: #C678DD;&quot;&gt;class&lt;/span&gt; &lt;span style=&quot;color: #E5C07B;&quot;&gt;unsuccessfulCases&lt;/span&gt; {
+
+    &lt;span style=&quot;color: #5C6370; font-style: italic;&quot;&gt;/* &lt;/span&gt;&lt;span style=&quot;color: #5C6370; font-style: italic;&quot;&gt;more code&lt;/span&gt;&lt;span style=&quot;color: #5C6370; font-style: italic;&quot;&gt; */&lt;/span&gt;
+
+    &lt;span style=&quot;color: #56B6C2;&quot;&gt;@Test&lt;/span&gt;
+    &lt;span style=&quot;color: #56B6C2;&quot;&gt;@DisplayName&lt;/span&gt;(&lt;span style=&quot;color: #98C379;&quot;&gt;&quot;Test login problem behaviour&quot;&lt;/span&gt;)
+    &lt;span style=&quot;color: #C678DD;&quot;&gt;public&lt;/span&gt; &lt;span style=&quot;color: #E5C07B;&quot;&gt;void&lt;/span&gt; &lt;span style=&quot;color: #61AFEF;&quot;&gt;testLoginProblem&lt;/span&gt;() &lt;span style=&quot;color: #C678DD;&quot;&gt;throws&lt;/span&gt; &lt;span style=&quot;color: #E5C07B;&quot;&gt;IOException&lt;/span&gt; {
+
+        &lt;span style=&quot;color: #5C6370; font-style: italic;&quot;&gt;// &lt;/span&gt;&lt;span style=&quot;color: #5C6370; font-style: italic;&quot;&gt;set up a happy path for the connecting sequence&lt;/span&gt;
+        when(mockFTPClient.getReplyCode())
+            .thenReturn(230);
+
+        &lt;span style=&quot;color: #5C6370; font-style: italic;&quot;&gt;// &lt;/span&gt;&lt;span style=&quot;color: #5C6370; font-style: italic;&quot;&gt;but bad response for the login call&lt;/span&gt;
+        when(mockFTPClient.login(anyString(), anyString()))
+            .thenReturn(&lt;span style=&quot;color: #56B6C2;&quot;&gt;false&lt;/span&gt;);
+
+        &lt;span style=&quot;color: #E5C07B;&quot;&gt;Throwable&lt;/span&gt; &lt;span style=&quot;color: #E06C75;&quot;&gt;ex&lt;/span&gt; = assertThrows
+            (IOException.&lt;span style=&quot;color: #C678DD;&quot;&gt;class&lt;/span&gt;
+             , () -&amp;gt; FtpClient.getClient(URI.create(&lt;span style=&quot;color: #98C379;&quot;&gt;&quot;localhost&quot;&lt;/span&gt;), mockFTPClient)
+             , () -&amp;gt; &lt;span style=&quot;color: #98C379;&quot;&gt;&quot;FtpClient should throw an exception&quot;&lt;/span&gt;
+             + &lt;span style=&quot;color: #98C379;&quot;&gt;&quot; when ftp login is not successful&quot;&lt;/span&gt;);
+    }
+}
+&lt;/pre&gt;
+&lt;/div&gt;
+&lt;/div&gt;
+&lt;/div&gt;
+&lt;/div&gt;
+&lt;/div&gt;
+
+&lt;div id=&quot;outline-container-orgc95c641&quot; class=&quot;outline-2&quot;&gt;
+&lt;h2 id=&quot;orgc95c641&quot;&gt;Add tests for &lt;code&gt;listFiles(...)&lt;/code&gt;, &lt;code&gt;downloadFile(...)&lt;/code&gt; and &lt;code&gt;downloadAllFiles(...)&lt;/code&gt; methods&lt;/h2&gt;
+&lt;div class=&quot;outline-text-2&quot; id=&quot;text-orgc95c641&quot;&gt;
+&lt;/div&gt;
+&lt;div id=&quot;outline-container-org51b9e5c&quot; class=&quot;outline-3&quot;&gt;
+&lt;h3 id=&quot;org51b9e5c&quot;&gt;Mock file/directory behaviours for the &lt;code&gt;FTPClient&lt;/code&gt;&lt;/h3&gt;
+&lt;div class=&quot;outline-text-3&quot; id=&quot;text-org51b9e5c&quot;&gt;
+&lt;div class=&quot;org-src-container&quot;&gt;
+&lt;pre class=&quot;src src-java&quot;&gt;&lt;span style=&quot;color: #56B6C2;&quot;&gt;@Nested&lt;/span&gt;
+&lt;span style=&quot;color: #56B6C2;&quot;&gt;@DisplayName&lt;/span&gt;(&lt;span style=&quot;color: #98C379;&quot;&gt;&quot;Test successful ftp connection&quot;&lt;/span&gt;)
+&lt;span style=&quot;color: #C678DD;&quot;&gt;public&lt;/span&gt; &lt;span style=&quot;color: #C678DD;&quot;&gt;class&lt;/span&gt; &lt;span style=&quot;color: #E5C07B;&quot;&gt;openIfSuccessful&lt;/span&gt; {
+
+    &lt;span style=&quot;color: #C678DD;&quot;&gt;private&lt;/span&gt; &lt;span style=&quot;color: #C678DD;&quot;&gt;final&lt;/span&gt; &lt;span style=&quot;color: #E5C07B;&quot;&gt;FTPClient&lt;/span&gt; &lt;span style=&quot;color: #E06C75;&quot;&gt;mockFTPClient&lt;/span&gt; = mock(FTPClient.&lt;span style=&quot;color: #C678DD;&quot;&gt;class&lt;/span&gt;);
+    &lt;span style=&quot;color: #C678DD;&quot;&gt;private&lt;/span&gt; &lt;span style=&quot;color: #E5C07B;&quot;&gt;FtpClient&lt;/span&gt; &lt;span style=&quot;color: #E06C75;&quot;&gt;client&lt;/span&gt;;
+    &lt;span style=&quot;color: #C678DD;&quot;&gt;private&lt;/span&gt; &lt;span style=&quot;color: #E5C07B;&quot;&gt;FTPFile&lt;/span&gt;[] &lt;span style=&quot;color: #E06C75;&quot;&gt;ftpFiles&lt;/span&gt;;
+
+    &lt;span style=&quot;color: #56B6C2;&quot;&gt;@BeforeEach&lt;/span&gt;
+    &lt;span style=&quot;color: #C678DD;&quot;&gt;public&lt;/span&gt; &lt;span style=&quot;color: #E5C07B;&quot;&gt;void&lt;/span&gt; &lt;span style=&quot;color: #61AFEF;&quot;&gt;setUp&lt;/span&gt;() &lt;span style=&quot;color: #C678DD;&quot;&gt;throws&lt;/span&gt; &lt;span style=&quot;color: #E5C07B;&quot;&gt;IOException&lt;/span&gt; {
+
+        &lt;span style=&quot;color: #5C6370; font-style: italic;&quot;&gt;/* &lt;/span&gt;&lt;span style=&quot;color: #5C6370; font-style: italic;&quot;&gt;more code&lt;/span&gt;&lt;span style=&quot;color: #5C6370; font-style: italic;&quot;&gt; */&lt;/span&gt;
+
+        &lt;span style=&quot;color: #5C6370; font-style: italic;&quot;&gt;// &lt;/span&gt;&lt;span style=&quot;color: #5C6370; font-style: italic;&quot;&gt;setup file content for the mock FTPClient&lt;/span&gt;
+        ftpFiles = &lt;span style=&quot;color: #C678DD;&quot;&gt;new&lt;/span&gt; &lt;span style=&quot;color: #E5C07B;&quot;&gt;FTPFile&lt;/span&gt;[2];
+        ftpFiles[0] = &lt;span style=&quot;color: #C678DD;&quot;&gt;new&lt;/span&gt; &lt;span style=&quot;color: #E5C07B;&quot;&gt;FTPFile&lt;/span&gt;();
+        ftpFiles[0].setName(&lt;span style=&quot;color: #98C379;&quot;&gt;&quot;fileOne.txt&quot;&lt;/span&gt;);
+        ftpFiles[0].setType(&lt;span style=&quot;color: #56B6C2;&quot;&gt;FTPFile&lt;/span&gt;.FILE_TYPE);
+        ftpFiles[1] = &lt;span style=&quot;color: #C678DD;&quot;&gt;new&lt;/span&gt; &lt;span style=&quot;color: #E5C07B;&quot;&gt;FTPFile&lt;/span&gt;();
+        ftpFiles[1].setName(&lt;span style=&quot;color: #98C379;&quot;&gt;&quot;fileTwo.txt&quot;&lt;/span&gt;);
+        ftpFiles[1].setType(&lt;span style=&quot;color: #56B6C2;&quot;&gt;FTPFile&lt;/span&gt;.FILE_TYPE);
+
+        &lt;span style=&quot;color: #5C6370; font-style: italic;&quot;&gt;// &lt;/span&gt;&lt;span style=&quot;color: #5C6370; font-style: italic;&quot;&gt;mock FTPClient response for the list command&lt;/span&gt;
+        when(mockFTPClient.listFiles(anyString()))
+            .thenReturn(ftpFiles);
+
+    }
+}
+&lt;/pre&gt;
+&lt;/div&gt;
+&lt;/div&gt;
+&lt;/div&gt;
+
+&lt;div id=&quot;outline-container-org3b3f542&quot; class=&quot;outline-3&quot;&gt;
+&lt;h3 id=&quot;org3b3f542&quot;&gt;Add &lt;code&gt;listFiles(...)&lt;/code&gt; method test&lt;/h3&gt;
+&lt;div class=&quot;outline-text-3&quot; id=&quot;text-org3b3f542&quot;&gt;
+&lt;/div&gt;
+&lt;div id=&quot;outline-container-org985931b&quot; class=&quot;outline-4&quot;&gt;
+&lt;h4 id=&quot;org985931b&quot;&gt;Code to test&lt;/h4&gt;
+&lt;div class=&quot;outline-text-4&quot; id=&quot;text-org985931b&quot;&gt;
+&lt;div class=&quot;org-src-container&quot;&gt;
+&lt;pre class=&quot;src src-java&quot;&gt;&lt;span style=&quot;color: #C678DD;&quot;&gt;public&lt;/span&gt; &lt;span style=&quot;color: #E5C07B;&quot;&gt;List&lt;/span&gt;&amp;lt;&lt;span style=&quot;color: #E5C07B;&quot;&gt;FTPFile&lt;/span&gt;&amp;gt; &lt;span style=&quot;color: #61AFEF;&quot;&gt;listFiles&lt;/span&gt;(&lt;span style=&quot;color: #E5C07B;&quot;&gt;Path&lt;/span&gt; &lt;span style=&quot;color: #E06C75;&quot;&gt;remoteDir&lt;/span&gt;) &lt;span style=&quot;color: #C678DD;&quot;&gt;throws&lt;/span&gt; &lt;span style=&quot;color: #E5C07B;&quot;&gt;IOException&lt;/span&gt; {
+
+    &lt;span style=&quot;color: #E5C07B;&quot;&gt;FTPFile&lt;/span&gt;[] &lt;span style=&quot;color: #E06C75;&quot;&gt;files&lt;/span&gt; = ftp.listFiles(remoteDir.toString());
+
+    &lt;span style=&quot;color: #C678DD;&quot;&gt;return&lt;/span&gt; Arrays.stream(files)
+        .collect(Collectors.toList());
+}
+&lt;/pre&gt;
+&lt;/div&gt;
+&lt;/div&gt;
+&lt;/div&gt;
+
+&lt;div id=&quot;outline-container-org0b4840d&quot; class=&quot;outline-4&quot;&gt;
+&lt;h4 id=&quot;org0b4840d&quot;&gt;Unit test&lt;/h4&gt;
+&lt;div class=&quot;outline-text-4&quot; id=&quot;text-org0b4840d&quot;&gt;
+&lt;div class=&quot;org-src-container&quot;&gt;
+&lt;pre class=&quot;src src-java&quot;&gt;&lt;span style=&quot;color: #56B6C2;&quot;&gt;@Test&lt;/span&gt;
+&lt;span style=&quot;color: #56B6C2;&quot;&gt;@DisplayName&lt;/span&gt;(&lt;span style=&quot;color: #98C379;&quot;&gt;&quot;Test list files call&quot;&lt;/span&gt;)
+&lt;span style=&quot;color: #C678DD;&quot;&gt;public&lt;/span&gt; &lt;span style=&quot;color: #E5C07B;&quot;&gt;void&lt;/span&gt; &lt;span style=&quot;color: #61AFEF;&quot;&gt;testFTPListFiles&lt;/span&gt;() &lt;span style=&quot;color: #C678DD;&quot;&gt;throws&lt;/span&gt; &lt;span style=&quot;color: #E5C07B;&quot;&gt;IOException&lt;/span&gt; {
+
+    &lt;span style=&quot;color: #5C6370; font-style: italic;&quot;&gt;// &lt;/span&gt;&lt;span style=&quot;color: #5C6370; font-style: italic;&quot;&gt;get the list through FtpClient&lt;/span&gt;
+    &lt;span style=&quot;color: #E5C07B;&quot;&gt;List&lt;/span&gt;&amp;lt;&lt;span style=&quot;color: #E5C07B;&quot;&gt;FTPFile&lt;/span&gt;&amp;gt; &lt;span style=&quot;color: #E06C75;&quot;&gt;list&lt;/span&gt; = client.listFiles(Path.of(&lt;span style=&quot;color: #98C379;&quot;&gt;&quot;/any/path&quot;&lt;/span&gt;));
+
+    assertLinesMatch(List.of(&lt;span style=&quot;color: #98C379;&quot;&gt;&quot;fileOne.txt&quot;&lt;/span&gt;, &lt;span style=&quot;color: #98C379;&quot;&gt;&quot;fileTwo.txt&quot;&lt;/span&gt;)
+                     , list.stream()
+                     .map(FTPFile::getName)
+                     .collect(Collectors.toList()));
+}
+&lt;/pre&gt;
+&lt;/div&gt;
+&lt;/div&gt;
+&lt;/div&gt;
+&lt;/div&gt;
+
+&lt;div id=&quot;outline-container-orgc487c8e&quot; class=&quot;outline-3&quot;&gt;
+&lt;h3 id=&quot;orgc487c8e&quot;&gt;Add &lt;code&gt;downloadFile(...)&lt;/code&gt; method test&lt;/h3&gt;
+&lt;div class=&quot;outline-text-3&quot; id=&quot;text-orgc487c8e&quot;&gt;
+&lt;/div&gt;
+&lt;div id=&quot;outline-container-org0a65335&quot; class=&quot;outline-4&quot;&gt;
+&lt;h4 id=&quot;org0a65335&quot;&gt;Code to test&lt;/h4&gt;
+&lt;div class=&quot;outline-text-4&quot; id=&quot;text-org0a65335&quot;&gt;
+&lt;div class=&quot;org-src-container&quot;&gt;
+&lt;pre class=&quot;src src-java&quot;&gt;&lt;span style=&quot;color: #C678DD;&quot;&gt;public&lt;/span&gt; &lt;span style=&quot;color: #E5C07B;&quot;&gt;void&lt;/span&gt; &lt;span style=&quot;color: #61AFEF;&quot;&gt;downloadFile&lt;/span&gt;(&lt;span style=&quot;color: #E5C07B;&quot;&gt;Path&lt;/span&gt; &lt;span style=&quot;color: #E06C75;&quot;&gt;remoteFile&lt;/span&gt;, &lt;span style=&quot;color: #E5C07B;&quot;&gt;OutputStream&lt;/span&gt; &lt;span style=&quot;color: #E06C75;&quot;&gt;out&lt;/span&gt;) &lt;span style=&quot;color: #C678DD;&quot;&gt;throws&lt;/span&gt; &lt;span style=&quot;color: #E5C07B;&quot;&gt;IOException&lt;/span&gt; {
+    ftp.retrieveFile(remoteFile.toString(), out);
+}
+&lt;/pre&gt;
+&lt;/div&gt;
+&lt;/div&gt;
+&lt;/div&gt;
+
+&lt;div id=&quot;outline-container-org4821c9d&quot; class=&quot;outline-4&quot;&gt;
+&lt;h4 id=&quot;org4821c9d&quot;&gt;Unit test&lt;/h4&gt;
+&lt;div class=&quot;outline-text-4&quot; id=&quot;text-org4821c9d&quot;&gt;
+&lt;div class=&quot;org-src-container&quot;&gt;
+&lt;pre class=&quot;src src-java&quot;&gt;&lt;span style=&quot;color: #56B6C2;&quot;&gt;@Test&lt;/span&gt;
+&lt;span style=&quot;color: #56B6C2;&quot;&gt;@DisplayName&lt;/span&gt;(&lt;span style=&quot;color: #98C379;&quot;&gt;&quot;Test downloading a file call&quot;&lt;/span&gt;)
+&lt;span style=&quot;color: #C678DD;&quot;&gt;public&lt;/span&gt; &lt;span style=&quot;color: #E5C07B;&quot;&gt;void&lt;/span&gt; &lt;span style=&quot;color: #61AFEF;&quot;&gt;testFTPDownloadFile&lt;/span&gt;(&lt;span style=&quot;color: #56B6C2;&quot;&gt;@TempDir&lt;/span&gt; &lt;span style=&quot;color: #E5C07B;&quot;&gt;Path&lt;/span&gt; &lt;span style=&quot;color: #E06C75;&quot;&gt;dataDir&lt;/span&gt;) &lt;span style=&quot;color: #C678DD;&quot;&gt;throws&lt;/span&gt; &lt;span style=&quot;color: #E5C07B;&quot;&gt;IOException&lt;/span&gt; {
+
+    &lt;span style=&quot;color: #5C6370; font-style: italic;&quot;&gt;// &lt;/span&gt;&lt;span style=&quot;color: #5C6370; font-style: italic;&quot;&gt;prepare an output stream to copy file content&lt;/span&gt;
+    &lt;span style=&quot;color: #E5C07B;&quot;&gt;var&lt;/span&gt; &lt;span style=&quot;color: #E06C75;&quot;&gt;out&lt;/span&gt; = &lt;span style=&quot;color: #C678DD;&quot;&gt;new&lt;/span&gt; &lt;span style=&quot;color: #E5C07B;&quot;&gt;FileOutputStream&lt;/span&gt;
+        (dataDir.resolve(&lt;span style=&quot;color: #98C379;&quot;&gt;&quot;test.txt&quot;&lt;/span&gt;).toFile());
+
+    &lt;span style=&quot;color: #5C6370; font-style: italic;&quot;&gt;// &lt;/span&gt;&lt;span style=&quot;color: #5C6370; font-style: italic;&quot;&gt;try to download a file with the given path&lt;/span&gt;
+    client.downloadFile(Path.of(&lt;span style=&quot;color: #98C379;&quot;&gt;&quot;any/path&quot;&lt;/span&gt;), out);
+
+    verify(mockFTPClient).retrieveFile(&lt;span style=&quot;color: #98C379;&quot;&gt;&quot;any/path&quot;&lt;/span&gt;, out);
+}
+&lt;/pre&gt;
+&lt;/div&gt;
+&lt;/div&gt;
+&lt;/div&gt;
+&lt;/div&gt;
+
+&lt;div id=&quot;outline-container-org4a0dc19&quot; class=&quot;outline-3&quot;&gt;
+&lt;h3 id=&quot;org4a0dc19&quot;&gt;Add &lt;code&gt;downloadAllFiles(...)&lt;/code&gt; method test&lt;/h3&gt;
+&lt;div class=&quot;outline-text-3&quot; id=&quot;text-org4a0dc19&quot;&gt;
+&lt;/div&gt;
+&lt;div id=&quot;outline-container-orgf5fb836&quot; class=&quot;outline-4&quot;&gt;
+&lt;h4 id=&quot;orgf5fb836&quot;&gt;Code to test&lt;/h4&gt;
+&lt;div class=&quot;outline-text-4&quot; id=&quot;text-orgf5fb836&quot;&gt;
+&lt;div class=&quot;org-src-container&quot;&gt;
+&lt;pre class=&quot;src src-java&quot;&gt;&lt;span style=&quot;color: #C678DD;&quot;&gt;public&lt;/span&gt; &lt;span style=&quot;color: #E5C07B;&quot;&gt;void&lt;/span&gt; &lt;span style=&quot;color: #61AFEF;&quot;&gt;downloadAllFiles&lt;/span&gt;
+    (&lt;span style=&quot;color: #E5C07B;&quot;&gt;Path&lt;/span&gt; &lt;span style=&quot;color: #E06C75;&quot;&gt;remoteDir&lt;/span&gt;
+     , &lt;span style=&quot;color: #E5C07B;&quot;&gt;Function&lt;/span&gt;&amp;lt;&lt;span style=&quot;color: #E5C07B;&quot;&gt;Path&lt;/span&gt;, &lt;span style=&quot;color: #E5C07B;&quot;&gt;OutputStream&lt;/span&gt;&amp;gt; &lt;span style=&quot;color: #E06C75;&quot;&gt;outputProvider&lt;/span&gt;
+     , &lt;span style=&quot;color: #E5C07B;&quot;&gt;Consumer&lt;/span&gt;&amp;lt;&lt;span style=&quot;color: #E5C07B;&quot;&gt;String&lt;/span&gt;&amp;gt; &lt;span style=&quot;color: #E06C75;&quot;&gt;progressReporter&lt;/span&gt;) &lt;span style=&quot;color: #C678DD;&quot;&gt;throws&lt;/span&gt; &lt;span style=&quot;color: #E5C07B;&quot;&gt;IOException&lt;/span&gt; {
+
+    &lt;span style=&quot;color: #E5C07B;&quot;&gt;var&lt;/span&gt; &lt;span style=&quot;color: #E06C75;&quot;&gt;files&lt;/span&gt; = ftp.listFiles(remoteDir.toString());
+
+    &lt;span style=&quot;color: #E5C07B;&quot;&gt;var&lt;/span&gt; &lt;span style=&quot;color: #E06C75;&quot;&gt;filesList&lt;/span&gt; = Arrays.stream(files)
+        .filter(FTPFile::isFile)
+        .map(FTPFile::getName)
+        .collect(Collectors.toList());
+
+    &lt;span style=&quot;color: #C678DD;&quot;&gt;for&lt;/span&gt;(&lt;span style=&quot;color: #E5C07B;&quot;&gt;int&lt;/span&gt; &lt;span style=&quot;color: #E06C75;&quot;&gt;i&lt;/span&gt; = 0; i &amp;lt; filesList.&lt;span style=&quot;color: #E5C07B;&quot;&gt;size&lt;/span&gt;(); i++) {
+        progressReporter.accept
+            (String.format(&lt;span style=&quot;color: #98C379;&quot;&gt;&quot;Downloading (%d of %d):[%s]&quot;&lt;/span&gt;
+                           , i+1, filesList.size(), filesList.get(i)));
+
+        &lt;span style=&quot;color: #C678DD;&quot;&gt;try&lt;/span&gt; (&lt;span style=&quot;color: #E5C07B;&quot;&gt;var&lt;/span&gt; &lt;span style=&quot;color: #E06C75;&quot;&gt;out&lt;/span&gt; = outputProvider.apply(Path.of(filesList.get(i)))) {
+            ftp.retrieveFile(remoteDir.resolve(filesList.get(i)).toString(), out);
+        }
+    }
+}
+&lt;/pre&gt;
+&lt;/div&gt;
+&lt;/div&gt;
+&lt;/div&gt;
+&lt;div id=&quot;outline-container-orgfcf33c3&quot; class=&quot;outline-4&quot;&gt;
+&lt;h4 id=&quot;orgfcf33c3&quot;&gt;Unit test&lt;/h4&gt;
+&lt;div class=&quot;outline-text-4&quot; id=&quot;text-orgfcf33c3&quot;&gt;
+&lt;div class=&quot;org-src-container&quot;&gt;
+&lt;pre class=&quot;src src-java&quot;&gt;&lt;span style=&quot;color: #56B6C2;&quot;&gt;@Test&lt;/span&gt;
+&lt;span style=&quot;color: #56B6C2;&quot;&gt;@DisplayName&lt;/span&gt;(&lt;span style=&quot;color: #98C379;&quot;&gt;&quot;Test downloadAllFiles call&quot;&lt;/span&gt;)
+&lt;span style=&quot;color: #C678DD;&quot;&gt;public&lt;/span&gt; &lt;span style=&quot;color: #E5C07B;&quot;&gt;void&lt;/span&gt; &lt;span style=&quot;color: #61AFEF;&quot;&gt;testFTPDownloadAllFiles&lt;/span&gt;() &lt;span style=&quot;color: #C678DD;&quot;&gt;throws&lt;/span&gt; &lt;span style=&quot;color: #E5C07B;&quot;&gt;IOException&lt;/span&gt; {
+
+    &lt;span style=&quot;color: #5C6370; font-style: italic;&quot;&gt;// &lt;/span&gt;&lt;span style=&quot;color: #5C6370; font-style: italic;&quot;&gt;create a simple progress reporter&lt;/span&gt;
+    &lt;span style=&quot;color: #E5C07B;&quot;&gt;Consumer&lt;/span&gt;&amp;lt;&lt;span style=&quot;color: #E5C07B;&quot;&gt;String&lt;/span&gt;&amp;gt; &lt;span style=&quot;color: #E06C75;&quot;&gt;progressReporter&lt;/span&gt; = mock(Consumer.&lt;span style=&quot;color: #C678DD;&quot;&gt;class&lt;/span&gt;);
+    &lt;span style=&quot;color: #5C6370; font-style: italic;&quot;&gt;// &lt;/span&gt;&lt;span style=&quot;color: #5C6370; font-style: italic;&quot;&gt;create order verifier for the progress reporter mock&lt;/span&gt;
+    &lt;span style=&quot;color: #E5C07B;&quot;&gt;InOrder&lt;/span&gt; &lt;span style=&quot;color: #E06C75;&quot;&gt;inOrderReporter&lt;/span&gt; = inOrder(progressReporter);
+
+    &lt;span style=&quot;color: #5C6370; font-style: italic;&quot;&gt;// &lt;/span&gt;&lt;span style=&quot;color: #5C6370; font-style: italic;&quot;&gt;create a simple output stream&lt;/span&gt;
+    &lt;span style=&quot;color: #E5C07B;&quot;&gt;OutputStream&lt;/span&gt; &lt;span style=&quot;color: #E06C75;&quot;&gt;out&lt;/span&gt; = mock(OutputStream.&lt;span style=&quot;color: #C678DD;&quot;&gt;class&lt;/span&gt;);
+    &lt;span style=&quot;color: #5C6370; font-style: italic;&quot;&gt;// &lt;/span&gt;&lt;span style=&quot;color: #5C6370; font-style: italic;&quot;&gt;create a simple output provider&lt;/span&gt;
+    &lt;span style=&quot;color: #E5C07B;&quot;&gt;Function&lt;/span&gt;&amp;lt;&lt;span style=&quot;color: #E5C07B;&quot;&gt;Path&lt;/span&gt;, &lt;span style=&quot;color: #E5C07B;&quot;&gt;OutputStream&lt;/span&gt;&amp;gt; &lt;span style=&quot;color: #E06C75;&quot;&gt;outputProvider&lt;/span&gt; = mock(Function.&lt;span style=&quot;color: #C678DD;&quot;&gt;class&lt;/span&gt;);
+    when(outputProvider.apply(any(Path.&lt;span style=&quot;color: #C678DD;&quot;&gt;class&lt;/span&gt;))).thenReturn(out);
+    &lt;span style=&quot;color: #5C6370; font-style: italic;&quot;&gt;// &lt;/span&gt;&lt;span style=&quot;color: #5C6370; font-style: italic;&quot;&gt;create order verifier for the output provider mock&lt;/span&gt;
+    &lt;span style=&quot;color: #E5C07B;&quot;&gt;InOrder&lt;/span&gt; &lt;span style=&quot;color: #E06C75;&quot;&gt;inOrderProvider&lt;/span&gt; = inOrder(outputProvider);
+
+    client.downloadAllFiles
+        (Path.of(&lt;span style=&quot;color: #98C379;&quot;&gt;&quot;/remote/path&quot;&lt;/span&gt;), outputProvider, progressReporter);
+
+    &lt;span style=&quot;color: #5C6370; font-style: italic;&quot;&gt;// &lt;/span&gt;&lt;span style=&quot;color: #5C6370; font-style: italic;&quot;&gt;check the download sequence&lt;/span&gt;
+    &lt;span style=&quot;color: #5C6370; font-style: italic;&quot;&gt;// &lt;/span&gt;&lt;span style=&quot;color: #5C6370; font-style: italic;&quot;&gt;get a list&lt;/span&gt;
+    verify(mockFTPClient).listFiles(&lt;span style=&quot;color: #98C379;&quot;&gt;&quot;/remote/path&quot;&lt;/span&gt;);
+
+    &lt;span style=&quot;color: #5C6370; font-style: italic;&quot;&gt;// &lt;/span&gt;&lt;span style=&quot;color: #5C6370; font-style: italic;&quot;&gt;say &quot;I am downloading ...&quot; twice&lt;/span&gt;
+    inOrderReporter.verify(progressReporter)
+        .accept(&lt;span style=&quot;color: #98C379;&quot;&gt;&quot;Downloading (1 of 2):[fileOne.txt]&quot;&lt;/span&gt;);
+    inOrderReporter.verify(progressReporter)
+        .accept(&lt;span style=&quot;color: #98C379;&quot;&gt;&quot;Downloading (2 of 2):[fileTwo.txt]&quot;&lt;/span&gt;);
+
+    &lt;span style=&quot;color: #5C6370; font-style: italic;&quot;&gt;// &lt;/span&gt;&lt;span style=&quot;color: #5C6370; font-style: italic;&quot;&gt;get output stream to write to... twice&lt;/span&gt;
+    inOrderProvider.verify(outputProvider).apply(Path.of(&lt;span style=&quot;color: #98C379;&quot;&gt;&quot;fileOne.txt&quot;&lt;/span&gt;));
+    inOrderProvider.verify(outputProvider).apply(Path.of(&lt;span style=&quot;color: #98C379;&quot;&gt;&quot;fileTwo.txt&quot;&lt;/span&gt;));
+
+    &lt;span style=&quot;color: #5C6370; font-style: italic;&quot;&gt;// &lt;/span&gt;&lt;span style=&quot;color: #5C6370; font-style: italic;&quot;&gt;check if retrieveFile method has been called&lt;/span&gt;
+    verify(mockFTPClient).retrieveFile(&lt;span style=&quot;color: #98C379;&quot;&gt;&quot;/remote/path/fileOne.txt&quot;&lt;/span&gt;, out);
+    verify(mockFTPClient).retrieveFile(&lt;span style=&quot;color: #98C379;&quot;&gt;&quot;/remote/path/fileTwo.txt&quot;&lt;/span&gt;, out);
+}
+&lt;/pre&gt;
+&lt;/div&gt;
+&lt;/div&gt;
+&lt;/div&gt;
+&lt;/div&gt;
+&lt;/div&gt;
+
+&lt;div id=&quot;outline-container-org29a9281&quot; class=&quot;outline-2&quot;&gt;
+&lt;h2 id=&quot;org29a9281&quot;&gt;Add &lt;code&gt;FtpClient::getClient(...)&lt;/code&gt; test for non-default port and user account&lt;/h2&gt;
+&lt;div class=&quot;outline-text-2&quot; id=&quot;text-org29a9281&quot;&gt;
+&lt;/div&gt;
+&lt;div id=&quot;outline-container-org6755770&quot; class=&quot;outline-4&quot;&gt;
+&lt;h4 id=&quot;org6755770&quot;&gt;Code to test&lt;/h4&gt;
+&lt;div class=&quot;outline-text-4&quot; id=&quot;text-org6755770&quot;&gt;
+&lt;div class=&quot;org-src-container&quot;&gt;
+&lt;pre class=&quot;src src-java&quot;&gt;&lt;span style=&quot;color: #C678DD;&quot;&gt;public&lt;/span&gt; &lt;span style=&quot;color: #C678DD;&quot;&gt;static&lt;/span&gt; &lt;span style=&quot;color: #E5C07B;&quot;&gt;FtpClient&lt;/span&gt; &lt;span style=&quot;color: #61AFEF;&quot;&gt;getClient&lt;/span&gt;
+    (&lt;span style=&quot;color: #E5C07B;&quot;&gt;URI&lt;/span&gt; &lt;span style=&quot;color: #E06C75;&quot;&gt;serverAddress&lt;/span&gt;, &lt;span style=&quot;color: #E5C07B;&quot;&gt;FTPClient&lt;/span&gt; &lt;span style=&quot;color: #E06C75;&quot;&gt;ftp&lt;/span&gt;
+     , &lt;span style=&quot;color: #E5C07B;&quot;&gt;int&lt;/span&gt; &lt;span style=&quot;color: #E06C75;&quot;&gt;port&lt;/span&gt;, &lt;span style=&quot;color: #E5C07B;&quot;&gt;String&lt;/span&gt; &lt;span style=&quot;color: #E06C75;&quot;&gt;user&lt;/span&gt;, &lt;span style=&quot;color: #E5C07B;&quot;&gt;String&lt;/span&gt; &lt;span style=&quot;color: #E06C75;&quot;&gt;password&lt;/span&gt;) &lt;span style=&quot;color: #C678DD;&quot;&gt;throws&lt;/span&gt; &lt;span style=&quot;color: #E5C07B;&quot;&gt;IOException&lt;/span&gt; {
+
+    &lt;span style=&quot;color: #E5C07B;&quot;&gt;FtpClient&lt;/span&gt; &lt;span style=&quot;color: #E06C75;&quot;&gt;client&lt;/span&gt; = &lt;span style=&quot;color: #C678DD;&quot;&gt;new&lt;/span&gt; &lt;span style=&quot;color: #E5C07B;&quot;&gt;FtpClient&lt;/span&gt;(serverAddress, ftp);
+
+    client.open(port, user, password);
+
+    &lt;span style=&quot;color: #C678DD;&quot;&gt;return&lt;/span&gt; client;
+}
+&lt;/pre&gt;
+&lt;/div&gt;
+&lt;/div&gt;
+&lt;/div&gt;
+
+&lt;div id=&quot;outline-container-orgfc5d93c&quot; class=&quot;outline-4&quot;&gt;
+&lt;h4 id=&quot;orgfc5d93c&quot;&gt;Unit test&lt;/h4&gt;
+&lt;div class=&quot;outline-text-4&quot; id=&quot;text-orgfc5d93c&quot;&gt;
+&lt;div class=&quot;org-src-container&quot;&gt;
+&lt;pre class=&quot;src src-java&quot;&gt;&lt;span style=&quot;color: #56B6C2;&quot;&gt;@Nested&lt;/span&gt;
+&lt;span style=&quot;color: #56B6C2;&quot;&gt;@DisplayName&lt;/span&gt;(&lt;span style=&quot;color: #98C379;&quot;&gt;&quot;When connecting with non-default port and user&quot;&lt;/span&gt;)
+&lt;span style=&quot;color: #C678DD;&quot;&gt;public&lt;/span&gt; &lt;span style=&quot;color: #C678DD;&quot;&gt;class&lt;/span&gt; &lt;span style=&quot;color: #E5C07B;&quot;&gt;connectDetailed&lt;/span&gt; {
+
+    &lt;span style=&quot;color: #C678DD;&quot;&gt;private&lt;/span&gt; &lt;span style=&quot;color: #C678DD;&quot;&gt;final&lt;/span&gt; &lt;span style=&quot;color: #E5C07B;&quot;&gt;FTPClient&lt;/span&gt; &lt;span style=&quot;color: #E06C75;&quot;&gt;mockFTPClient&lt;/span&gt; = mock(FTPClient.&lt;span style=&quot;color: #C678DD;&quot;&gt;class&lt;/span&gt;);
+
+    &lt;span style=&quot;color: #56B6C2;&quot;&gt;@Test&lt;/span&gt;
+    &lt;span style=&quot;color: #56B6C2;&quot;&gt;@DisplayName&lt;/span&gt;(&lt;span style=&quot;color: #98C379;&quot;&gt;&quot;Test open connection sequence with port / user / password&quot;&lt;/span&gt;)
+    &lt;span style=&quot;color: #C678DD;&quot;&gt;public&lt;/span&gt; &lt;span style=&quot;color: #E5C07B;&quot;&gt;void&lt;/span&gt; &lt;span style=&quot;color: #61AFEF;&quot;&gt;testFTPOpenDetailed&lt;/span&gt;() &lt;span style=&quot;color: #C678DD;&quot;&gt;throws&lt;/span&gt; &lt;span style=&quot;color: #E5C07B;&quot;&gt;IOException&lt;/span&gt; {
+
+        &lt;span style=&quot;color: #5C6370; font-style: italic;&quot;&gt;// &lt;/span&gt;&lt;span style=&quot;color: #5C6370; font-style: italic;&quot;&gt;set up a happy path for connecting / login sequence&lt;/span&gt;
+        when(mockFTPClient.getReplyCode())
+            .thenReturn(230);
+        when(mockFTPClient.login(any(), any()))
+            .thenReturn(&lt;span style=&quot;color: #56B6C2;&quot;&gt;true&lt;/span&gt;);
+
+        &lt;span style=&quot;color: #E5C07B;&quot;&gt;FtpClient&lt;/span&gt; &lt;span style=&quot;color: #E06C75;&quot;&gt;client&lt;/span&gt; = FtpClient.getClient
+            (URI.create(&lt;span style=&quot;color: #98C379;&quot;&gt;&quot;ftp.server&quot;&lt;/span&gt;), mockFTPClient
+             , 22, &lt;span style=&quot;color: #98C379;&quot;&gt;&quot;userOne&quot;&lt;/span&gt;, &lt;span style=&quot;color: #98C379;&quot;&gt;&quot;passwordSecret&quot;&lt;/span&gt;);
+
+
+        &lt;span style=&quot;color: #5C6370; font-style: italic;&quot;&gt;// &lt;/span&gt;&lt;span style=&quot;color: #5C6370; font-style: italic;&quot;&gt;open connection should have three steps:&lt;/span&gt;
+        &lt;span style=&quot;color: #5C6370; font-style: italic;&quot;&gt;// &lt;/span&gt;&lt;span style=&quot;color: #5C6370; font-style: italic;&quot;&gt;connect to server @ port&lt;/span&gt;
+        verify(mockFTPClient).connect(&lt;span style=&quot;color: #98C379;&quot;&gt;&quot;ftp.server&quot;&lt;/span&gt;, 22);
+        &lt;span style=&quot;color: #5C6370; font-style: italic;&quot;&gt;// &lt;/span&gt;&lt;span style=&quot;color: #5C6370; font-style: italic;&quot;&gt;log in with username anonymous and no password&lt;/span&gt;
+        verify(mockFTPClient).login(&lt;span style=&quot;color: #98C379;&quot;&gt;&quot;userOne&quot;&lt;/span&gt;, &lt;span style=&quot;color: #98C379;&quot;&gt;&quot;passwordSecret&quot;&lt;/span&gt;);
+        &lt;span style=&quot;color: #5C6370; font-style: italic;&quot;&gt;// &lt;/span&gt;&lt;span style=&quot;color: #5C6370; font-style: italic;&quot;&gt;switch to passive mode to be able to work from VMs&lt;/span&gt;
+        &lt;span style=&quot;color: #5C6370; font-style: italic;&quot;&gt;// &lt;/span&gt;&lt;span style=&quot;color: #5C6370; font-style: italic;&quot;&gt;(behind NATs and port mapping)&lt;/span&gt;
+        verify(mockFTPClient).enterLocalPassiveMode();
+    }
+}
+&lt;/pre&gt;
+&lt;/div&gt;
+
+&lt;hr /&gt;
+&lt;p&gt;
+Thank you.
+&lt;/p&gt;
+&lt;/div&gt;
+&lt;/div&gt;
+&lt;/div&gt;
+</content>
+ </entry>
  
  <entry>
    <title>Creating an ftp utility using Apache Commons &lt;code&gt;FTPClient&lt;/code&gt;</title>
