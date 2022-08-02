@@ -2,11 +2,15 @@
 <urlset xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.sitemaps.org/schemas/sitemap/0.9 http://www.sitemaps.org/schemas/sitemap/0.9/sitemap.xsd" xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
 <url>
 <loc>http://localhost:4000/about</loc>
-<lastmod>2022-08-02T13:06:22+01:00</lastmod>
+<lastmod>2022-08-02T16:39:46+01:00</lastmod>
+</url>
+<url>
+<loc>http://localhost:4000/cv</loc>
+<lastmod>2022-08-02T16:39:46+01:00</lastmod>
 </url>
 <url>
 <loc>http://localhost:4000/search</loc>
-<lastmod>2022-08-02T13:06:22+01:00</lastmod>
+<lastmod>2022-08-02T16:39:46+01:00</lastmod>
 </url>
 <url>
 <loc>http://localhost:4000/2022/06/27/html-is-possible</loc>
@@ -30,6 +34,10 @@
 </url>
 <url>
 <loc>http://localhost:4000/</loc>
+</url>
+<url>
+<loc>http://localhost:4000/documents/RustamIsangulovResume.pdf</loc>
+<lastmod>2022-08-02T16:17:21+01:00</lastmod>
 </url>
 <url>
 <loc>http://localhost:4000/images/spring.io.elementary.html</loc>
