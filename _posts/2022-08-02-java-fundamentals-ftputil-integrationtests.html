@@ -1,0 +1,369 @@
+---
+layout: post
+title:  "Writing integration tests for the ftp utility using <code>MockFtpServer</code>"
+date:   2022-08-02 12:11:27 +0100
+categories: Java Mock FTP Server
+---
+
+<div class="post">
+<p>
+Toolkit: macOS | <a href="https://www.jetbrains.com/idea/">InelliJ IDEA</a> | <a href="https://junit.org/junit5/docs/current/user-guide/">JUnit 5</a> | <a href="https://mockftpserver.org/">MockFtpServer</a>
+</p>
+
+<p>
+Sources: <a href="https://github.com/rustam-isangulov/java.fundamentals">GitHub</a>
+</p>
+</div>
+
+<div id="outline-container-org70fa7db" class="outline-2">
+<h2 id="org70fa7db">Objectives</h2>
+<div class="outline-text-2" id="text-org70fa7db">
+<p>
+Test <a href="https://rustam-isangulov.github.io/2022/07/30/java-fundamentals-ftputil">FtpUtility</a>  workflows against a functioning FTP server.
+</p>
+</div>
+</div>
+
+<div id="outline-container-org22195c8" class="outline-2">
+<h2 id="org22195c8">Review the structure</h2>
+<div class="outline-text-2" id="text-org22195c8">
+
+<div id="org34a0a31" class="figure">
+<p><img src="/images/ftputil-mockftp-structure.png" alt="ftputil-mockftp-structure.png" />
+</p>
+</div>
+
+
+<hr />
+</div>
+</div>
+<div id="outline-container-orgafbf828" class="outline-2">
+<h2 id="orgafbf828">Final result of running all intergation tests in IntelliJ</h2>
+<div class="outline-text-2" id="text-orgafbf828">
+
+<div id="org6687e3b" class="figure">
+<p><img src="/images/ftputil-mockftpserver-structure.jpg" alt="ftputil-mockftpserver-structure.jpg" />
+</p>
+</div>
+
+<hr />
+</div>
+</div>
+
+<div id="outline-container-org41717b4" class="outline-2">
+<h2 id="org41717b4">Add dependencies to <code>MockFtpServer</code> in <code>maven</code> project</h2>
+<div class="outline-text-2" id="text-org41717b4">
+<p>
+<i>Note: <code>MockFtpServer</code> uses <code>slf4j</code> logging library. A dependency to it is added as well (although it is optional).</i>
+</p>
+
+<div class="org-src-container">
+<pre class="src src-xml">&lt;<span style="color: #E06C75;">dependencies</span>&gt;
+  &lt;<span style="color: #E06C75;">dependency</span>&gt;
+    &lt;<span style="color: #E06C75;">groupId</span>&gt;org.mockftpserver&lt;/<span style="color: #E06C75;">groupId</span>&gt;
+    &lt;<span style="color: #E06C75;">artifactId</span>&gt;MockFtpServer&lt;/<span style="color: #E06C75;">artifactId</span>&gt;
+    &lt;<span style="color: #E06C75;">version</span>&gt;2.8.0&lt;/<span style="color: #E06C75;">version</span>&gt;
+  &lt;/<span style="color: #E06C75;">dependency</span>&gt;
+  &lt;<span style="color: #E06C75;">dependency</span>&gt;
+    &lt;<span style="color: #E06C75;">groupId</span>&gt;org.slf4j&lt;/<span style="color: #E06C75;">groupId</span>&gt;
+    &lt;<span style="color: #E06C75;">artifactId</span>&gt;slf4j-simple&lt;/<span style="color: #E06C75;">artifactId</span>&gt;
+    &lt;<span style="color: #E06C75;">version</span>&gt;1.7.36&lt;/<span style="color: #E06C75;">version</span>&gt;
+  &lt;/<span style="color: #E06C75;">dependency</span>&gt;
+&lt;/<span style="color: #E06C75;">dependencies</span>&gt;
+</pre>
+</div>
+</div>
+</div>
+
+<div id="outline-container-orgff4aba5" class="outline-2">
+<h2 id="orgff4aba5">Configure <code>FakeFtpServer</code> instance for each intergation test</h2>
+<div class="outline-text-2" id="text-orgff4aba5">
+<div class="org-src-container">
+<pre class="src src-java"><span style="color: #C678DD;">public</span> <span style="color: #C678DD;">class</span> <span style="color: #E5C07B;">FtpClientIntegrationTest</span> {
+
+    <span style="color: #5C6370; font-style: italic;">// </span><span style="color: #5C6370; font-style: italic;">we will have two files stored on FTP server</span>
+    <span style="color: #C678DD;">private</span> <span style="color: #C678DD;">final</span> <span style="color: #E5C07B;">Path</span> <span style="color: #E06C75;">fileOnePath</span> = Path.of(<span style="color: #98C379;">"file_one.json"</span>);
+    <span style="color: #C678DD;">private</span> <span style="color: #C678DD;">final</span> <span style="color: #E5C07B;">Path</span> <span style="color: #E06C75;">fileTwoPath</span> = Path.of(<span style="color: #98C379;">"file_two_json"</span>);
+    <span style="color: #5C6370; font-style: italic;">// </span><span style="color: #5C6370; font-style: italic;">this is content of those files</span>
+    <span style="color: #C678DD;">private</span> <span style="color: #C678DD;">final</span> <span style="color: #E5C07B;">String</span> <span style="color: #E06C75;">fileOneContent</span> = <span style="color: #98C379;">"{\"id\":\"1\",\"approvedSymbol\":\"AAA\"}"</span>;
+    <span style="color: #C678DD;">private</span> <span style="color: #C678DD;">final</span> <span style="color: #E5C07B;">String</span> <span style="color: #E06C75;">fileTwoContent</span> = <span style="color: #98C379;">"{\"id\":\"2\",\"approvedSymbol\":\"BBB\"}"</span>;
+
+    <span style="color: #56B6C2;">@Nested</span>
+    <span style="color: #56B6C2;">@DisplayName</span>(<span style="color: #98C379;">"Given that an FTP server with accessible content is available"</span>)
+    <span style="color: #C678DD;">class</span> <span style="color: #E5C07B;">testWithFTPServerAvailable</span> {
+
+        <span style="color: #5C6370; font-style: italic;">// </span><span style="color: #5C6370; font-style: italic;">we will run the FTP on local host</span>
+        <span style="color: #C678DD;">private</span> <span style="color: #C678DD;">final</span> <span style="color: #E5C07B;">URI</span> <span style="color: #E06C75;">server</span> = URI.create(<span style="color: #98C379;">"localhost"</span>);
+        <span style="color: #5C6370; font-style: italic;">// </span><span style="color: #5C6370; font-style: italic;">with /pub/data directory</span>
+        <span style="color: #C678DD;">private</span> <span style="color: #C678DD;">final</span> <span style="color: #E5C07B;">Path</span> <span style="color: #E06C75;">remoteBase</span> = Path.of(<span style="color: #98C379;">"/pub/"</span>);
+        <span style="color: #C678DD;">private</span> <span style="color: #C678DD;">final</span> <span style="color: #E5C07B;">Path</span> <span style="color: #E06C75;">dataDir</span> = Path.of(<span style="color: #98C379;">"data"</span>);
+
+        <span style="color: #C678DD;">private</span> <span style="color: #E5C07B;">FakeFtpServer</span> <span style="color: #E06C75;">fakeFtpServer</span>;
+
+        <span style="color: #56B6C2;">@BeforeEach</span>
+        <span style="color: #C678DD;">public</span> <span style="color: #E5C07B;">void</span> <span style="color: #61AFEF;">setUp</span>() {
+
+            <span style="color: #5C6370; font-style: italic;">// </span><span style="color: #5C6370; font-style: italic;">setup ftp server</span>
+            fakeFtpServer = <span style="color: #C678DD;">new</span> <span style="color: #E5C07B;">FakeFtpServer</span>();
+
+            <span style="color: #5C6370; font-style: italic;">// </span><span style="color: #5C6370; font-style: italic;">setup default account</span>
+            <span style="color: #E5C07B;">UserAccount</span> <span style="color: #E06C75;">anonymous</span> = <span style="color: #C678DD;">new</span> <span style="color: #E5C07B;">UserAccount</span>();
+            anonymous.setPasswordRequiredForLogin(<span style="color: #56B6C2;">false</span>);
+            anonymous.setUsername(<span style="color: #98C379;">"anonymous"</span>);
+            anonymous.setHomeDirectory(<span style="color: #98C379;">"/"</span>);
+
+            fakeFtpServer.addUserAccount(anonymous);
+
+            <span style="color: #5C6370; font-style: italic;">// </span><span style="color: #5C6370; font-style: italic;">setup sample directory and files structure</span>
+            <span style="color: #E5C07B;">FileSystem</span> <span style="color: #E06C75;">fileSystem</span> = <span style="color: #C678DD;">new</span> <span style="color: #E5C07B;">UnixFakeFileSystem</span>();
+            fileSystem.add(<span style="color: #C678DD;">new</span> <span style="color: #E5C07B;">DirectoryEntry</span>(remoteBase.toString()));
+            fileSystem.add(<span style="color: #C678DD;">new</span> <span style="color: #E5C07B;">FileEntry</span>
+                           (remoteBase.resolve
+                            (dataDir.resolve(fileOnePath)).toString()
+                            , fileOneContent));
+            fileSystem.add(<span style="color: #C678DD;">new</span> <span style="color: #E5C07B;">FileEntry</span>
+                           (remoteBase.resolve
+                            (dataDir.resolve(fileTwoPath)).toString()
+                            , fileTwoContent));
+
+            fakeFtpServer.setFileSystem(fileSystem);
+            fakeFtpServer.setSystemName(<span style="color: #98C379;">"Unix"</span>);
+
+            fakeFtpServer.start();
+        }
+
+        <span style="color: #56B6C2;">@AfterEach</span>
+        <span style="color: #C678DD;">public</span> <span style="color: #E5C07B;">void</span> <span style="color: #61AFEF;">tearDown</span>() {
+            fakeFtpServer.stop();
+        }
+
+        <span style="color: #5C6370; font-style: italic;">/* </span><span style="color: #5C6370; font-style: italic;">more code</span><span style="color: #5C6370; font-style: italic;"> */</span>
+    }
+}
+</pre>
+</div>
+</div>
+</div>
+
+<div id="outline-container-orgde60c11" class="outline-2">
+<h2 id="orgde60c11">Test <i>connect</i> + <i>list files in a driectory</i> workflow</h2>
+<div class="outline-text-2" id="text-orgde60c11">
+<div class="org-src-container">
+<pre class="src src-java"><span style="color: #56B6C2;">@Nested</span>
+<span style="color: #56B6C2;">@DisplayName</span>(<span style="color: #98C379;">"When we connect with a new FtpClient instance"</span>)
+<span style="color: #C678DD;">public</span> <span style="color: #C678DD;">class</span> <span style="color: #E5C07B;">testConnected</span> {
+
+    <span style="color: #56B6C2;">@Test</span>
+    <span style="color: #56B6C2;">@DisplayName</span>(<span style="color: #98C379;">"Then we can list files in a remote directory"</span>)
+    <span style="color: #C678DD;">public</span> <span style="color: #E5C07B;">void</span> <span style="color: #61AFEF;">testListOfFiles</span>() {
+
+        <span style="color: #C678DD;">try</span> (<span style="color: #E5C07B;">var</span> <span style="color: #E06C75;">ftpClient</span> = FtpClient.getClient(server, <span style="color: #C678DD;">new</span> <span style="color: #E5C07B;">FTPClient</span>())) {
+
+            <span style="color: #E5C07B;">List</span>&lt;<span style="color: #E5C07B;">FTPFile</span>&gt; <span style="color: #E06C75;">files</span> = ftpClient
+                .listFiles(remoteBase.resolve(dataDir));
+
+            assertLinesMatch
+                (List.of(fileOnePath.toString(), fileTwoPath.toString())
+                 , files.stream().map(FTPFile::getName)
+                 .collect(Collectors.toList()));
+
+        } <span style="color: #C678DD;">catch</span> (<span style="color: #E5C07B;">IOException</span> <span style="color: #E06C75;">e</span>) {
+            <span style="color: #C678DD;">throw</span> <span style="color: #C678DD;">new</span> <span style="color: #E5C07B;">RuntimeException</span>(e);
+        }
+    }
+
+    <span style="color: #5C6370; font-style: italic;">/* </span><span style="color: #5C6370; font-style: italic;">more code</span><span style="color: #5C6370; font-style: italic;"> */</span>
+}
+</pre>
+</div>
+</div>
+</div>
+
+<div id="outline-container-org9dfebd8" class="outline-2">
+<h2 id="org9dfebd8">Test <i>connect</i> + <i>download all files in a directory</i> workflow</h2>
+<div class="outline-text-2" id="text-org9dfebd8">
+<div class="org-src-container">
+<pre class="src src-java"><span style="color: #56B6C2;">@Test</span>
+<span style="color: #56B6C2;">@DisplayName</span>(<span style="color: #98C379;">"Then we can download content of all remote files in a directory"</span>)
+<span style="color: #C678DD;">public</span> <span style="color: #E5C07B;">void</span> <span style="color: #61AFEF;">testDownloadFiles</span>() {
+
+    <span style="color: #5C6370; font-style: italic;">// </span><span style="color: #5C6370; font-style: italic;">create output streams for the content of remote files</span>
+    <span style="color: #E5C07B;">Map</span>&lt;<span style="color: #E5C07B;">Path</span>, <span style="color: #E5C07B;">ByteArrayOutputStream</span>&gt; <span style="color: #E06C75;">outputStreams</span> = Map.of
+        (fileOnePath, <span style="color: #C678DD;">new</span> <span style="color: #E5C07B;">ByteArrayOutputStream</span>()
+         , fileTwoPath, <span style="color: #C678DD;">new</span> <span style="color: #E5C07B;">ByteArrayOutputStream</span>());
+
+    <span style="color: #5C6370; font-style: italic;">// </span><span style="color: #5C6370; font-style: italic;">prepare outputProvider for the ftpClient</span>
+    <span style="color: #E5C07B;">Function</span>&lt;<span style="color: #E5C07B;">Path</span>, <span style="color: #E5C07B;">OutputStream</span>&gt; <span style="color: #E06C75;">outputProvider</span> = outputStreams::get;
+
+    <span style="color: #5C6370; font-style: italic;">// </span><span style="color: #5C6370; font-style: italic;">prepare reporter (empty)</span>
+    <span style="color: #E5C07B;">Consumer</span>&lt;<span style="color: #E5C07B;">String</span>&gt; <span style="color: #E06C75;">progressReporter</span> = message -&gt; {};
+
+    <span style="color: #C678DD;">try</span> (<span style="color: #E5C07B;">var</span> <span style="color: #E06C75;">ftpClient</span> = FtpClient.getClient(server, <span style="color: #C678DD;">new</span> <span style="color: #E5C07B;">FTPClient</span>())) {
+
+        ftpClient.downloadAllFiles
+            (remoteBase.resolve(dataDir), outputProvider, progressReporter);
+
+        <span style="color: #E5C07B;">String</span> <span style="color: #E06C75;">downloadedFileOneContent</span> = outputStreams.get(fileOnePath).toString();
+        <span style="color: #E5C07B;">String</span> <span style="color: #E06C75;">downloadedFileTwoContent</span> = outputStreams.get(fileTwoPath).toString();
+
+        assertAll(<span style="color: #98C379;">"Test that downloaded content is matching"</span>
+                  + <span style="color: #98C379;">" what was uploaded to the FTP"</span>
+                  , () -&gt; assertLinesMatch
+                  (List.of(fileOneContent, fileTwoContent)
+                   , List.of(downloadedFileOneContent, downloadedFileTwoContent))
+                  );
+
+    } <span style="color: #C678DD;">catch</span> (<span style="color: #E5C07B;">IOException</span> <span style="color: #E06C75;">e</span>) {
+        <span style="color: #C678DD;">throw</span> <span style="color: #C678DD;">new</span> <span style="color: #E5C07B;">RuntimeException</span>(e);
+    }
+}
+</pre>
+</div>
+</div>
+</div>
+
+<div id="outline-container-org7510309" class="outline-2">
+<h2 id="org7510309">Test <i>connect</i> + <i>download a single file</i> workflow</h2>
+<div class="outline-text-2" id="text-org7510309">
+<div class="org-src-container">
+<pre class="src src-java"><span style="color: #56B6C2;">@Test</span>
+<span style="color: #56B6C2;">@DisplayName</span>(<span style="color: #98C379;">"Then we can download content of a remote file"</span>)
+<span style="color: #C678DD;">public</span> <span style="color: #E5C07B;">void</span> <span style="color: #61AFEF;">testDownloadSingleFile</span>() {
+
+    <span style="color: #5C6370; font-style: italic;">// </span><span style="color: #5C6370; font-style: italic;">prepare output stream</span>
+    <span style="color: #E5C07B;">var</span> <span style="color: #E06C75;">outputStream</span> = <span style="color: #C678DD;">new</span> <span style="color: #E5C07B;">ByteArrayOutputStream</span>();
+
+    <span style="color: #C678DD;">try</span> (<span style="color: #E5C07B;">var</span> <span style="color: #E06C75;">ftpClient</span> = FtpClient.getClient(server, <span style="color: #C678DD;">new</span> <span style="color: #E5C07B;">FTPClient</span>())) {
+
+        ftpClient.downloadFile
+            (remoteBase.resolve(dataDir).resolve(fileOnePath)
+             , outputStream);
+
+        <span style="color: #E5C07B;">String</span> <span style="color: #E06C75;">downloadedFileOneContent</span> = outputStream.toString();
+
+        assertAll(<span style="color: #98C379;">"Test that downloaded content is matching"</span>
+                  + <span style="color: #98C379;">" what was uploaded to the FTP"</span>
+                  , () -&gt; assertLinesMatch
+                  (List.of(fileOneContent)
+                   , List.of(downloadedFileOneContent))
+                  );
+
+    } <span style="color: #C678DD;">catch</span> (<span style="color: #E5C07B;">IOException</span> <span style="color: #E06C75;">e</span>) {
+        <span style="color: #C678DD;">throw</span> <span style="color: #C678DD;">new</span> <span style="color: #E5C07B;">RuntimeException</span>(e);
+    }
+}
+</pre>
+</div>
+</div>
+</div>
+
+<div id="outline-container-orgbc1a714" class="outline-2">
+<h2 id="orgbc1a714">Test cases for potential failures while interacting with an FTP server</h2>
+<div class="outline-text-2" id="text-orgbc1a714">
+</div>
+<div id="outline-container-org61eb820" class="outline-3">
+<h3 id="org61eb820">Test the case when an FTP server refuses our attempt to connect</h3>
+<div class="outline-text-3" id="text-org61eb820">
+</div>
+<div id="outline-container-orgcb7c6d9" class="outline-4">
+<h4 id="orgcb7c6d9">Additional FTP Mock Server configuration for the failure case</h4>
+<div class="outline-text-4" id="text-orgcb7c6d9">
+<div class="org-src-container">
+<pre class="src src-java"><span style="color: #56B6C2;">@Nested</span>
+<span style="color: #56B6C2;">@DisplayName</span>(<span style="color: #98C379;">"When server refuses our attempt to connect"</span>)
+<span style="color: #C678DD;">class</span> <span style="color: #E5C07B;">connectionIsRefused</span> {
+
+    <span style="color: #56B6C2;">@BeforeEach</span>
+    <span style="color: #C678DD;">public</span> <span style="color: #E5C07B;">void</span> <span style="color: #61AFEF;">setUp</span>() {
+
+        <span style="color: #5C6370; font-style: italic;">// </span><span style="color: #5C6370; font-style: italic;">change response to the next Connect request</span>
+        <span style="color: #E5C07B;">ConnectCommandHandler</span> <span style="color: #E06C75;">handler</span> =
+            (<span style="color: #E5C07B;">ConnectCommandHandler</span>) fakeFtpServer.getCommandHandler(<span style="color: #98C379;">"Connect"</span>);
+        handler.setReplyCode(534);
+        handler.setReplyMessageKey(<span style="color: #98C379;">"Request denied for policy reasons."</span>);
+        handler.setReplyText(<span style="color: #98C379;">"Request denied for policy reasons."</span>);
+    }
+
+    <span style="color: #56B6C2;">@AfterEach</span>
+    <span style="color: #C678DD;">public</span> <span style="color: #E5C07B;">void</span> <span style="color: #61AFEF;">resetServer</span>() {
+        <span style="color: #5C6370; font-style: italic;">// </span><span style="color: #5C6370; font-style: italic;">this is not strictly necessary</span>
+        <span style="color: #5C6370; font-style: italic;">// </span><span style="color: #5C6370; font-style: italic;">but will help to avoid errors if we switch</span>
+        <span style="color: #5C6370; font-style: italic;">// </span><span style="color: #5C6370; font-style: italic;">to a single FTP server for all tests</span>
+        fakeFtpServer.setCommandHandler
+            (<span style="color: #98C379;">"Connect"</span>, <span style="color: #C678DD;">new</span> <span style="color: #E5C07B;">ConnectCommandHandler</span>());
+    }
+
+    <span style="color: #5C6370; font-style: italic;">/* </span><span style="color: #5C6370; font-style: italic;">more code</span><span style="color: #5C6370; font-style: italic;"> */</span>
+}
+</pre>
+</div>
+</div>
+</div>
+
+
+<div id="outline-container-org8a4e2e4" class="outline-4">
+<h4 id="org8a4e2e4">Intergation test for the <i>connect</i> workflow</h4>
+<div class="outline-text-4" id="text-org8a4e2e4">
+<div class="org-src-container">
+<pre class="src src-java"><span style="color: #56B6C2;">@Test</span>
+<span style="color: #56B6C2;">@DisplayName</span>(<span style="color: #98C379;">"Then the client throws Unable to connect... exception"</span>)
+<span style="color: #C678DD;">public</span> <span style="color: #E5C07B;">void</span> <span style="color: #61AFEF;">givenNewlyCreatedFTPClient_whenBadResponseOnConnect_thenException</span>() {
+
+    <span style="color: #5C6370; font-style: italic;">// </span><span style="color: #5C6370; font-style: italic;">test connect() method</span>
+    <span style="color: #E5C07B;">Throwable</span> <span style="color: #E06C75;">exception</span> = assertThrows
+        (IOException.<span style="color: #C678DD;">class</span>
+         , () -&gt; FtpClient.getClient(server
+                                     , <span style="color: #C678DD;">new</span> <span style="color: #E5C07B;">FTPClient</span>()
+                                     , fakeFtpServer.getServerControlPort()
+                                     , <span style="color: #98C379;">"anonymous"</span>, <span style="color: #98C379;">""</span>)
+         , () -&gt; <span style="color: #98C379;">"Return code 534 (not a positive completion)"</span>
+         + <span style="color: #98C379;">" should cause an IOException"</span>);
+
+    assertTrue(exception.getMessage().startsWith(<span style="color: #98C379;">"Unable to connect"</span>)
+               , () -&gt; <span style="color: #98C379;">"FtpClient should throw an exception with "</span> +
+               <span style="color: #98C379;">"'Unable to connect..' message in case of a negative connect reply"</span>);
+}
+</pre>
+</div>
+</div>
+</div>
+</div>
+
+<div id="outline-container-orga06c50a" class="outline-3">
+<h3 id="orga06c50a">Test the case of trying to login with wrong credentials</h3>
+<div class="outline-text-3" id="text-orga06c50a">
+<div class="org-src-container">
+<pre class="src src-java"><span style="color: #56B6C2;">@Nested</span>
+<span style="color: #56B6C2;">@DisplayName</span>(<span style="color: #98C379;">"When we login with a wrong user or password"</span>)
+<span style="color: #C678DD;">class</span> <span style="color: #E5C07B;">loginIsRefused</span> {
+
+    <span style="color: #56B6C2;">@Test</span>
+    <span style="color: #56B6C2;">@DisplayName</span>(<span style="color: #98C379;">"Then the client throws Unable to login... exception"</span>)
+    <span style="color: #C678DD;">public</span> <span style="color: #E5C07B;">void</span> <span style="color: #61AFEF;">givenNewlyCreatedFTPClient_whenBadUserName_thenException</span>() {
+
+        <span style="color: #5C6370; font-style: italic;">// </span><span style="color: #5C6370; font-style: italic;">bad username for the server</span>
+        <span style="color: #E5C07B;">String</span> <span style="color: #E06C75;">badUserName</span> = <span style="color: #98C379;">"nonympus"</span>;
+
+        <span style="color: #E5C07B;">Throwable</span> <span style="color: #E06C75;">exception</span> = assertThrows
+            (IOException.<span style="color: #C678DD;">class</span>
+             , () -&gt; FtpClient.getClient(server
+                                         , <span style="color: #C678DD;">new</span> <span style="color: #E5C07B;">FTPClient</span>()
+                                         , fakeFtpServer.getServerControlPort()
+                                         , badUserName, <span style="color: #98C379;">""</span>)
+             , () -&gt; <span style="color: #98C379;">"Return code 501 (Syntax error...) should cause an IOException"</span>);
+
+        assertTrue(exception.getMessage().startsWith(<span style="color: #98C379;">"Unable to login"</span>)
+                   , () -&gt; <span style="color: #98C379;">"FtpClient should throw an exception with "</span> +
+                   <span style="color: #98C379;">"'Unable to login...' message in case of a negative login reply"</span>);
+    }
+}
+</pre>
+</div>
+
+<hr />
+<p>
+Thank you.
+</p>
+</div>
+</div>
+</div>
