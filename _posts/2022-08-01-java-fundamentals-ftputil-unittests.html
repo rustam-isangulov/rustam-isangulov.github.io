@@ -15,31 +15,31 @@ Sources: <a href="https://github.com/rustam-isangulov/java.fundamentals">GitHub<
 </p>
 </div>
 
-<div id="outline-container-org88dde2d" class="outline-2">
-<h2 id="org88dde2d">Objectives</h2>
-<div class="outline-text-2" id="text-org88dde2d">
+<div id="outline-container-org2302018" class="outline-2">
+<h2 id="org2302018">Objectives</h2>
+<div class="outline-text-2" id="text-org2302018">
 <p>
-Create unit tests that provide 100% coverage for methods and code lines.
+Create unit tests for <a href="https://rustam-isangulov.github.io/2022/07/30/java-fundamentals-ftputil">FtpUtility</a> that provide 100% coverage for methods and code lines.
 </p>
 </div>
 </div>
 
-<div id="outline-container-org4ec523f" class="outline-2">
-<h2 id="org4ec523f">Review the structure</h2>
-<div class="outline-text-2" id="text-org4ec523f">
+<div id="outline-container-org40b7ec0" class="outline-2">
+<h2 id="org40b7ec0">Review the structure</h2>
+<div class="outline-text-2" id="text-org40b7ec0">
 
-<div id="org7028ed4" class="figure">
+<div id="org50610f3" class="figure">
 <p><img src="/images/ftputil-structure.png" alt="ftputil-structure.png" />
 </p>
 </div>
 <hr />
 </div>
 </div>
-<div id="outline-container-org420e802" class="outline-2">
-<h2 id="org420e802">Final result of running all unit tests in IntelliJ</h2>
-<div class="outline-text-2" id="text-org420e802">
+<div id="outline-container-org821a978" class="outline-2">
+<h2 id="org821a978">Final result of running all unit tests in IntelliJ</h2>
+<div class="outline-text-2" id="text-org821a978">
 
-<div id="org9c5ba7a" class="figure">
+<div id="orgb2a15d9" class="figure">
 <p><img src="/images/ftputil-unittests-result.jpg" alt="ftputil-unittests-result.jpg" />
 </p>
 </div>
@@ -48,13 +48,13 @@ Create unit tests that provide 100% coverage for methods and code lines.
 </div>
 </div>
 
-<div id="outline-container-org55c205c" class="outline-2">
-<h2 id="org55c205c">Add dependecies to <code>JUnit</code> and <code>Mockito</code> in <code>maven</code> project</h2>
-<div class="outline-text-2" id="text-org55c205c">
+<div id="outline-container-orge2a85d2" class="outline-2">
+<h2 id="orge2a85d2">Add dependecies to <code>JUnit</code> and <code>Mockito</code> in <code>maven</code> project</h2>
+<div class="outline-text-2" id="text-orge2a85d2">
 </div>
-<div id="outline-container-orgd85034e" class="outline-3">
-<h3 id="orgd85034e"><code>pom.xml</code></h3>
-<div class="outline-text-3" id="text-orgd85034e">
+<div id="outline-container-org02b7062" class="outline-3">
+<h3 id="org02b7062"><code>pom.xml</code></h3>
+<div class="outline-text-3" id="text-org02b7062">
 <div class="org-src-container">
 <pre class="src src-xml">&lt;<span style="color: #E06C75;">dependencies</span>&gt;
   &lt;<span style="color: #E06C75;">dependency</span>&gt;
@@ -82,13 +82,13 @@ Create unit tests that provide 100% coverage for methods and code lines.
 </div>
 </div>
 </div>
-<div id="outline-container-orgc2e8b4c" class="outline-2">
-<h2 id="orgc2e8b4c">Add tests for <code>open(...)</code> and <code>close(...)</code> methods</h2>
-<div class="outline-text-2" id="text-orgc2e8b4c">
+<div id="outline-container-orgce82da0" class="outline-2">
+<h2 id="orgce82da0">Add tests for <code>open(...)</code> and <code>close(...)</code> methods</h2>
+<div class="outline-text-2" id="text-orgce82da0">
 </div>
-<div id="outline-container-orgefd44ae" class="outline-3">
-<h3 id="orgefd44ae">Add and initialise <code>FTPClient</code> and <code>FtpClient</code> objects</h3>
-<div class="outline-text-3" id="text-orgefd44ae">
+<div id="outline-container-org262e006" class="outline-3">
+<h3 id="org262e006">Add and initialise <code>FTPClient</code> and <code>FtpClient</code> objects</h3>
+<div class="outline-text-3" id="text-org262e006">
 <div class="org-src-container">
 <pre class="src src-java"><span style="color: #C678DD;">public</span> <span style="color: #C678DD;">class</span> <span style="color: #E5C07B;">FtpClientUnitTest</span> {
 
@@ -121,13 +121,13 @@ Create unit tests that provide 100% coverage for methods and code lines.
 </div>
 </div>
 
-<div id="outline-container-orge835e0a" class="outline-3">
-<h3 id="orge835e0a">Add <code>open(...)</code> method test</h3>
-<div class="outline-text-3" id="text-orge835e0a">
+<div id="outline-container-org4b7243f" class="outline-3">
+<h3 id="org4b7243f">Add <code>open(...)</code> method test</h3>
+<div class="outline-text-3" id="text-org4b7243f">
 </div>
-<div id="outline-container-orgbc56cd4" class="outline-4">
-<h4 id="orgbc56cd4">Code to test</h4>
-<div class="outline-text-4" id="text-orgbc56cd4">
+<div id="outline-container-org85ecb8f" class="outline-4">
+<h4 id="org85ecb8f">Code to test</h4>
+<div class="outline-text-4" id="text-org85ecb8f">
 <div class="org-src-container">
 <pre class="src src-java"><span style="color: #C678DD;">private</span> <span style="color: #E5C07B;">void</span> <span style="color: #61AFEF;">open</span>
     (<span style="color: #E5C07B;">int</span> <span style="color: #E06C75;">port</span>, <span style="color: #E5C07B;">String</span> <span style="color: #E06C75;">user</span>, <span style="color: #E5C07B;">String</span> <span style="color: #E06C75;">password</span>) <span style="color: #C678DD;">throws</span> <span style="color: #E5C07B;">IOException</span> {
@@ -161,9 +161,9 @@ Create unit tests that provide 100% coverage for methods and code lines.
 </div>
 </div>
 
-<div id="outline-container-org18b105c" class="outline-4">
-<h4 id="org18b105c">Unit test</h4>
-<div class="outline-text-4" id="text-org18b105c">
+<div id="outline-container-orgc0c9bb8" class="outline-4">
+<h4 id="orgc0c9bb8">Unit test</h4>
+<div class="outline-text-4" id="text-orgc0c9bb8">
 <div class="org-src-container">
 <pre class="src src-java"><span style="color: #56B6C2;">@Test</span>
 <span style="color: #56B6C2;">@DisplayName</span>(<span style="color: #98C379;">"Test open connection sequence for default port/user"</span>)
@@ -184,13 +184,13 @@ Create unit tests that provide 100% coverage for methods and code lines.
 </div>
 </div>
 
-<div id="outline-container-org294f6a3" class="outline-3">
-<h3 id="org294f6a3">Add <code>close(...)</code> method test</h3>
-<div class="outline-text-3" id="text-org294f6a3">
+<div id="outline-container-orgb900234" class="outline-3">
+<h3 id="orgb900234">Add <code>close(...)</code> method test</h3>
+<div class="outline-text-3" id="text-orgb900234">
 </div>
-<div id="outline-container-orgcd5916e" class="outline-4">
-<h4 id="orgcd5916e">Code to test</h4>
-<div class="outline-text-4" id="text-orgcd5916e">
+<div id="outline-container-org9cbad84" class="outline-4">
+<h4 id="org9cbad84">Code to test</h4>
+<div class="outline-text-4" id="text-org9cbad84">
 <div class="org-src-container">
 <pre class="src src-java"><span style="color: #56B6C2;">@Override</span>
 <span style="color: #C678DD;">public</span> <span style="color: #E5C07B;">void</span> <span style="color: #61AFEF;">close</span>() <span style="color: #C678DD;">throws</span> <span style="color: #E5C07B;">IOException</span> {
@@ -203,9 +203,9 @@ Create unit tests that provide 100% coverage for methods and code lines.
 </div>
 </div>
 
-<div id="outline-container-org3d7ccc1" class="outline-4">
-<h4 id="org3d7ccc1">Unit test</h4>
-<div class="outline-text-4" id="text-org3d7ccc1">
+<div id="outline-container-org08994e4" class="outline-4">
+<h4 id="org08994e4">Unit test</h4>
+<div class="outline-text-4" id="text-org08994e4">
 <div class="org-src-container">
 <pre class="src src-java"><span style="color: #56B6C2;">@Test</span>
 <span style="color: #56B6C2;">@DisplayName</span>(<span style="color: #98C379;">"Test close sequence"</span>)
@@ -226,13 +226,13 @@ Create unit tests that provide 100% coverage for methods and code lines.
 </div>
 </div>
 
-<div id="outline-container-orgcfe9b7e" class="outline-3">
-<h3 id="orgcfe9b7e">Unsuccessful ftp connection behaviour tests for <code>open(...)</code></h3>
-<div class="outline-text-3" id="text-orgcfe9b7e">
+<div id="outline-container-orga0ba5bf" class="outline-3">
+<h3 id="orga0ba5bf">Unsuccessful ftp connection behaviour tests for <code>open(...)</code></h3>
+<div class="outline-text-3" id="text-orga0ba5bf">
 </div>
-<div id="outline-container-org97c052e" class="outline-4">
-<h4 id="org97c052e">Connection problem test</h4>
-<div class="outline-text-4" id="text-org97c052e">
+<div id="outline-container-orgef23681" class="outline-4">
+<h4 id="orgef23681">Connection problem test</h4>
+<div class="outline-text-4" id="text-orgef23681">
 <div class="org-src-container">
 <pre class="src src-java"><span style="color: #56B6C2;">@Nested</span>
 <span style="color: #56B6C2;">@DisplayName</span>(<span style="color: #98C379;">"Test unsuccessful open connection cases"</span>)
@@ -262,9 +262,9 @@ Create unit tests that provide 100% coverage for methods and code lines.
 </div>
 </div>
 
-<div id="outline-container-org3a93a3e" class="outline-4">
-<h4 id="org3a93a3e">Login problem test</h4>
-<div class="outline-text-4" id="text-org3a93a3e">
+<div id="outline-container-orge0c153a" class="outline-4">
+<h4 id="orge0c153a">Login problem test</h4>
+<div class="outline-text-4" id="text-orge0c153a">
 <div class="org-src-container">
 <pre class="src src-java"><span style="color: #56B6C2;">@Nested</span>
 <span style="color: #56B6C2;">@DisplayName</span>(<span style="color: #98C379;">"Test unsuccessful open connection cases"</span>)
@@ -298,13 +298,13 @@ Create unit tests that provide 100% coverage for methods and code lines.
 </div>
 </div>
 
-<div id="outline-container-orgc95c641" class="outline-2">
-<h2 id="orgc95c641">Add tests for <code>listFiles(...)</code>, <code>downloadFile(...)</code> and <code>downloadAllFiles(...)</code> methods</h2>
-<div class="outline-text-2" id="text-orgc95c641">
+<div id="outline-container-org639048c" class="outline-2">
+<h2 id="org639048c">Add tests for <code>listFiles(...)</code>, <code>downloadFile(...)</code> and <code>downloadAllFiles(...)</code> methods</h2>
+<div class="outline-text-2" id="text-org639048c">
 </div>
-<div id="outline-container-org51b9e5c" class="outline-3">
-<h3 id="org51b9e5c">Mock file/directory behaviours for the <code>FTPClient</code></h3>
-<div class="outline-text-3" id="text-org51b9e5c">
+<div id="outline-container-orgaf0d85c" class="outline-3">
+<h3 id="orgaf0d85c">Mock file/directory behaviours for the <code>FTPClient</code></h3>
+<div class="outline-text-3" id="text-orgaf0d85c">
 <div class="org-src-container">
 <pre class="src src-java"><span style="color: #56B6C2;">@Nested</span>
 <span style="color: #56B6C2;">@DisplayName</span>(<span style="color: #98C379;">"Test successful ftp connection"</span>)
@@ -339,13 +339,13 @@ Create unit tests that provide 100% coverage for methods and code lines.
 </div>
 </div>
 
-<div id="outline-container-org3b3f542" class="outline-3">
-<h3 id="org3b3f542">Add <code>listFiles(...)</code> method test</h3>
-<div class="outline-text-3" id="text-org3b3f542">
+<div id="outline-container-orga24e798" class="outline-3">
+<h3 id="orga24e798">Add <code>listFiles(...)</code> method test</h3>
+<div class="outline-text-3" id="text-orga24e798">
 </div>
-<div id="outline-container-org985931b" class="outline-4">
-<h4 id="org985931b">Code to test</h4>
-<div class="outline-text-4" id="text-org985931b">
+<div id="outline-container-org4481803" class="outline-4">
+<h4 id="org4481803">Code to test</h4>
+<div class="outline-text-4" id="text-org4481803">
 <div class="org-src-container">
 <pre class="src src-java"><span style="color: #C678DD;">public</span> <span style="color: #E5C07B;">List</span>&lt;<span style="color: #E5C07B;">FTPFile</span>&gt; <span style="color: #61AFEF;">listFiles</span>(<span style="color: #E5C07B;">Path</span> <span style="color: #E06C75;">remoteDir</span>) <span style="color: #C678DD;">throws</span> <span style="color: #E5C07B;">IOException</span> {
 
@@ -359,9 +359,9 @@ Create unit tests that provide 100% coverage for methods and code lines.
 </div>
 </div>
 
-<div id="outline-container-org0b4840d" class="outline-4">
-<h4 id="org0b4840d">Unit test</h4>
-<div class="outline-text-4" id="text-org0b4840d">
+<div id="outline-container-org937a209" class="outline-4">
+<h4 id="org937a209">Unit test</h4>
+<div class="outline-text-4" id="text-org937a209">
 <div class="org-src-container">
 <pre class="src src-java"><span style="color: #56B6C2;">@Test</span>
 <span style="color: #56B6C2;">@DisplayName</span>(<span style="color: #98C379;">"Test list files call"</span>)
@@ -381,13 +381,13 @@ Create unit tests that provide 100% coverage for methods and code lines.
 </div>
 </div>
 
-<div id="outline-container-orgc487c8e" class="outline-3">
-<h3 id="orgc487c8e">Add <code>downloadFile(...)</code> method test</h3>
-<div class="outline-text-3" id="text-orgc487c8e">
+<div id="outline-container-org13c8c1b" class="outline-3">
+<h3 id="org13c8c1b">Add <code>downloadFile(...)</code> method test</h3>
+<div class="outline-text-3" id="text-org13c8c1b">
 </div>
-<div id="outline-container-org0a65335" class="outline-4">
-<h4 id="org0a65335">Code to test</h4>
-<div class="outline-text-4" id="text-org0a65335">
+<div id="outline-container-org3c37065" class="outline-4">
+<h4 id="org3c37065">Code to test</h4>
+<div class="outline-text-4" id="text-org3c37065">
 <div class="org-src-container">
 <pre class="src src-java"><span style="color: #C678DD;">public</span> <span style="color: #E5C07B;">void</span> <span style="color: #61AFEF;">downloadFile</span>(<span style="color: #E5C07B;">Path</span> <span style="color: #E06C75;">remoteFile</span>, <span style="color: #E5C07B;">OutputStream</span> <span style="color: #E06C75;">out</span>) <span style="color: #C678DD;">throws</span> <span style="color: #E5C07B;">IOException</span> {
     ftp.retrieveFile(remoteFile.toString(), out);
@@ -397,9 +397,9 @@ Create unit tests that provide 100% coverage for methods and code lines.
 </div>
 </div>
 
-<div id="outline-container-org4821c9d" class="outline-4">
-<h4 id="org4821c9d">Unit test</h4>
-<div class="outline-text-4" id="text-org4821c9d">
+<div id="outline-container-org822bb49" class="outline-4">
+<h4 id="org822bb49">Unit test</h4>
+<div class="outline-text-4" id="text-org822bb49">
 <div class="org-src-container">
 <pre class="src src-java"><span style="color: #56B6C2;">@Test</span>
 <span style="color: #56B6C2;">@DisplayName</span>(<span style="color: #98C379;">"Test downloading a file call"</span>)
@@ -420,13 +420,13 @@ Create unit tests that provide 100% coverage for methods and code lines.
 </div>
 </div>
 
-<div id="outline-container-org4a0dc19" class="outline-3">
-<h3 id="org4a0dc19">Add <code>downloadAllFiles(...)</code> method test</h3>
-<div class="outline-text-3" id="text-org4a0dc19">
+<div id="outline-container-org0f326a5" class="outline-3">
+<h3 id="org0f326a5">Add <code>downloadAllFiles(...)</code> method test</h3>
+<div class="outline-text-3" id="text-org0f326a5">
 </div>
-<div id="outline-container-orgf5fb836" class="outline-4">
-<h4 id="orgf5fb836">Code to test</h4>
-<div class="outline-text-4" id="text-orgf5fb836">
+<div id="outline-container-org3ff8abc" class="outline-4">
+<h4 id="org3ff8abc">Code to test</h4>
+<div class="outline-text-4" id="text-org3ff8abc">
 <div class="org-src-container">
 <pre class="src src-java"><span style="color: #C678DD;">public</span> <span style="color: #E5C07B;">void</span> <span style="color: #61AFEF;">downloadAllFiles</span>
     (<span style="color: #E5C07B;">Path</span> <span style="color: #E06C75;">remoteDir</span>
@@ -454,9 +454,9 @@ Create unit tests that provide 100% coverage for methods and code lines.
 </div>
 </div>
 </div>
-<div id="outline-container-orgfcf33c3" class="outline-4">
-<h4 id="orgfcf33c3">Unit test</h4>
-<div class="outline-text-4" id="text-orgfcf33c3">
+<div id="outline-container-orgdd90b01" class="outline-4">
+<h4 id="orgdd90b01">Unit test</h4>
+<div class="outline-text-4" id="text-orgdd90b01">
 <div class="org-src-container">
 <pre class="src src-java"><span style="color: #56B6C2;">@Test</span>
 <span style="color: #56B6C2;">@DisplayName</span>(<span style="color: #98C379;">"Test downloadAllFiles call"</span>)
@@ -503,13 +503,13 @@ Create unit tests that provide 100% coverage for methods and code lines.
 </div>
 </div>
 
-<div id="outline-container-org29a9281" class="outline-2">
-<h2 id="org29a9281">Add <code>FtpClient::getClient(...)</code> test for non-default port and user account</h2>
-<div class="outline-text-2" id="text-org29a9281">
+<div id="outline-container-orgc7b529a" class="outline-2">
+<h2 id="orgc7b529a">Add <code>FtpClient::getClient(...)</code> test for non-default port and user account</h2>
+<div class="outline-text-2" id="text-orgc7b529a">
 </div>
-<div id="outline-container-org6755770" class="outline-4">
-<h4 id="org6755770">Code to test</h4>
-<div class="outline-text-4" id="text-org6755770">
+<div id="outline-container-org3aa6951" class="outline-4">
+<h4 id="org3aa6951">Code to test</h4>
+<div class="outline-text-4" id="text-org3aa6951">
 <div class="org-src-container">
 <pre class="src src-java"><span style="color: #C678DD;">public</span> <span style="color: #C678DD;">static</span> <span style="color: #E5C07B;">FtpClient</span> <span style="color: #61AFEF;">getClient</span>
     (<span style="color: #E5C07B;">URI</span> <span style="color: #E06C75;">serverAddress</span>, <span style="color: #E5C07B;">FTPClient</span> <span style="color: #E06C75;">ftp</span>
@@ -526,9 +526,9 @@ Create unit tests that provide 100% coverage for methods and code lines.
 </div>
 </div>
 
-<div id="outline-container-orgfc5d93c" class="outline-4">
-<h4 id="orgfc5d93c">Unit test</h4>
-<div class="outline-text-4" id="text-orgfc5d93c">
+<div id="outline-container-orgcbe4737" class="outline-4">
+<h4 id="orgcbe4737">Unit test</h4>
+<div class="outline-text-4" id="text-orgcbe4737">
 <div class="org-src-container">
 <pre class="src src-java"><span style="color: #56B6C2;">@Nested</span>
 <span style="color: #56B6C2;">@DisplayName</span>(<span style="color: #98C379;">"When connecting with non-default port and user"</span>)
