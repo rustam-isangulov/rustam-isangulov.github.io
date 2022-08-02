@@ -4,7 +4,7 @@
  <title>blog</title>
  <link href="http://localhost:4000/atom.xml" rel="self"/>
  <link href="http://localhost:4000/"/>
- <updated>2022-08-02T12:59:44+01:00</updated>
+ <updated>2022-08-02T13:03:53+01:00</updated>
  <id>http://localhost:4000</id>
  <author>
    <name></name>
@@ -27,20 +27,20 @@ Sources: &lt;a href=&quot;https://github.com/rustam-isangulov/java.fundamentals&
 &lt;/p&gt;
 &lt;/div&gt;
 
-&lt;div id=&quot;outline-container-org70fa7db&quot; class=&quot;outline-2&quot;&gt;
-&lt;h2 id=&quot;org70fa7db&quot;&gt;Objectives&lt;/h2&gt;
-&lt;div class=&quot;outline-text-2&quot; id=&quot;text-org70fa7db&quot;&gt;
+&lt;div id=&quot;outline-container-orgad583d2&quot; class=&quot;outline-2&quot;&gt;
+&lt;h2 id=&quot;orgad583d2&quot;&gt;Objectives&lt;/h2&gt;
+&lt;div class=&quot;outline-text-2&quot; id=&quot;text-orgad583d2&quot;&gt;
 &lt;p&gt;
 Test &lt;a href=&quot;https://rustam-isangulov.github.io/2022/07/30/java-fundamentals-ftputil&quot;&gt;FtpUtility&lt;/a&gt;  workflows against a functioning FTP server.
 &lt;/p&gt;
 &lt;/div&gt;
 &lt;/div&gt;
 
-&lt;div id=&quot;outline-container-org22195c8&quot; class=&quot;outline-2&quot;&gt;
-&lt;h2 id=&quot;org22195c8&quot;&gt;Review the structure&lt;/h2&gt;
-&lt;div class=&quot;outline-text-2&quot; id=&quot;text-org22195c8&quot;&gt;
+&lt;div id=&quot;outline-container-org4671eb2&quot; class=&quot;outline-2&quot;&gt;
+&lt;h2 id=&quot;org4671eb2&quot;&gt;Review the structure&lt;/h2&gt;
+&lt;div class=&quot;outline-text-2&quot; id=&quot;text-org4671eb2&quot;&gt;
 
-&lt;div id=&quot;org34a0a31&quot; class=&quot;figure&quot;&gt;
+&lt;div id=&quot;orgc86b307&quot; class=&quot;figure&quot;&gt;
 &lt;p&gt;&lt;img src=&quot;/images/ftputil-mockftp-structure.png&quot; alt=&quot;ftputil-mockftp-structure.png&quot; /&gt;
 &lt;/p&gt;
 &lt;/div&gt;
@@ -49,11 +49,11 @@ Test &lt;a href=&quot;https://rustam-isangulov.github.io/2022/07/30/java-fundame
 &lt;hr /&gt;
 &lt;/div&gt;
 &lt;/div&gt;
-&lt;div id=&quot;outline-container-orgafbf828&quot; class=&quot;outline-2&quot;&gt;
-&lt;h2 id=&quot;orgafbf828&quot;&gt;Final result of running all intergation tests in IntelliJ&lt;/h2&gt;
-&lt;div class=&quot;outline-text-2&quot; id=&quot;text-orgafbf828&quot;&gt;
+&lt;div id=&quot;outline-container-org415ff5c&quot; class=&quot;outline-2&quot;&gt;
+&lt;h2 id=&quot;org415ff5c&quot;&gt;Final result of running all intergation tests in IntelliJ&lt;/h2&gt;
+&lt;div class=&quot;outline-text-2&quot; id=&quot;text-org415ff5c&quot;&gt;
 
-&lt;div id=&quot;org6687e3b&quot; class=&quot;figure&quot;&gt;
+&lt;div id=&quot;org215b877&quot; class=&quot;figure&quot;&gt;
 &lt;p&gt;&lt;img src=&quot;/images/ftputil-mockftpserver-structure.jpg&quot; alt=&quot;ftputil-mockftpserver-structure.jpg&quot; /&gt;
 &lt;/p&gt;
 &lt;/div&gt;
@@ -62,9 +62,9 @@ Test &lt;a href=&quot;https://rustam-isangulov.github.io/2022/07/30/java-fundame
 &lt;/div&gt;
 &lt;/div&gt;
 
-&lt;div id=&quot;outline-container-org41717b4&quot; class=&quot;outline-2&quot;&gt;
-&lt;h2 id=&quot;org41717b4&quot;&gt;Add dependencies to &lt;code&gt;MockFtpServer&lt;/code&gt; in &lt;code&gt;maven&lt;/code&gt; project&lt;/h2&gt;
-&lt;div class=&quot;outline-text-2&quot; id=&quot;text-org41717b4&quot;&gt;
+&lt;div id=&quot;outline-container-org0bd4df1&quot; class=&quot;outline-2&quot;&gt;
+&lt;h2 id=&quot;org0bd4df1&quot;&gt;Add dependencies to &lt;code&gt;MockFtpServer&lt;/code&gt; in &lt;code&gt;maven&lt;/code&gt; project&lt;/h2&gt;
+&lt;div class=&quot;outline-text-2&quot; id=&quot;text-org0bd4df1&quot;&gt;
 &lt;p&gt;
 &lt;i&gt;Note: &lt;code&gt;MockFtpServer&lt;/code&gt; uses &lt;code&gt;slf4j&lt;/code&gt; logging library. A dependency to it is added as well (although it is optional).&lt;/i&gt;
 &lt;/p&gt;
@@ -87,9 +87,9 @@ Test &lt;a href=&quot;https://rustam-isangulov.github.io/2022/07/30/java-fundame
 &lt;/div&gt;
 &lt;/div&gt;
 
-&lt;div id=&quot;outline-container-orgff4aba5&quot; class=&quot;outline-2&quot;&gt;
-&lt;h2 id=&quot;orgff4aba5&quot;&gt;Configure &lt;code&gt;FakeFtpServer&lt;/code&gt; instance for each intergation test&lt;/h2&gt;
-&lt;div class=&quot;outline-text-2&quot; id=&quot;text-orgff4aba5&quot;&gt;
+&lt;div id=&quot;outline-container-org07e612f&quot; class=&quot;outline-2&quot;&gt;
+&lt;h2 id=&quot;org07e612f&quot;&gt;Configure &lt;code&gt;FakeFtpServer&lt;/code&gt; instance for each intergation test&lt;/h2&gt;
+&lt;div class=&quot;outline-text-2&quot; id=&quot;text-org07e612f&quot;&gt;
 &lt;div class=&quot;org-src-container&quot;&gt;
 &lt;pre class=&quot;src src-java&quot;&gt;&lt;span style=&quot;color: #C678DD;&quot;&gt;public&lt;/span&gt; &lt;span style=&quot;color: #C678DD;&quot;&gt;class&lt;/span&gt; &lt;span style=&quot;color: #E5C07B;&quot;&gt;FtpClientIntegrationTest&lt;/span&gt; {
 
@@ -157,9 +157,9 @@ Test &lt;a href=&quot;https://rustam-isangulov.github.io/2022/07/30/java-fundame
 &lt;/div&gt;
 &lt;/div&gt;
 
-&lt;div id=&quot;outline-container-orgde60c11&quot; class=&quot;outline-2&quot;&gt;
-&lt;h2 id=&quot;orgde60c11&quot;&gt;Test &lt;i&gt;connect&lt;/i&gt; + &lt;i&gt;list files in a driectory&lt;/i&gt; workflow&lt;/h2&gt;
-&lt;div class=&quot;outline-text-2&quot; id=&quot;text-orgde60c11&quot;&gt;
+&lt;div id=&quot;outline-container-orga4f9231&quot; class=&quot;outline-2&quot;&gt;
+&lt;h2 id=&quot;orga4f9231&quot;&gt;Test &lt;i&gt;connect&lt;/i&gt; + &lt;i&gt;list files in a driectory&lt;/i&gt; workflow&lt;/h2&gt;
+&lt;div class=&quot;outline-text-2&quot; id=&quot;text-orga4f9231&quot;&gt;
 &lt;div class=&quot;org-src-container&quot;&gt;
 &lt;pre class=&quot;src src-java&quot;&gt;&lt;span style=&quot;color: #56B6C2;&quot;&gt;@Nested&lt;/span&gt;
 &lt;span style=&quot;color: #56B6C2;&quot;&gt;@DisplayName&lt;/span&gt;(&lt;span style=&quot;color: #98C379;&quot;&gt;&quot;When we connect with a new FtpClient instance&quot;&lt;/span&gt;)
@@ -191,9 +191,9 @@ Test &lt;a href=&quot;https://rustam-isangulov.github.io/2022/07/30/java-fundame
 &lt;/div&gt;
 &lt;/div&gt;
 
-&lt;div id=&quot;outline-container-org9dfebd8&quot; class=&quot;outline-2&quot;&gt;
-&lt;h2 id=&quot;org9dfebd8&quot;&gt;Test &lt;i&gt;connect&lt;/i&gt; + &lt;i&gt;download all files in a directory&lt;/i&gt; workflow&lt;/h2&gt;
-&lt;div class=&quot;outline-text-2&quot; id=&quot;text-org9dfebd8&quot;&gt;
+&lt;div id=&quot;outline-container-orgcf78ede&quot; class=&quot;outline-2&quot;&gt;
+&lt;h2 id=&quot;orgcf78ede&quot;&gt;Test &lt;i&gt;connect&lt;/i&gt; + &lt;i&gt;download all files in a directory&lt;/i&gt; workflow&lt;/h2&gt;
+&lt;div class=&quot;outline-text-2&quot; id=&quot;text-orgcf78ede&quot;&gt;
 &lt;div class=&quot;org-src-container&quot;&gt;
 &lt;pre class=&quot;src src-java&quot;&gt;&lt;span style=&quot;color: #56B6C2;&quot;&gt;@Test&lt;/span&gt;
 &lt;span style=&quot;color: #56B6C2;&quot;&gt;@DisplayName&lt;/span&gt;(&lt;span style=&quot;color: #98C379;&quot;&gt;&quot;Then we can download content of all remote files in a directory&quot;&lt;/span&gt;)
@@ -234,9 +234,9 @@ Test &lt;a href=&quot;https://rustam-isangulov.github.io/2022/07/30/java-fundame
 &lt;/div&gt;
 &lt;/div&gt;
 
-&lt;div id=&quot;outline-container-org7510309&quot; class=&quot;outline-2&quot;&gt;
-&lt;h2 id=&quot;org7510309&quot;&gt;Test &lt;i&gt;connect&lt;/i&gt; + &lt;i&gt;download a single file&lt;/i&gt; workflow&lt;/h2&gt;
-&lt;div class=&quot;outline-text-2&quot; id=&quot;text-org7510309&quot;&gt;
+&lt;div id=&quot;outline-container-org6b05d20&quot; class=&quot;outline-2&quot;&gt;
+&lt;h2 id=&quot;org6b05d20&quot;&gt;Test &lt;i&gt;connect&lt;/i&gt; + &lt;i&gt;download a single file&lt;/i&gt; workflow&lt;/h2&gt;
+&lt;div class=&quot;outline-text-2&quot; id=&quot;text-org6b05d20&quot;&gt;
 &lt;div class=&quot;org-src-container&quot;&gt;
 &lt;pre class=&quot;src src-java&quot;&gt;&lt;span style=&quot;color: #56B6C2;&quot;&gt;@Test&lt;/span&gt;
 &lt;span style=&quot;color: #56B6C2;&quot;&gt;@DisplayName&lt;/span&gt;(&lt;span style=&quot;color: #98C379;&quot;&gt;&quot;Then we can download content of a remote file&quot;&lt;/span&gt;)
@@ -269,17 +269,17 @@ Test &lt;a href=&quot;https://rustam-isangulov.github.io/2022/07/30/java-fundame
 &lt;/div&gt;
 &lt;/div&gt;
 
-&lt;div id=&quot;outline-container-orgbc1a714&quot; class=&quot;outline-2&quot;&gt;
-&lt;h2 id=&quot;orgbc1a714&quot;&gt;Test cases for potential failures while interacting with an FTP server&lt;/h2&gt;
-&lt;div class=&quot;outline-text-2&quot; id=&quot;text-orgbc1a714&quot;&gt;
+&lt;div id=&quot;outline-container-orgca3d5c1&quot; class=&quot;outline-2&quot;&gt;
+&lt;h2 id=&quot;orgca3d5c1&quot;&gt;Test cases for potential failures while interacting with an FTP server&lt;/h2&gt;
+&lt;div class=&quot;outline-text-2&quot; id=&quot;text-orgca3d5c1&quot;&gt;
 &lt;/div&gt;
-&lt;div id=&quot;outline-container-org61eb820&quot; class=&quot;outline-3&quot;&gt;
-&lt;h3 id=&quot;org61eb820&quot;&gt;Test the case when an FTP server refuses our attempt to connect&lt;/h3&gt;
-&lt;div class=&quot;outline-text-3&quot; id=&quot;text-org61eb820&quot;&gt;
+&lt;div id=&quot;outline-container-orgcde2488&quot; class=&quot;outline-3&quot;&gt;
+&lt;h3 id=&quot;orgcde2488&quot;&gt;Test the case when an FTP server refuses our attempt to connect&lt;/h3&gt;
+&lt;div class=&quot;outline-text-3&quot; id=&quot;text-orgcde2488&quot;&gt;
 &lt;/div&gt;
-&lt;div id=&quot;outline-container-orgcb7c6d9&quot; class=&quot;outline-4&quot;&gt;
-&lt;h4 id=&quot;orgcb7c6d9&quot;&gt;Additional FTP Mock Server configuration for the failure case&lt;/h4&gt;
-&lt;div class=&quot;outline-text-4&quot; id=&quot;text-orgcb7c6d9&quot;&gt;
+&lt;div id=&quot;outline-container-org1a406cc&quot; class=&quot;outline-4&quot;&gt;
+&lt;h4 id=&quot;org1a406cc&quot;&gt;Additional FTP Mock Server configuration for the failure case&lt;/h4&gt;
+&lt;div class=&quot;outline-text-4&quot; id=&quot;text-org1a406cc&quot;&gt;
 &lt;div class=&quot;org-src-container&quot;&gt;
 &lt;pre class=&quot;src src-java&quot;&gt;&lt;span style=&quot;color: #56B6C2;&quot;&gt;@Nested&lt;/span&gt;
 &lt;span style=&quot;color: #56B6C2;&quot;&gt;@DisplayName&lt;/span&gt;(&lt;span style=&quot;color: #98C379;&quot;&gt;&quot;When server refuses our attempt to connect&quot;&lt;/span&gt;)
@@ -313,9 +313,9 @@ Test &lt;a href=&quot;https://rustam-isangulov.github.io/2022/07/30/java-fundame
 &lt;/div&gt;
 
 
-&lt;div id=&quot;outline-container-org8a4e2e4&quot; class=&quot;outline-4&quot;&gt;
-&lt;h4 id=&quot;org8a4e2e4&quot;&gt;Intergation test for the &lt;i&gt;connect&lt;/i&gt; workflow&lt;/h4&gt;
-&lt;div class=&quot;outline-text-4&quot; id=&quot;text-org8a4e2e4&quot;&gt;
+&lt;div id=&quot;outline-container-org5e019df&quot; class=&quot;outline-4&quot;&gt;
+&lt;h4 id=&quot;org5e019df&quot;&gt;Intergation test for the &lt;i&gt;connect&lt;/i&gt; workflow&lt;/h4&gt;
+&lt;div class=&quot;outline-text-4&quot; id=&quot;text-org5e019df&quot;&gt;
 &lt;div class=&quot;org-src-container&quot;&gt;
 &lt;pre class=&quot;src src-java&quot;&gt;&lt;span style=&quot;color: #56B6C2;&quot;&gt;@Test&lt;/span&gt;
 &lt;span style=&quot;color: #56B6C2;&quot;&gt;@DisplayName&lt;/span&gt;(&lt;span style=&quot;color: #98C379;&quot;&gt;&quot;Then the client throws Unable to connect... exception&quot;&lt;/span&gt;)
@@ -341,9 +341,9 @@ Test &lt;a href=&quot;https://rustam-isangulov.github.io/2022/07/30/java-fundame
 &lt;/div&gt;
 &lt;/div&gt;
 
-&lt;div id=&quot;outline-container-orga06c50a&quot; class=&quot;outline-3&quot;&gt;
-&lt;h3 id=&quot;orga06c50a&quot;&gt;Test the case of trying to login with wrong credentials&lt;/h3&gt;
-&lt;div class=&quot;outline-text-3&quot; id=&quot;text-orga06c50a&quot;&gt;
+&lt;div id=&quot;outline-container-org98c6652&quot; class=&quot;outline-3&quot;&gt;
+&lt;h3 id=&quot;org98c6652&quot;&gt;Test the case of trying to login with wrong credentials&lt;/h3&gt;
+&lt;div class=&quot;outline-text-3&quot; id=&quot;text-org98c6652&quot;&gt;
 &lt;div class=&quot;org-src-container&quot;&gt;
 &lt;pre class=&quot;src src-java&quot;&gt;&lt;span style=&quot;color: #56B6C2;&quot;&gt;@Nested&lt;/span&gt;
 &lt;span style=&quot;color: #56B6C2;&quot;&gt;@DisplayName&lt;/span&gt;(&lt;span style=&quot;color: #98C379;&quot;&gt;&quot;When we login with a wrong user or password&quot;&lt;/span&gt;)
