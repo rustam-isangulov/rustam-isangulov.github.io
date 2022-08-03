@@ -15,18 +15,18 @@ Sources: <a href="https://github.com/rustam-isangulov/java.fundamentals">GitHub<
 </p>
 </div>
 
-<div id="outline-container-org41f0056" class="outline-2">
-<h2 id="org41f0056">Objectives</h2>
-<div class="outline-text-2" id="text-org41f0056">
+<div id="outline-container-org0c518b5" class="outline-2">
+<h2 id="org0c518b5">Objectives</h2>
+<div class="outline-text-2" id="text-org0c518b5">
 <p>
 Configure <a href="https://rustam-isangulov.github.io/2022/07/30/java-fundamentals-ftputil">FtpUtility</a> project to output a <code>*.jar</code> file that contains all depndencies.
 </p>
 </div>
 </div>
 
-<div id="outline-container-org9929110" class="outline-2">
-<h2 id="org9929110">Add dependencies to <code>maven-assembly-plugin</code> in <code>pom.xml</code></h2>
-<div class="outline-text-2" id="text-org9929110">
+<div id="outline-container-orgee6ea2d" class="outline-2">
+<h2 id="orgee6ea2d">Add dependencies to <code>maven-assembly-plugin</code> in <code>pom.xml</code></h2>
+<div class="outline-text-2" id="text-orgee6ea2d">
 <div class="org-src-container">
 <pre class="src src-xml">&lt;<span style="color: #E06C75;">build</span>&gt;
   &lt;<span style="color: #E06C75;">plugins</span>&gt;
@@ -61,9 +61,9 @@ Configure <a href="https://rustam-isangulov.github.io/2022/07/30/java-fundamenta
 </div>
 </div>
 
-<div id="outline-container-org8fef1bb" class="outline-2">
-<h2 id="org8fef1bb">Build the project and produce an uber-jar</h2>
-<div class="outline-text-2" id="text-org8fef1bb">
+<div id="outline-container-org3681e63" class="outline-2">
+<h2 id="org3681e63">Build the project and produce an uber-jar</h2>
+<div class="outline-text-2" id="text-org3681e63">
 <p>
 Use <code>mvn package</code> command in the <code>IntelliJ</code> <code>Terminal</code> tab to produce a newly specified output:
 </p>
@@ -94,18 +94,18 @@ Check if the target directory contains the new <code>*.jar</code> with dependenc
 <div class="org-src-container">
 <pre class="src src-shell"> % ls -la target
 total 1184
-drwxr-xr-x  12 rustamisangulov  staff     384 Aug  3 11:02 .
-drwxr-xr-x   6 rustamisangulov  staff     192 Aug  2 15:11 ..
-drwxr-xr-x   2 rustamisangulov  staff      64 Aug  2 14:56 archive-tmp
-drwxr-xr-x   4 rustamisangulov  staff     128 Aug  1 13:36 classes
--rw-r--r--   1 rustamisangulov  staff  561750 Aug  3 11:02 ftputil-0.2-jar-with-dependencies.jar
--rw-r--r--   1 rustamisangulov  staff   11491 Aug  2 15:11 ftputil-0.2.jar
-drwxr-xr-x   3 rustamisangulov  staff      96 Jul 30 19:59 generated-sources
-drwxr-xr-x   3 rustamisangulov  staff      96 Jul 30 19:59 generated-test-sources
-drwxr-xr-x   3 rustamisangulov  staff      96 Jul 30 19:59 maven-archiver
-drwxr-xr-x   3 rustamisangulov  staff      96 Jul 30 19:59 maven-status
-drwxr-xr-x  10 rustamisangulov  staff     320 Jul 30 19:59 surefire-reports
-drwxr-xr-x   3 rustamisangulov  staff      96 Jul 30 19:59 test-classes
+drwxr-xr-x  12 rv  staff     384 Aug  3 11:02 .
+drwxr-xr-x   6 rv  staff     192 Aug  2 15:11 ..
+drwxr-xr-x   2 rv  staff      64 Aug  2 14:56 archive-tmp
+drwxr-xr-x   4 rv  staff     128 Aug  1 13:36 classes
+-rw-r--r--   1 rv  staff  561750 Aug  3 11:02 ftputil-0.2-jar-with-dependencies.jar
+-rw-r--r--   1 rv  staff   11491 Aug  2 15:11 ftputil-0.2.jar
+drwxr-xr-x   3 rv  staff      96 Jul 30 19:59 generated-sources
+drwxr-xr-x   3 rv  staff      96 Jul 30 19:59 generated-test-sources
+drwxr-xr-x   3 rv  staff      96 Jul 30 19:59 maven-archiver
+drwxr-xr-x   3 rv  staff      96 Jul 30 19:59 maven-status
+drwxr-xr-x  10 rv  staff     320 Jul 30 19:59 surefire-reports
+drwxr-xr-x   3 rv  staff      96 Jul 30 19:59 test-classes
 </pre>
 </div>
 
@@ -115,9 +115,9 @@ Note the new output file <code>ftputil-0.2-jar-with-dependencies.jar</code>, thi
 </div>
 </div>
 
-<div id="outline-container-org9c82a4b" class="outline-2">
-<h2 id="org9c82a4b">Example of using the jar archive with all dependencies</h2>
-<div class="outline-text-2" id="text-org9c82a4b">
+<div id="outline-container-org932d974" class="outline-2">
+<h2 id="org932d974">Example of using the jar archive with all dependencies</h2>
+<div class="outline-text-2" id="text-org932d974">
 <p>
 We can use <code>jshell</code> environment to see differences between a default jar and one with all dependencies included.
 </p>

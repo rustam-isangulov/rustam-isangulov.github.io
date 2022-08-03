@@ -4,7 +4,7 @@
  <title>blog</title>
  <link href="http://localhost:4000/atom.xml" rel="self"/>
  <link href="http://localhost:4000/"/>
- <updated>2022-08-03T12:00:27+01:00</updated>
+ <updated>2022-08-03T12:07:31+01:00</updated>
  <id>http://localhost:4000</id>
  <author>
    <name></name>
@@ -27,18 +27,18 @@ Sources: &lt;a href=&quot;https://github.com/rustam-isangulov/java.fundamentals&
 &lt;/p&gt;
 &lt;/div&gt;
 
-&lt;div id=&quot;outline-container-org41f0056&quot; class=&quot;outline-2&quot;&gt;
-&lt;h2 id=&quot;org41f0056&quot;&gt;Objectives&lt;/h2&gt;
-&lt;div class=&quot;outline-text-2&quot; id=&quot;text-org41f0056&quot;&gt;
+&lt;div id=&quot;outline-container-org0c518b5&quot; class=&quot;outline-2&quot;&gt;
+&lt;h2 id=&quot;org0c518b5&quot;&gt;Objectives&lt;/h2&gt;
+&lt;div class=&quot;outline-text-2&quot; id=&quot;text-org0c518b5&quot;&gt;
 &lt;p&gt;
 Configure &lt;a href=&quot;https://rustam-isangulov.github.io/2022/07/30/java-fundamentals-ftputil&quot;&gt;FtpUtility&lt;/a&gt; project to output a &lt;code&gt;*.jar&lt;/code&gt; file that contains all depndencies.
 &lt;/p&gt;
 &lt;/div&gt;
 &lt;/div&gt;
 
-&lt;div id=&quot;outline-container-org9929110&quot; class=&quot;outline-2&quot;&gt;
-&lt;h2 id=&quot;org9929110&quot;&gt;Add dependencies to &lt;code&gt;maven-assembly-plugin&lt;/code&gt; in &lt;code&gt;pom.xml&lt;/code&gt;&lt;/h2&gt;
-&lt;div class=&quot;outline-text-2&quot; id=&quot;text-org9929110&quot;&gt;
+&lt;div id=&quot;outline-container-orgee6ea2d&quot; class=&quot;outline-2&quot;&gt;
+&lt;h2 id=&quot;orgee6ea2d&quot;&gt;Add dependencies to &lt;code&gt;maven-assembly-plugin&lt;/code&gt; in &lt;code&gt;pom.xml&lt;/code&gt;&lt;/h2&gt;
+&lt;div class=&quot;outline-text-2&quot; id=&quot;text-orgee6ea2d&quot;&gt;
 &lt;div class=&quot;org-src-container&quot;&gt;
 &lt;pre class=&quot;src src-xml&quot;&gt;&amp;lt;&lt;span style=&quot;color: #E06C75;&quot;&gt;build&lt;/span&gt;&amp;gt;
   &amp;lt;&lt;span style=&quot;color: #E06C75;&quot;&gt;plugins&lt;/span&gt;&amp;gt;
@@ -73,9 +73,9 @@ Configure &lt;a href=&quot;https://rustam-isangulov.github.io/2022/07/30/java-fu
 &lt;/div&gt;
 &lt;/div&gt;
 
-&lt;div id=&quot;outline-container-org8fef1bb&quot; class=&quot;outline-2&quot;&gt;
-&lt;h2 id=&quot;org8fef1bb&quot;&gt;Build the project and produce an uber-jar&lt;/h2&gt;
-&lt;div class=&quot;outline-text-2&quot; id=&quot;text-org8fef1bb&quot;&gt;
+&lt;div id=&quot;outline-container-org3681e63&quot; class=&quot;outline-2&quot;&gt;
+&lt;h2 id=&quot;org3681e63&quot;&gt;Build the project and produce an uber-jar&lt;/h2&gt;
+&lt;div class=&quot;outline-text-2&quot; id=&quot;text-org3681e63&quot;&gt;
 &lt;p&gt;
 Use &lt;code&gt;mvn package&lt;/code&gt; command in the &lt;code&gt;IntelliJ&lt;/code&gt; &lt;code&gt;Terminal&lt;/code&gt; tab to produce a newly specified output:
 &lt;/p&gt;
@@ -106,18 +106,18 @@ Check if the target directory contains the new &lt;code&gt;*.jar&lt;/code&gt; wi
 &lt;div class=&quot;org-src-container&quot;&gt;
 &lt;pre class=&quot;src src-shell&quot;&gt; % ls -la target
 total 1184
-drwxr-xr-x  12 rustamisangulov  staff     384 Aug  3 11:02 .
-drwxr-xr-x   6 rustamisangulov  staff     192 Aug  2 15:11 ..
-drwxr-xr-x   2 rustamisangulov  staff      64 Aug  2 14:56 archive-tmp
-drwxr-xr-x   4 rustamisangulov  staff     128 Aug  1 13:36 classes
--rw-r--r--   1 rustamisangulov  staff  561750 Aug  3 11:02 ftputil-0.2-jar-with-dependencies.jar
--rw-r--r--   1 rustamisangulov  staff   11491 Aug  2 15:11 ftputil-0.2.jar
-drwxr-xr-x   3 rustamisangulov  staff      96 Jul 30 19:59 generated-sources
-drwxr-xr-x   3 rustamisangulov  staff      96 Jul 30 19:59 generated-test-sources
-drwxr-xr-x   3 rustamisangulov  staff      96 Jul 30 19:59 maven-archiver
-drwxr-xr-x   3 rustamisangulov  staff      96 Jul 30 19:59 maven-status
-drwxr-xr-x  10 rustamisangulov  staff     320 Jul 30 19:59 surefire-reports
-drwxr-xr-x   3 rustamisangulov  staff      96 Jul 30 19:59 test-classes
+drwxr-xr-x  12 rv  staff     384 Aug  3 11:02 .
+drwxr-xr-x   6 rv  staff     192 Aug  2 15:11 ..
+drwxr-xr-x   2 rv  staff      64 Aug  2 14:56 archive-tmp
+drwxr-xr-x   4 rv  staff     128 Aug  1 13:36 classes
+-rw-r--r--   1 rv  staff  561750 Aug  3 11:02 ftputil-0.2-jar-with-dependencies.jar
+-rw-r--r--   1 rv  staff   11491 Aug  2 15:11 ftputil-0.2.jar
+drwxr-xr-x   3 rv  staff      96 Jul 30 19:59 generated-sources
+drwxr-xr-x   3 rv  staff      96 Jul 30 19:59 generated-test-sources
+drwxr-xr-x   3 rv  staff      96 Jul 30 19:59 maven-archiver
+drwxr-xr-x   3 rv  staff      96 Jul 30 19:59 maven-status
+drwxr-xr-x  10 rv  staff     320 Jul 30 19:59 surefire-reports
+drwxr-xr-x   3 rv  staff      96 Jul 30 19:59 test-classes
 &lt;/pre&gt;
 &lt;/div&gt;
 
@@ -127,9 +127,9 @@ Note the new output file &lt;code&gt;ftputil-0.2-jar-with-dependencies.jar&lt;/c
 &lt;/div&gt;
 &lt;/div&gt;
 
-&lt;div id=&quot;outline-container-org9c82a4b&quot; class=&quot;outline-2&quot;&gt;
-&lt;h2 id=&quot;org9c82a4b&quot;&gt;Example of using the jar archive with all dependencies&lt;/h2&gt;
-&lt;div class=&quot;outline-text-2&quot; id=&quot;text-org9c82a4b&quot;&gt;
+&lt;div id=&quot;outline-container-org932d974&quot; class=&quot;outline-2&quot;&gt;
+&lt;h2 id=&quot;org932d974&quot;&gt;Example of using the jar archive with all dependencies&lt;/h2&gt;
+&lt;div class=&quot;outline-text-2&quot; id=&quot;text-org932d974&quot;&gt;
 &lt;p&gt;
 We can use &lt;code&gt;jshell&lt;/code&gt; environment to see differences between a default jar and one with all dependencies included.
 &lt;/p&gt;
