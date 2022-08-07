@@ -1,0 +1,344 @@
+<div class="post">
+<p>
+Toolkit: macOS | <a href="https://www.jetbrains.com/idea/">InelliJ IDEA</a> | <a href="https://commons.apache.org/proper/commons-net/">Apache Commons Net</a>
+</p>
+
+<p>
+Sources: <a href="https://github.com/rustam-isangulov/java.fundamentals">GitHub</a>
+</p>
+</div>
+
+<div id="outline-container-org37d94e0" class="outline-2">
+<h2 id="org37d94e0">Objectives</h2>
+<div class="outline-text-2" id="text-org37d94e0">
+<p>
+Create a utility to:
+</p>
+<ul class="org-ul">
+<li>download multiple(all) files from a directory on an ftp server</li>
+<li>work from inside container/VM environments</li>
+</ul>
+
+<p>
+<i>Note: for the second objective <code>FTPClient</code> should be switched to <b>local passive mode</b>, see <code>open(...)</code> method for details.</i>
+</p>
+</div>
+</div>
+
+<div id="outline-container-orgde3cbdc" class="outline-2">
+<h2 id="orgde3cbdc">Review the structure</h2>
+<div class="outline-text-2" id="text-orgde3cbdc">
+
+<div id="org1f0106b" class="figure">
+<p><img src="/images/ftputil-structure.png" alt="ftputil-structure.png" />
+</p>
+</div>
+<hr />
+</div>
+</div>
+<div id="outline-container-org644ba1d" class="outline-2">
+<h2 id="org644ba1d">Add dependecies to Apache Commons in <code>maven</code> project</h2>
+<div class="outline-text-2" id="text-org644ba1d">
+</div>
+<div id="outline-container-org6277511" class="outline-3">
+<h3 id="org6277511"><code>pom.xml</code></h3>
+<div class="outline-text-3" id="text-org6277511">
+<div class="org-src-container">
+<pre class="src src-xml">&lt;<span style="color: #E06C75;">dependencies</span>&gt;
+  &lt;<span style="color: #E06C75;">dependency</span>&gt;
+    &lt;<span style="color: #E06C75;">groupId</span>&gt;commons-net&lt;/<span style="color: #E06C75;">groupId</span>&gt;
+    &lt;<span style="color: #E06C75;">artifactId</span>&gt;commons-net&lt;/<span style="color: #E06C75;">artifactId</span>&gt;
+    &lt;<span style="color: #E06C75;">version</span>&gt;3.8.0&lt;/<span style="color: #E06C75;">version</span>&gt;
+  &lt;/<span style="color: #E06C75;">dependency</span>&gt;
+&lt;/<span style="color: #E06C75;">dependencies</span>&gt;
+
+</pre>
+</div>
+</div>
+</div>
+</div>
+
+<div id="outline-container-org88760b3" class="outline-2">
+<h2 id="org88760b3">Add create instance and open connection logic</h2>
+<div class="outline-text-2" id="text-org88760b3">
+<p>
+In this section we will add content for open/close connection method, constructor and instance factory methods.
+</p>
+</div>
+
+<div id="outline-container-org401515b" class="outline-3">
+<h3 id="org401515b"><code>open(...)</code></h3>
+<div class="outline-text-3" id="text-org401515b">
+<div class="org-src-container">
+<pre class="src src-java"><span style="color: #C678DD;">private</span> <span style="color: #E5C07B;">void</span> <span style="color: #61AFEF;">open</span>(<span style="color: #E5C07B;">int</span> <span style="color: #E06C75;">port</span>, <span style="color: #E5C07B;">String</span> <span style="color: #E06C75;">user</span>, <span style="color: #E5C07B;">String</span> <span style="color: #E06C75;">password</span>) <span style="color: #C678DD;">throws</span> <span style="color: #E5C07B;">IOException</span> {
+
+    <span style="color: #5C6370; font-style: italic;">// </span><span style="color: #5C6370; font-style: italic;">connect</span>
+    ftp.connect(server.toString(), port);
+
+    <span style="color: #5C6370; font-style: italic;">// </span><span style="color: #5C6370; font-style: italic;">check for connection failures</span>
+    <span style="color: #C678DD;">if</span> (<span style="color: #56B6C2; font-weight: bold;">!</span>FTPReply.isPositiveCompletion(ftp.getReplyCode())) {
+        ftp.disconnect();
+        <span style="color: #C678DD;">throw</span> <span style="color: #C678DD;">new</span> <span style="color: #E5C07B;">IOException</span>
+            (<span style="color: #98C379;">"Unable to connect to FTP Server: "</span> + server
+             + <span style="color: #98C379;">" port: "</span> + port);
+    }
+
+    <span style="color: #5C6370; font-style: italic;">// </span><span style="color: #5C6370; font-style: italic;">check for login failures</span>
+    <span style="color: #C678DD;">if</span> (<span style="color: #56B6C2; font-weight: bold;">!</span>ftp.login(user, password)) {
+        ftp.disconnect();
+        <span style="color: #C678DD;">throw</span> <span style="color: #C678DD;">new</span> <span style="color: #E5C07B;">IOException</span>
+            (<span style="color: #98C379;">"Unable to login to FTP Server: "</span> + server
+             + <span style="color: #98C379;">" port: "</span> + port);
+    }
+
+    <span style="color: #5C6370; font-style: italic;">// </span><span style="color: #5C6370; font-style: italic;">passive mode to be able to work from inside VMs</span>
+    ftp.enterLocalPassiveMode();
+
+    <span style="color: #5C6370; font-style: italic;">// </span><span style="color: #5C6370; font-style: italic;">now ready to access files and dirs</span>
+}
+</pre>
+</div>
+</div>
+</div>
+
+<div id="outline-container-org7ce3ae7" class="outline-3">
+<h3 id="org7ce3ae7"><code>close()</code></h3>
+<div class="outline-text-3" id="text-org7ce3ae7">
+<div class="org-src-container">
+<pre class="src src-java"><span style="color: #56B6C2;">@Override</span>
+<span style="color: #C678DD;">public</span> <span style="color: #E5C07B;">void</span> <span style="color: #61AFEF;">close</span>() <span style="color: #C678DD;">throws</span> <span style="color: #E5C07B;">IOException</span> {
+    ftp.logout();
+    ftp.disconnect();
+}
+</pre>
+</div>
+</div>
+</div>
+
+<div id="outline-container-org85215df" class="outline-3">
+<h3 id="org85215df"><code>FtpClient(...)</code></h3>
+<div class="outline-text-3" id="text-org85215df">
+<div class="org-src-container">
+<pre class="src src-java"><span style="color: #C678DD;">private</span> <span style="color: #61AFEF;">FtpClient</span>(<span style="color: #E5C07B;">URI</span> <span style="color: #E06C75;">serverAddress</span>, <span style="color: #E5C07B;">FTPClient</span> <span style="color: #E06C75;">ftp</span>) {
+    <span style="color: #C678DD;">this</span>.server = serverAddress;
+    <span style="color: #C678DD;">this</span>.ftp = ftp;
+}
+</pre>
+</div>
+</div>
+</div>
+
+<div id="outline-container-orgea1c41b" class="outline-3">
+<h3 id="orgea1c41b"><code>getClient(...)</code></h3>
+<div class="outline-text-3" id="text-orgea1c41b">
+<div class="org-src-container">
+<pre class="src src-java"><span style="color: #C678DD;">public</span> <span style="color: #C678DD;">static</span> <span style="color: #E5C07B;">FtpClient</span> <span style="color: #61AFEF;">getClient</span>
+    (<span style="color: #E5C07B;">URI</span> <span style="color: #E06C75;">serverAddress</span>, <span style="color: #E5C07B;">FTPClient</span> <span style="color: #E06C75;">ftp</span>) <span style="color: #C678DD;">throws</span> <span style="color: #E5C07B;">IOException</span> {
+
+    <span style="color: #5C6370; font-style: italic;">// </span><span style="color: #5C6370; font-style: italic;">default port</span>
+    <span style="color: #E5C07B;">int</span> <span style="color: #E06C75;">port</span> = 21;
+    <span style="color: #5C6370; font-style: italic;">// </span><span style="color: #5C6370; font-style: italic;">username for public access data</span>
+    <span style="color: #E5C07B;">String</span> <span style="color: #E06C75;">user</span> = <span style="color: #98C379;">"anonymous"</span>;
+    <span style="color: #5C6370; font-style: italic;">// </span><span style="color: #5C6370; font-style: italic;">password for anonymous users</span>
+    <span style="color: #E5C07B;">String</span> <span style="color: #E06C75;">password</span> = <span style="color: #98C379;">""</span>;
+
+    <span style="color: #E5C07B;">FtpClient</span> <span style="color: #E06C75;">client</span> = <span style="color: #C678DD;">new</span> <span style="color: #E5C07B;">FtpClient</span>(serverAddress, ftp);
+
+    client.open(port, user, password);
+
+    <span style="color: #C678DD;">return</span> client;
+}
+
+<span style="color: #C678DD;">public</span> <span style="color: #C678DD;">static</span> <span style="color: #E5C07B;">FtpClient</span> <span style="color: #61AFEF;">getClient</span>
+    (<span style="color: #E5C07B;">URI</span> <span style="color: #E06C75;">serverAddress</span>, <span style="color: #E5C07B;">FTPClient</span> <span style="color: #E06C75;">ftp</span>
+     , <span style="color: #E5C07B;">int</span> <span style="color: #E06C75;">port</span>, <span style="color: #E5C07B;">String</span> <span style="color: #E06C75;">user</span>, <span style="color: #E5C07B;">String</span> <span style="color: #E06C75;">password</span>) <span style="color: #C678DD;">throws</span> <span style="color: #E5C07B;">IOException</span> {
+
+    <span style="color: #E5C07B;">FtpClient</span> <span style="color: #E06C75;">client</span> = <span style="color: #C678DD;">new</span> <span style="color: #E5C07B;">FtpClient</span>(serverAddress, ftp);
+
+    client.open(port, user, password);
+
+    <span style="color: #C678DD;">return</span> client;
+}
+</pre>
+</div>
+</div>
+</div>
+</div>
+
+<div id="outline-container-org3d9420e" class="outline-2">
+<h2 id="org3d9420e">List files in a remote directory</h2>
+<div class="outline-text-2" id="text-org3d9420e">
+<p>
+In this section we will add the logic to retrieve a list of files in a remote directory.
+</p>
+</div>
+
+<div id="outline-container-orga027393" class="outline-3">
+<h3 id="orga027393"><code>listFiles(...)</code></h3>
+<div class="outline-text-3" id="text-orga027393">
+<div class="org-src-container">
+<pre class="src src-java"><span style="color: #C678DD;">public</span> <span style="color: #E5C07B;">List</span>&lt;<span style="color: #E5C07B;">FTPFile</span>&gt; <span style="color: #61AFEF;">listFiles</span>(<span style="color: #E5C07B;">Path</span> <span style="color: #E06C75;">remoteDir</span>) <span style="color: #C678DD;">throws</span> <span style="color: #E5C07B;">IOException</span> {
+
+    <span style="color: #E5C07B;">FTPFile</span>[] <span style="color: #E06C75;">files</span> = ftp.listFiles(remoteDir.toString());
+
+    <span style="color: #C678DD;">return</span> Arrays.stream(files)
+        .collect(Collectors.toList());
+}
+</pre>
+</div>
+</div>
+</div>
+</div>
+
+<div id="outline-container-orga6f6f3f" class="outline-2">
+<h2 id="orga6f6f3f">Download remote files</h2>
+<div class="outline-text-2" id="text-orga6f6f3f">
+<p>
+In this section we will add content for remote files downloading methods, both single file and multple files versions.
+</p>
+</div>
+
+<div id="outline-container-org149a8f9" class="outline-3">
+<h3 id="org149a8f9"><code>downloadFile(...)</code></h3>
+<div class="outline-text-3" id="text-org149a8f9">
+<div class="org-src-container">
+<pre class="src src-java"><span style="color: #C678DD;">public</span> <span style="color: #E5C07B;">void</span> <span style="color: #61AFEF;">downloadFile</span>
+    (<span style="color: #E5C07B;">Path</span> <span style="color: #E06C75;">remoteFile</span>, <span style="color: #E5C07B;">OutputStream</span> <span style="color: #E06C75;">out</span>) <span style="color: #C678DD;">throws</span> <span style="color: #E5C07B;">IOException</span> {
+
+    ftp.retrieveFile(remoteFile.toString(), out);
+}
+</pre>
+</div>
+</div>
+</div>
+
+<div id="outline-container-org84ef305" class="outline-3">
+<h3 id="org84ef305"><code>downloadAllFiles(...)</code></h3>
+<div class="outline-text-3" id="text-org84ef305">
+<div class="org-src-container">
+<pre class="src src-java"><span style="color: #C678DD;">public</span> <span style="color: #E5C07B;">void</span> <span style="color: #61AFEF;">downloadAllFiles</span>
+    (<span style="color: #E5C07B;">Path</span> <span style="color: #E06C75;">remoteDir</span>
+     , <span style="color: #E5C07B;">Function</span>&lt;<span style="color: #E5C07B;">Path</span>, <span style="color: #E5C07B;">OutputStream</span>&gt; <span style="color: #E06C75;">outputProvider</span>
+     , <span style="color: #E5C07B;">Consumer</span>&lt;<span style="color: #E5C07B;">String</span>&gt; <span style="color: #E06C75;">progressReporter</span>) <span style="color: #C678DD;">throws</span> <span style="color: #E5C07B;">IOException</span> {
+
+    <span style="color: #E5C07B;">var</span> <span style="color: #E06C75;">files</span> = ftp.listFiles(remoteDir.toString());
+
+    <span style="color: #E5C07B;">var</span> <span style="color: #E06C75;">filesList</span> = Arrays.stream(files)
+        .filter(FTPFile::isFile)
+        .map(FTPFile::getName)
+        .collect(Collectors.toList());
+
+    <span style="color: #C678DD;">for</span>(<span style="color: #E5C07B;">int</span> <span style="color: #E06C75;">i</span> = 0; i &lt; filesList.<span style="color: #E5C07B;">size</span>(); i++) {
+        progressReporter.accept
+            (String.format(<span style="color: #98C379;">"Downloading (%d of %d):[%s]"</span>
+                           , i+1, filesList.size(), filesList.get(i)));
+
+        <span style="color: #C678DD;">try</span> (<span style="color: #E5C07B;">var</span> <span style="color: #E06C75;">out</span> = outputProvider.apply(Path.of(filesList.get(i)))) {
+            ftp.retrieveFile(remoteDir.resolve(filesList.get(i)).toString(), out);
+        }
+    }
+}
+</pre>
+</div>
+</div>
+</div>
+</div>
+
+<div id="outline-container-org9c37ca7" class="outline-2">
+<h2 id="org9c37ca7">Example</h2>
+<div class="outline-text-2" id="text-org9c37ca7">
+<p>
+Here is an example of using the <code>FtpClient</code> to list and download multiple files form an FTP server.
+</p>
+
+<div class="org-src-container">
+<pre class="src src-java"><span style="color: #C678DD;">public</span> <span style="color: #C678DD;">class</span> <span style="color: #E5C07B;">FtiUtilRun</span> {
+    <span style="color: #C678DD;">public</span> <span style="color: #C678DD;">static</span> <span style="color: #E5C07B;">void</span> <span style="color: #61AFEF;">main</span>(<span style="color: #E5C07B;">String</span>... <span style="color: #E06C75;">args</span>) <span style="color: #C678DD;">throws</span> <span style="color: #E5C07B;">IOException</span> {
+
+        <span style="color: #5C6370; font-style: italic;">// </span><span style="color: #5C6370; font-style: italic;">create and open connection</span>
+        <span style="color: #C678DD;">try</span> (<span style="color: #E5C07B;">var</span> <span style="color: #E06C75;">ftpClient</span> = FtpClient.getClient
+             (URI.create(<span style="color: #98C379;">"ftp.ebi.ac.uk"</span>), <span style="color: #C678DD;">new</span> <span style="color: #E5C07B;">FTPClient</span>())){
+
+            <span style="color: #5C6370; font-style: italic;">// </span><span style="color: #5C6370; font-style: italic;">remote directory</span>
+            <span style="color: #E5C07B;">var</span> <span style="color: #E06C75;">remoteDir</span> = Path.of
+                (<span style="color: #98C379;">"/pub/databases/opentargets/"</span> +
+                 <span style="color: #98C379;">"platform/latest/output/etl/json/diseases/"</span>);
+
+            <span style="color: #5C6370; font-style: italic;">// </span><span style="color: #5C6370; font-style: italic;">print a list of files in a remote directory</span>
+            ftpClient.listFiles(remoteDir)
+                .forEach(System.out::println);
+
+            <span style="color: #5C6370; font-style: italic;">// </span><span style="color: #5C6370; font-style: italic;">provide output stream to copy a remote file content into</span>
+            <span style="color: #E5C07B;">Function</span>&lt;<span style="color: #E5C07B;">Path</span>, <span style="color: #E5C07B;">OutputStream</span>&gt; <span style="color: #E06C75;">outputProvider</span> = file -&gt; {
+                <span style="color: #C678DD;">try</span> {
+                    <span style="color: #C678DD;">return</span> <span style="color: #C678DD;">new</span> <span style="color: #E5C07B;">BufferedOutputStream</span>
+                       (<span style="color: #C678DD;">new</span> <span style="color: #E5C07B;">FileOutputStream</span>(file.toFile()));
+                } <span style="color: #C678DD;">catch</span> (<span style="color: #E5C07B;">FileNotFoundException</span> <span style="color: #E06C75;">e</span>) {
+                    <span style="color: #C678DD;">throw</span> <span style="color: #C678DD;">new</span> <span style="color: #E5C07B;">RuntimeException</span>
+                        (<span style="color: #98C379;">"Cannot create files in the local directory..."</span>,e);
+                }
+            };
+
+            <span style="color: #5C6370; font-style: italic;">// </span><span style="color: #5C6370; font-style: italic;">progress reporter</span>
+            <span style="color: #E5C07B;">Consumer</span>&lt;<span style="color: #E5C07B;">String</span>&gt; <span style="color: #E06C75;">progressReporter</span> = System.out::println;
+
+            <span style="color: #5C6370; font-style: italic;">// </span><span style="color: #5C6370; font-style: italic;">download all files in the directory</span>
+            ftpClient.downloadAllFiles
+                (remoteDir, outputProvider, progressReporter);
+        }
+    }
+}
+</pre>
+</div>
+
+<p>
+Output:
+</p>
+
+<div class="org-src-container">
+<pre class="src src-shell">-rw-r--r--    1 ftp      ftp             0 Jun 20 12:03 _SUCCESS
+-rw-r--r--    1 ftp      ftp       1760417 Jun 20 12:03 part-00000-083c466a-3036-42e0-97ab-87035b32cc9b-c000.json
+-rw-r--r--    1 ftp      ftp       1699456 Jun 20 12:03 part-00001-083c466a-3036-42e0-97ab-87035b32cc9b-c000.json
+-rw-r--r--    1 ftp      ftp       1745262 Jun 20 12:03 part-00002-083c466a-3036-42e0-97ab-87035b32cc9b-c000.json
+-rw-r--r--    1 ftp      ftp       1664693 Jun 20 12:03 part-00003-083c466a-3036-42e0-97ab-87035b32cc9b-c000.json
+-rw-r--r--    1 ftp      ftp       2135641 Jun 20 12:03 part-00004-083c466a-3036-42e0-97ab-87035b32cc9b-c000.json
+-rw-r--r--    1 ftp      ftp       2115169 Jun 20 12:03 part-00005-083c466a-3036-42e0-97ab-87035b32cc9b-c000.json
+-rw-r--r--    1 ftp      ftp       2322320 Jun 20 12:03 part-00006-083c466a-3036-42e0-97ab-87035b32cc9b-c000.json
+-rw-r--r--    1 ftp      ftp       2165083 Jun 20 12:03 part-00007-083c466a-3036-42e0-97ab-87035b32cc9b-c000.json
+-rw-r--r--    1 ftp      ftp       1818603 Jun 20 12:03 part-00008-083c466a-3036-42e0-97ab-87035b32cc9b-c000.json
+-rw-r--r--    1 ftp      ftp       1890536 Jun 20 12:03 part-00009-083c466a-3036-42e0-97ab-87035b32cc9b-c000.json
+-rw-r--r--    1 ftp      ftp       1806820 Jun 20 12:03 part-00010-083c466a-3036-42e0-97ab-87035b32cc9b-c000.json
+-rw-r--r--    1 ftp      ftp       2078683 Jun 20 12:03 part-00011-083c466a-3036-42e0-97ab-87035b32cc9b-c000.json
+-rw-r--r--    1 ftp      ftp        644630 Jun 20 12:03 part-00012-083c466a-3036-42e0-97ab-87035b32cc9b-c000.json
+-rw-r--r--    1 ftp      ftp        697469 Jun 20 12:03 part-00013-083c466a-3036-42e0-97ab-87035b32cc9b-c000.json
+-rw-r--r--    1 ftp      ftp        684315 Jun 20 12:03 part-00014-083c466a-3036-42e0-97ab-87035b32cc9b-c000.json
+-rw-r--r--    1 ftp      ftp        676954 Jun 20 12:03 part-00015-083c466a-3036-42e0-97ab-87035b32cc9b-c000.json
+<span style="color: #61AFEF;">Downloading</span> (1 of 17):[_SUCCESS]
+<span style="color: #61AFEF;">Downloading</span> (2 of 17):[part-00000-083c466a-3036-42e0-97ab-87035b32cc9b-c000.json]
+<span style="color: #61AFEF;">Downloading</span> (3 of 17):[part-00001-083c466a-3036-42e0-97ab-87035b32cc9b-c000.json]
+<span style="color: #61AFEF;">Downloading</span> (4 of 17):[part-00002-083c466a-3036-42e0-97ab-87035b32cc9b-c000.json]
+<span style="color: #61AFEF;">Downloading</span> (5 of 17):[part-00003-083c466a-3036-42e0-97ab-87035b32cc9b-c000.json]
+<span style="color: #61AFEF;">Downloading</span> (6 of 17):[part-00004-083c466a-3036-42e0-97ab-87035b32cc9b-c000.json]
+<span style="color: #61AFEF;">Downloading</span> (7 of 17):[part-00005-083c466a-3036-42e0-97ab-87035b32cc9b-c000.json]
+<span style="color: #61AFEF;">Downloading</span> (8 of 17):[part-00006-083c466a-3036-42e0-97ab-87035b32cc9b-c000.json]
+<span style="color: #61AFEF;">Downloading</span> (9 of 17):[part-00007-083c466a-3036-42e0-97ab-87035b32cc9b-c000.json]
+<span style="color: #61AFEF;">Downloading</span> (10 of 17):[part-00008-083c466a-3036-42e0-97ab-87035b32cc9b-c000.json]
+<span style="color: #61AFEF;">Downloading</span> (11 of 17):[part-00009-083c466a-3036-42e0-97ab-87035b32cc9b-c000.json]
+<span style="color: #61AFEF;">Downloading</span> (12 of 17):[part-00010-083c466a-3036-42e0-97ab-87035b32cc9b-c000.json]
+<span style="color: #61AFEF;">Downloading</span> (13 of 17):[part-00011-083c466a-3036-42e0-97ab-87035b32cc9b-c000.json]
+<span style="color: #61AFEF;">Downloading</span> (14 of 17):[part-00012-083c466a-3036-42e0-97ab-87035b32cc9b-c000.json]
+<span style="color: #61AFEF;">Downloading</span> (15 of 17):[part-00013-083c466a-3036-42e0-97ab-87035b32cc9b-c000.json]
+<span style="color: #61AFEF;">Downloading</span> (16 of 17):[part-00014-083c466a-3036-42e0-97ab-87035b32cc9b-c000.json]
+<span style="color: #61AFEF;">Downloading</span> (17 of 17):[part-00015-083c466a-3036-42e0-97ab-87035b32cc9b-c000.json]
+
+Process finished with exit code 0
+
+</pre>
+</div>
+
+<hr />
+<p>
+Thank you.
+</p>
+</div>
+</div>
