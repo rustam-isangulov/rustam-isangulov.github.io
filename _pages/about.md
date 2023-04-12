@@ -4,7 +4,8 @@ title: About
 ---
 
 Written by Rustam Isangulov.
-A collection of notes on matters of software engineering.
+<br>
+A collection of notes on software engineering.
 
 [LinkedIn](https://www.linkedin.com/in/rustam-isangulov/)
 <br/>
